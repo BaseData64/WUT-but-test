@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"
+    >
+
+    <title>WUT Cafe OLV — First Run</title>
+    <link rel="stylesheet" href="style/cafe.css">
+    <link rel="stylesheet" href="style/olv_symbols.css">
+    <link rel="stylesheet" href="style/olv_setup.css">
+</head>
+
+<body>
+
+<div id="wut-cafe-stage" data-wut-firstrun-state="welcome">
+
+    <!--
+        WUT First Run — Nintendo Wii U / Miiverse-style presentation.
+        No decorative build/status rails are used in this pass.
+    -->
+
+    <!--
+        WUT First Run — Portal symbol runtime
+
+        The content and supplied illustrations are adapted from Makii's
+        Makiiverse welcome prototype. All panels stay in one document so the
+        Wii U build does not depend on unconfirmed routes or account state.
+    -->
+    <div
+        id="welcome-start"
+        class="wut-view wut-step"
+        data-wut-step="welcome"
+        aria-hidden="false"
+    >
+        <div class="wut-welcome-window wut-hero-window">
+            <div class="wut-window-body">
+                <div class="wut-step-kicker">FIRST RUN 01 / 06</div>
+
+                <h1 class="wut-welcome-title">
+                    Welcome to WUT-Miiverse!
+                </h1>
+
+                <p class="wut-hero-copy">
+                    WUT-Miiverse is a community project that connects people
+                    through their Mii characters. Share your gaming experiences
+                    and discover what other players are talking about.
+                </p>
+
+                <div class="wut-hero-art-stage">
+                    <img
+                        class="wut-hero-art"
+                        src="res/olv/welcome/welcome1.png"
+                        alt="Mii characters communicating around the world"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        id="welcome-about"
+        class="wut-view wut-step wut-step-hidden"
+        data-wut-step="about"
+        aria-hidden="true"
+    >
+        <div class="wut-welcome-window wut-about-window">
+            <div class="wut-window-body">
+                <div class="wut-step-kicker">FIRST RUN 02 / 06</div>
+
+                <h1 class="wut-welcome-title">What is WUT-Miiverse?</h1>
+
+                <p class="wut-about-copy">
+                    WUT-Miiverse is a homebrew prototype inspired by the social
+                    experience shown for Wii U during the Miiverse era.
+                </p>
+
+                <img
+                    class="wut-about-art"
+                    src="res/olv/welcome/welcome3.png"
+                    alt="Written and drawn community posts"
+                >
+
+                <p class="wut-about-copy wut-about-copy-lower">
+                    The goal is to support written or drawn posts in game
+                    communities and direct messages between friends as those
+                    backend features are implemented.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div
+        id="welcome-manners"
+        class="wut-view wut-step wut-step-hidden"
+        data-wut-step="manners"
+        aria-hidden="true"
+    >
+        <div class="wut-manners-window">
+            <div class="wut-manners-heading">
+                <div class="wut-step-kicker">FIRST RUN 03 / 06</div>
+                <h1 class="wut-welcome-title">WUT-Miiverse Manners</h1>
+                <p>Review these guidelines, then select Accept.</p>
+            </div>
+
+            <div id="wut-manners-scroll" class="wut-manners-scroll">
+                <p class="wut-manners-intro">
+                    These guidelines describe the community WUT is being built
+                    to support. Server-side moderation is not active in this
+                    prototype yet.
+                </p>
+
+                <div class="wut-manner-card wut-manner-orange">
+                    <h2>Posts can be viewed around the world</h2>
+                    <div class="wut-manner-layout">
+                        <div class="wut-manner-art-cell">
+                            <img
+                                src="res/olv/welcome/welcome5-1.png"
+                                alt="Players sharing a post around the world"
+                            >
+                        </div>
+                        <div class="wut-manner-copy-cell">
+                            <p>
+                                Community posts and replies may be visible to
+                                people beyond your friends list.
+                            </p>
+                            <p>
+                                Think about the full audience before publishing
+                                something and keep each post useful to its game
+                                community.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wut-manner-card wut-manner-red">
+                    <h2>Be nice to one another</h2>
+                    <div class="wut-manner-layout">
+                        <div class="wut-manner-art-cell">
+                            <img
+                                src="res/olv/welcome/welcome5-4.png"
+                                alt="One player treating another player badly"
+                            >
+                        </div>
+                        <div class="wut-manner-copy-cell">
+                            <p>
+                                Treat other users with respect, including when
+                                you disagree about a game or a post.
+                            </p>
+                            <p>
+                                Harassment, hateful attacks and deliberately
+                                disruptive content do not belong in WUT.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wut-manner-card wut-manner-pink">
+                    <h2>Keep personal information private</h2>
+                    <div class="wut-manner-layout wut-manner-layout-wide-art">
+                        <div class="wut-manner-art-cell">
+                            <img
+                                src="res/olv/welcome/welcome5-2.png"
+                                alt="Private information must not be shared"
+                            >
+                        </div>
+                        <div class="wut-manner-copy-cell">
+                            <p>
+                                Do not share addresses, phone numbers, e-mail
+                                addresses, school or workplace information.
+                            </p>
+                            <p>
+                                Protect your own details and never publish
+                                somebody else's private information.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wut-manner-card wut-manner-blue">
+                    <h2>Mark spoilers clearly</h2>
+                    <div class="wut-manner-layout">
+                        <div class="wut-manner-art-cell">
+                            <img
+                                src="res/olv/welcome/welcome5-3.png"
+                                alt="A player warning another player about a spoiler"
+                            >
+                        </div>
+                        <div class="wut-manner-copy-cell">
+                            <p>
+                                Story details and hidden game discoveries can
+                                spoil another player's experience.
+                            </p>
+                            <p>
+                                When spoiler controls become available, use
+                                them before publishing revealing content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wut-manner-card wut-manner-cyan">
+                    <h2>Community rules will be enforced</h2>
+                    <div class="wut-manner-layout wut-manner-layout-small-art">
+                        <div class="wut-manner-art-cell">
+                            <img
+                                src="res/olv/welcome/welcome5-6.png"
+                                alt="A prohibited user symbol"
+                            >
+                        </div>
+                        <div class="wut-manner-copy-cell">
+                            <p>
+                                The planned service will need reporting and
+                                moderation tools to keep communities usable.
+                            </p>
+                            <p>
+                                The exact penalties and enforcement system are
+                                still pending a documented backend policy.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wut-manner-card wut-manner-green">
+                    <h2>Played-game marks add useful context</h2>
+                    <div class="wut-manner-layout wut-manner-layout-small-art">
+                        <div class="wut-manner-art-cell">
+                            <img
+                                src="res/olv/welcome/welcome5-5.png"
+                                alt="Played-game mark"
+                            >
+                        </div>
+                        <div class="wut-manner-copy-cell">
+                            <p>
+                                Posts may eventually display a mark when WUT
+                                can verify that their author played the game.
+                            </p>
+                            <p>
+                                This is a planned compatibility feature and is
+                                not verified by the current local prototype.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="wut-manners-agreement">
+                    Selecting Accept confirms that you understand these
+                    prototype community guidelines.
+                </p>
+            </div>
+
+            <div class="wut-scroll-hint">Use ↑ / ↓ to read everything</div>
+        </div>
+    </div>
+
+    <div
+        id="welcome-game-experience"
+        class="wut-view wut-step wut-step-hidden"
+        data-wut-step="game-experience"
+        aria-hidden="true"
+    >
+        <div class="wut-welcome-window wut-game-window">
+            <div class="wut-window-body">
+                <div class="wut-step-kicker">FIRST RUN 04 / 06</div>
+
+                <h1 class="wut-welcome-title">Game experience</h1>
+
+                <p class="wut-game-copy">
+                    How would you describe your experience with games?
+                    This prototype keeps the choice only for this session.
+                </p>
+
+                <div class="wut-skill-list">
+                    <div class="wut-skill-slot">
+                        <button
+                            id="wut-skill-beginner"
+                            class="wut-skill-option wut-control-hidden"
+                            type="button"
+                            data-wut-action="select-skill-beginner"
+                            aria-pressed="false"
+                        >
+                            <img src="res/olv/skill-beginner.png" alt="">
+                            <span>Beginner</span>
+                        </button>
+                    </div>
+
+                    <div class="wut-skill-slot">
+                        <button
+                            id="wut-skill-intermediate"
+                            class="wut-skill-option wut-control-hidden"
+                            type="button"
+                            data-wut-action="select-skill-intermediate"
+                            aria-pressed="false"
+                        >
+                            <img src="res/olv/skill-intermediate.png" alt="">
+                            <span>Intermediate</span>
+                        </button>
+                    </div>
+
+                    <div class="wut-skill-slot">
+                        <button
+                            id="wut-skill-expert"
+                            class="wut-skill-option wut-control-hidden"
+                            type="button"
+                            data-wut-action="select-skill-expert"
+                            aria-pressed="false"
+                        >
+                            <img src="res/olv/skill-expert.png" alt="">
+                            <span>Expert</span>
+                        </button>
+                    </div>
+                </div>
+
+                <p id="wut-skill-hint" class="wut-skill-hint">
+                    Choose one option before continuing.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div
+        id="welcome-ready"
+        class="wut-view wut-step wut-step-hidden"
+        data-wut-step="ready"
+        aria-hidden="true"
+    >
+        <div class="wut-welcome-window wut-ready-window">
+            <div class="wut-window-body">
+                <div class="wut-step-kicker">FIRST RUN 05 / 06</div>
+
+                <h1 class="wut-welcome-title">
+                    Ready to start using WUT-Miiverse
+                </h1>
+
+                <p class="wut-ready-copy">
+                    First, explore communities and see what players are sharing.
+                    It is a good way to learn how WUT is meant to work and find
+                    something unexpected along the way.
+                </p>
+
+                <img
+                    class="wut-ready-art"
+                    src="res/olv/welcome/welcome8-2.png"
+                    alt="Mii characters discovering community conversations"
+                >
+            </div>
+        </div>
+    </div>
+
+    <div
+        id="welcome-finish"
+        class="wut-view wut-step wut-step-hidden"
+        data-wut-step="finish"
+        aria-hidden="true"
+    >
+        <div class="wut-welcome-window wut-finish-window">
+            <img
+                class="wut-finish-art"
+                src="res/olv/welcome/welcome8-3.png"
+                alt="Mii characters welcoming the player"
+            >
+
+            <div class="wut-finish-copy-wrap">
+                <div class="wut-step-kicker">FIRST RUN 06 / 06</div>
+                <h1 class="wut-welcome-title">Have fun with WUT-Miiverse!</h1>
+
+                <p id="wut-finish-copy" class="wut-finish-copy">
+                    Select Start to save this setup for WUT-Miiverse.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button
+        id="wut-setup-close"
+        class="wut-corner-button wut-corner-button-left"
+        type="button"
+        data-wut-action="close"
+    >
+        <span class="wut-action-icon wut-action-icon-close" aria-hidden="true"></span>
+        <span class="wut-action-label">Close</span>
+    </button>
+
+    <button
+        id="wut-setup-next"
+        class="wut-corner-button wut-corner-button-right wut-focused"
+        type="button"
+        data-wut-action="next"
+    >
+        <span class="wut-action-icon wut-action-icon-next" aria-hidden="true"></span>
+        <span class="wut-action-label">Next</span>
+    </button>
+
+</div>
+
+<script src="script/olv_store.js"></script>
+<script src="script/olv_session.js"></script>
+<script src="script/olv_identity.js"></script>
+<script src="script/olv_mii.js"></script>
+<script src="script/cafe_input.js"></script>
+<script src="script/olv_nav.js"></script>
+<script src="script/olv_setup.js"></script>
+
+</body>
+</html>

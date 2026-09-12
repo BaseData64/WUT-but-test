@@ -1,0 +1,8 @@
+<?php
+return array(
+    // Same machine is fine: the PHP proxy fetches it server-side.
+    'mii_renderer_base' => 'http://127.0.0.1:8080',
+
+    // Development identity injection is only honored from localhost.
+    'allow_local_dev_identity' => true,
+);
