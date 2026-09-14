@@ -1,0 +1,756 @@
+/* ============================================================
+   WUT-MIIVERSE — EARLY DEMO FIRST RUN
+   Experimental visual layer for the Wii U / Miiverse applet.
+
+   Goals:
+   - feel like an early Wii U social-feature presentation
+   - large illustrations + floating information, not one giant dialog
+   - preserve the existing First Run DOM ids and input controller
+   - remain friendly to old Wii U WebKit (no grid, no CSS variables)
+   ============================================================ */
+
+html,
+body {
+    background: #edf1ea;
+}
+
+#wut-cafe-stage {
+    background-color: #f4f6ef;
+    background-image:
+        url("../res/olv/bg-gray-dot.png"),
+        -webkit-gradient(
+            radial,
+            78% 12%, 10,
+            78% 12%, 430,
+            from(rgba(41,196,211,.18)),
+            color-stop(.58, rgba(41,196,211,.045)),
+            to(rgba(255,255,255,0))
+        ),
+        -webkit-gradient(
+            radial,
+            12% 78%, 12,
+            12% 78%, 470,
+            from(rgba(146,207,62,.20)),
+            color-stop(.56, rgba(146,207,62,.045)),
+            to(rgba(255,255,255,0))
+        );
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-position: 0 0, center top, center top;
+}
+
+#wut-cafe-stage:before {
+    border-left: 1px solid rgba(255,255,255,.82);
+    border-right: 1px solid rgba(76,92,70,.08);
+}
+
+#wut-cafe-stage:after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 5px;
+    background: #55c946;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#7bd94c),
+        color-stop(.46,#62ca33),
+        color-stop(.72,#20bdc7),
+        to(#63d3db)
+    );
+    z-index: 50;
+}
+
+/* Shared early-demo chrome ---------------------------------- */
+.wut-early-topline {
+    position: absolute;
+    top: 16px;
+    left: 25px;
+    right: 25px;
+    height: 35px;
+    z-index: 20;
+    color: #6c746e;
+}
+
+.wut-early-brand {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 32px;
+    line-height: 32px;
+    white-space: nowrap;
+}
+
+.wut-early-mark {
+    display: inline-block;
+    min-width: 47px;
+    height: 27px;
+    padding: 0 9px;
+    line-height: 27px;
+    color: #ffffff;
+    background: #60c734;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(44,118,18,.28);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 1px 2px rgba(0,0,0,.11);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 1px 2px rgba(0,0,0,.11);
+}
+
+.wut-early-name {
+    display: inline-block;
+    margin-left: 7px;
+    color: #4c5550;
+    font-size: 14px;
+    line-height: 27px;
+    font-weight: bold;
+    letter-spacing: 1.1px;
+    vertical-align: top;
+}
+
+.wut-early-motto {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    color: #8d9590;
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: bold;
+    letter-spacing: 1.25px;
+}
+
+.wut-early-progress {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    width: 162px;
+    height: 12px;
+    margin-left: -81px;
+    text-align: center;
+    z-index: 26;
+}
+
+.wut-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin: 0 5px;
+    background: #c6ccc6;
+    border: 1px solid #aab1aa;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+#wut-cafe-stage[data-wut-firstrun-state="welcome"] .wut-dot-1,
+#wut-cafe-stage[data-wut-firstrun-state="about"] .wut-dot-2,
+#wut-cafe-stage[data-wut-firstrun-state="manners"] .wut-dot-3,
+#wut-cafe-stage[data-wut-firstrun-state="game-experience"] .wut-dot-4,
+#wut-cafe-stage[data-wut-firstrun-state="ready"] .wut-dot-5,
+#wut-cafe-stage[data-wut-firstrun-state="finish"] .wut-dot-6 {
+    width: 17px;
+    background: #5ecb38;
+    border-color: #4aae29;
+}
+
+.wut-early-scene {
+    position: absolute;
+    top: 55px;
+    left: 20px;
+    right: 20px;
+    bottom: 72px;
+    overflow: hidden;
+}
+
+.wut-early-eyebrow {
+    margin: 0 0 5px;
+    color: #1ab7c5;
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: bold;
+    letter-spacing: 1.25px;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-early-title {
+    margin: 0;
+    color: #3f4842;
+    font-size: 31px;
+    line-height: 35px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-early-lead {
+    margin: 10px 0 0;
+    color: #656d68;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+/* 01 -------------------------------------------------------- */
+.wut-copy-welcome {
+    position: absolute;
+    left: 34px;
+    top: 61px;
+    width: 340px;
+    z-index: 7;
+}
+
+.wut-copy-welcome .wut-early-title {
+    color: #424b45;
+    font-size: 33px;
+    line-height: 36px;
+}
+
+.wut-early-chips {
+    margin-top: 15px;
+    white-space: nowrap;
+}
+
+.wut-early-chips span {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 9px 4px;
+    color: #64805b;
+    background: rgba(255,255,255,.76);
+    border: 1px solid #c9d2c6;
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+    font-size: 8px;
+    line-height: 10px;
+    font-weight: bold;
+    letter-spacing: .7px;
+}
+
+.wut-art-world {
+    position: absolute;
+    right: -5px;
+    bottom: 6px;
+    width: 500px;
+    height: 283px;
+    z-index: 3;
+}
+
+.wut-art-world > img {
+    position: absolute;
+    right: -27px;
+    bottom: -1px;
+    width: 500px;
+    height: auto;
+}
+
+.wut-float-note {
+    position: absolute;
+    min-width: 120px;
+    padding: 8px 12px;
+    color: #59615c;
+    background: rgba(255,255,255,.94);
+    border: 1px solid #d7dbd6;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(58,75,58,.12);
+    -webkit-box-shadow: 0 2px 5px rgba(58,75,58,.12);
+}
+
+.wut-float-note:after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    bottom: -6px;
+    left: 28px;
+    background: #ffffff;
+    border-right: 1px solid #d7dbd6;
+    border-bottom: 1px solid #d7dbd6;
+    -webkit-transform: rotate(45deg);
+}
+
+.wut-note-a { top: 18px; right: 36px; }
+.wut-note-b { top: 69px; right: 125px; color: #458737; }
+
+/* 02 -------------------------------------------------------- */
+.wut-share-title-block {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    width: 560px;
+    margin-left: -280px;
+    text-align: center;
+}
+
+.wut-share-title-block .wut-early-lead {
+    width: 525px;
+    margin: 6px auto 0;
+}
+
+.wut-share-demo {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    width: 730px;
+    height: 217px;
+    margin-left: -365px;
+}
+
+.wut-share-art {
+    position: absolute;
+    left: 50%;
+    top: 45px;
+    width: 365px;
+    height: auto;
+    margin-left: -182px;
+}
+
+.wut-demo-post {
+    position: absolute;
+    top: 30px;
+    width: 180px;
+    min-height: 76px;
+    padding: 13px 13px 10px 46px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #4a514d;
+    background: rgba(255,255,255,.93);
+    border: 1px solid #d2d7d1;
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    box-shadow: 0 3px 8px rgba(53,70,53,.12);
+    -webkit-box-shadow: 0 3px 8px rgba(53,70,53,.12);
+}
+
+.wut-demo-post-left { left: 0; }
+.wut-demo-post-right { right: 0; top: 104px; }
+
+.wut-demo-avatar {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    width: 28px;
+    height: 28px;
+    color: #ffffff;
+    background: #22b8c5;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    font-size: 13px;
+    line-height: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.wut-demo-avatar-green { background: #6bc23b; }
+.wut-demo-post strong { display: block; font-size: 12px; line-height: 15px; }
+.wut-demo-post small { display: block; margin-top: 5px; color: #9aa09c; font-size: 7px; line-height: 10px; font-weight: bold; letter-spacing: .5px; }
+
+/* 03 -------------------------------------------------------- */
+.wut-scene-manners { overflow: visible; }
+
+.wut-manners-heading {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.wut-manners-heading .wut-early-title { font-size: 27px; line-height: 31px; }
+.wut-manners-heading p { margin: 4px 0 0; color: #737b76; font-size: 11px; line-height: 15px; font-weight: bold; }
+
+.wut-manners-scroll.wut-early-rule-row {
+    position: absolute;
+    top: 84px;
+    left: 22px;
+    right: 22px;
+    bottom: 38px;
+    display: table;
+    width: 770px;
+    padding: 0;
+    margin: 0 auto;
+    overflow: visible;
+    table-layout: fixed;
+    background: transparent;
+    border: 0;
+}
+
+.wut-early-rule {
+    position: relative;
+    display: table-cell;
+    width: 33.333%;
+    padding: 0 8px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    vertical-align: top;
+    text-align: center;
+}
+
+.wut-early-rule:before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 11px;
+    right: 11px;
+    bottom: 4px;
+    background: rgba(255,255,255,.89);
+    border: 1px solid #d2d8d2;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    box-shadow: 0 3px 8px rgba(58,72,58,.11);
+    -webkit-box-shadow: 0 3px 8px rgba(58,72,58,.11);
+    z-index: -1;
+}
+
+.wut-rule-art {
+    height: 122px;
+    padding-top: 11px;
+    text-align: center;
+}
+
+.wut-rule-art img { width: auto; height: auto; max-width: 205px; max-height: 111px; }
+.wut-rule-world .wut-rule-art img { max-width: 185px; }
+.wut-rule-kind .wut-rule-art img { max-width: 170px; }
+.wut-rule-safe .wut-rule-art img { max-width: 205px; max-height: 76px; margin-top: 21px; }
+
+.wut-early-rule h2 {
+    margin: 0 18px;
+    color: #4b544f;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.wut-early-rule p {
+    margin: 5px 20px 0;
+    color: #777e79;
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+.wut-rule-world h2 { color: #e49331; }
+.wut-rule-kind h2 { color: #d75d59; }
+.wut-rule-safe h2 { color: #cf668e; }
+
+.wut-manners-agreement {
+    position: absolute;
+    left: 50%;
+    bottom: 1px;
+    width: 250px;
+    margin: 0 0 0 -125px;
+    padding: 4px 8px;
+    color: #5b7854;
+    background: transparent;
+    border: 0;
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.wut-scroll-hint { display: none; }
+
+/* 04 -------------------------------------------------------- */
+.wut-skill-heading {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.wut-skill-heading .wut-early-lead { margin-top: 4px; }
+
+.wut-skill-list {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    display: table;
+    width: 600px;
+    margin: 0 0 0 -300px;
+    table-layout: fixed;
+}
+
+.wut-skill-slot { display: table-cell; width: 200px; vertical-align: top; text-align: center; }
+
+.wut-skill-option {
+    position: relative;
+    display: inline-block;
+    width: 176px;
+    height: 154px;
+    padding-top: 9px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #555d58;
+    background: rgba(255,255,255,.88);
+    border: 2px solid #cdd3cd;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(55,70,55,.12), inset 0 1px 0 rgba(255,255,255,.98);
+    -webkit-box-shadow: 0 4px 8px rgba(55,70,55,.12), inset 0 1px 0 rgba(255,255,255,.98);
+    text-align: center;
+    overflow: hidden;
+}
+
+.wut-skill-option img {
+    position: relative;
+    display: block;
+    width: auto;
+    height: 61px;
+    max-width: 69px;
+    max-height: 61px;
+    margin: 5px auto 2px;
+    z-index: 2;
+}
+
+.wut-skill-option > span:not(.wut-skill-orbit) {
+    position: relative;
+    display: block;
+    margin-top: 1px;
+    font-size: 15px;
+    line-height: 19px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.wut-skill-option small {
+    position: relative;
+    display: block;
+    margin-top: 3px;
+    color: #929995;
+    font-size: 8px;
+    line-height: 11px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.wut-skill-orbit {
+    position: absolute;
+    left: 50%;
+    top: -56px;
+    width: 160px;
+    height: 160px;
+    margin-left: -80px;
+    background: rgba(39,188,199,.08);
+    border-radius: 90px;
+    -webkit-border-radius: 90px;
+}
+
+.wut-skill-option.wut-focused {
+    border-color: #18b9c6;
+    box-shadow: 0 0 0 4px rgba(24,185,198,.22), 0 4px 8px rgba(55,70,55,.12);
+    -webkit-box-shadow: 0 0 0 4px rgba(24,185,198,.22), 0 4px 8px rgba(55,70,55,.12);
+}
+
+.wut-skill-option.wut-selected {
+    color: #ffffff;
+    background: #62c83a;
+    background: -webkit-gradient(linear,left top,left bottom,from(#76d74e),to(#54bb2f));
+    border-color: #48a728;
+    text-shadow: 0 -1px 0 rgba(51,109,28,.27);
+}
+
+.wut-skill-option.wut-selected small { color: #e9ffe1; }
+.wut-skill-option.wut-selected .wut-skill-orbit { background: rgba(255,255,255,.12); }
+.wut-skill-option.wut-selected:after { top: 8px; right: 11px; font-size: 18px; }
+
+.wut-skill-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 17px;
+    margin: 0;
+    color: #8b938e;
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.wut-skill-hint.wut-skill-ready { color: #4c982f; }
+
+/* 05 -------------------------------------------------------- */
+.wut-discover-copy {
+    position: absolute;
+    left: 48px;
+    top: 56px;
+    width: 340px;
+    z-index: 5;
+}
+
+.wut-community-stamp {
+    position: relative;
+    width: 210px;
+    height: 64px;
+    margin-top: 18px;
+    padding-left: 73px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #8b938d;
+    background: rgba(255,255,255,.75);
+    border: 1px solid #d6dbd5;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    font-size: 8px;
+    line-height: 11px;
+    font-weight: bold;
+    letter-spacing: .6px;
+}
+
+.wut-community-stamp img {
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    width: 58px;
+    height: auto;
+}
+
+.wut-community-stamp span { display: block; padding-top: 18px; }
+.wut-community-stamp strong { color: #56ad38; font-size: 10px; }
+
+.wut-discover-art {
+    position: absolute;
+    right: 20px;
+    bottom: 13px;
+    width: 450px;
+    height: 255px;
+    text-align: right;
+}
+
+.wut-discover-art img { width: 450px; height: auto; }
+
+/* 06 -------------------------------------------------------- */
+.wut-scene-finish { overflow: visible; }
+
+.wut-finish-art {
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 690px;
+    height: auto;
+    margin-left: -345px;
+    z-index: 1;
+}
+
+.wut-finish-copy-wrap {
+    position: absolute;
+    top: 76px;
+    left: 50%;
+    width: 330px;
+    margin-left: -165px;
+    padding: 20px 16px 17px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background: rgba(255,255,255,.91);
+    border: 1px solid #d2d8d1;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(56,72,56,.12), inset 0 1px 0 #ffffff;
+    -webkit-box-shadow: 0 4px 12px rgba(56,72,56,.12), inset 0 1px 0 #ffffff;
+    text-align: center;
+    z-index: 5;
+}
+
+.wut-finish-copy-wrap .wut-early-title { font-size: 30px; line-height: 33px; color: #4a534d; }
+
+.wut-finish-logo {
+    margin-top: 7px;
+    color: #727b75;
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.wut-finish-logo span {
+    display: inline-block;
+    margin-right: 4px;
+    padding: 1px 6px;
+    color: #ffffff;
+    background: #62c938;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    letter-spacing: 0;
+}
+
+.wut-finish-copy {
+    margin: 9px auto 0;
+    color: #757d78;
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+/* Bottom actions -------------------------------------------- */
+.wut-corner-button {
+    bottom: 0;
+    height: 60px;
+    font-size: 15px;
+    z-index: 35;
+}
+
+.wut-corner-button-left {
+    width: 175px;
+    padding-right: 25px;
+    color: #666d68;
+    background: rgba(245,247,244,.95);
+    border-top: 1px solid #c9d0c9;
+    border-right: 1px solid #c9d0c9;
+    border-radius: 0 34px 0 0;
+    -webkit-border-radius: 0 34px 0 0;
+    text-shadow: 0 1px 0 #ffffff;
+    box-shadow: 1px -2px 6px rgba(50,65,50,.10), inset 0 1px 0 #ffffff;
+    -webkit-box-shadow: 1px -2px 6px rgba(50,65,50,.10), inset 0 1px 0 #ffffff;
+}
+
+.wut-corner-button-right {
+    width: 190px;
+    padding-left: 28px;
+    color: #ffffff;
+    background: #59c734;
+    background: -webkit-gradient(linear,left top,left bottom,from(#78d951),to(#4fba2b));
+    border-top: 1px solid #48a929;
+    border-left: 1px solid #48a929;
+    border-radius: 34px 0 0 0;
+    -webkit-border-radius: 34px 0 0 0;
+    text-shadow: 0 -1px 0 rgba(41,102,22,.35);
+    box-shadow: -1px -2px 7px rgba(52,90,39,.17), inset 0 1px 0 rgba(255,255,255,.5);
+    -webkit-box-shadow: -1px -2px 7px rgba(52,90,39,.17), inset 0 1px 0 rgba(255,255,255,.5);
+}
+
+.wut-corner-button .wut-action-label { line-height: 60px; }
+.wut-corner-button.wut-focused { box-shadow: 0 0 0 4px rgba(27,183,196,.34), 0 -2px 7px rgba(52,90,39,.17); -webkit-box-shadow: 0 0 0 4px rgba(27,183,196,.34), 0 -2px 7px rgba(52,90,39,.17); }
+.wut-corner-button-left.wut-focused { box-shadow: 0 0 0 4px rgba(27,183,196,.28), 1px -2px 6px rgba(50,65,50,.10); -webkit-box-shadow: 0 0 0 4px rgba(27,183,196,.28), 1px -2px 6px rgba(50,65,50,.10); }
+
+/* Keep action symbol positions from the proven portal stylesheet. */
+.wut-corner-button:disabled { opacity: .45; }
+
+/* Hide the old window treatment if any legacy classes are still present. */
+.wut-welcome-window,
+.wut-manners-window { background: transparent; border: 0; box-shadow: none; -webkit-box-shadow: none; }
+.wut-welcome-window:before,
+.wut-welcome-window:after,
+.wut-manners-window:before,
+.wut-manners-window:after { display: none; content: none; }
+
+/* Narrow-height fallback used by desktop testing windows. */
+@media screen and (max-height: 430px) {
+    .wut-early-topline { top: 10px; }
+    .wut-early-scene { top: 44px; bottom: 58px; }
+    .wut-corner-button { height: 52px; }
+    .wut-corner-button .wut-action-label { line-height: 52px; }
+    .wut-early-progress { bottom: 16px; }
+}

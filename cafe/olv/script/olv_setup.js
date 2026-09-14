@@ -60,9 +60,35 @@
         expert: "wut-skill-expert"
     };
 
+    var BASE_WIDTH = 1280;
+    var BASE_HEIGHT = 720;
     var current = 0;
     var selectedSkill = null;
     var complete = false;
+
+    function fitStage() {
+        var stage = document.getElementById("wut-cafe-stage");
+        var doc = document.documentElement || {};
+        var width = window.innerWidth || doc.clientWidth || BASE_WIDTH;
+        var height = window.innerHeight || doc.clientHeight || BASE_HEIGHT;
+        var scale = Math.min(width / BASE_WIDTH, height / BASE_HEIGHT);
+
+        if (!stage || !stage.style) {
+            return;
+        }
+
+        if (scale > 1) {
+            scale = 1;
+        }
+
+        if (!scale || scale < .1) {
+            scale = 1;
+        }
+
+        stage.style.webkitTransform = "scale(" + scale + ")";
+        stage.style.transform = "scale(" + scale + ")";
+        stage.setAttribute("data-wut-layout-scale", String(scale));
+    }
 
     function addClass(element, name) {
         if (!element) {
@@ -83,6 +109,30 @@
             new RegExp("\\s*" + name, "g"),
             ""
         );
+    }
+
+    function playNativeSound(name, mode, onceKey) {
+        var sound;
+
+        try {
+            if (typeof window.wutPlayMiiverseSound === "function") {
+                return window.wutPlayMiiverseSound(name, mode, onceKey);
+            }
+
+            sound = window.wiiuSound;
+
+            if (!sound && typeof wiiuSound !== "undefined") {
+                sound = wiiuSound;
+            }
+
+            if (sound && typeof sound.playSoundByName === "function") {
+                sound.playSoundByName(name, mode);
+                return true;
+            }
+        }
+        catch (ignore) {}
+
+        return false;
     }
 
     function emit(name, detail) {
@@ -235,6 +285,9 @@
 
         applySkillSelection();
 
+        /* Native Miiverse confirmation sound for the selected play style. */
+        playNativeSound("SE_OLV_OK", 1);
+
         if (window.console && console.log) {
             console.log("[WUT:FIRSTRUN] Game experience: " + name);
         }
@@ -283,6 +336,14 @@
         setControl("wut-setup-next", steps[current].right);
         showSkillControls(gameStep);
         applySkillSelection();
+
+        if (steps[current].name === "finish") {
+            playNativeSound(
+                "JGL_OLV_INIT_END",
+                3,
+                "firstrun-finish-jingle"
+            );
+        }
 
         if (
             window.WUTPortalNav &&
@@ -353,13 +414,57 @@
     function finish(source) {
         var stage = document.getElementById("wut-cafe-stage");
         var copy = document.getElementById("wut-finish-copy");
+        var sessionState = null;
         var persisted = false;
+        var search = (
+            window.location && window.location.search ?
+            window.location.search :
+            ""
+        );
+        var portalUrl = "cafe-olv-portal.html" + search;
+
+        if (
+            window.WUTSession &&
+            typeof window.WUTSession.getState === "function"
+        ) {
+            sessionState = window.WUTSession.getState();
+        }
+
+        /*
+         * On the real Miiverse applet we never force the user through the old
+         * manual Mii Link form. Native Inkay identity is the preferred path;
+         * if it is temporarily unavailable the portal can still open with its
+         * placeholder Mii while diagnostics remain available separately.
+         *
+         * Off-device browser testing keeps mii-link.html as a debug fallback.
+         */
+        if (
+            (!sessionState || !sessionState.miiRenderable) &&
+            (!sessionState || !sessionState.consoleContext)
+        ) {
+            portalUrl = "mii-link.html";
+        }
 
         if (complete) {
             return;
         }
 
         complete = true;
+
+        /*
+         * Native transition audio. SE_WAVE_MENU accompanies Start.
+         * BGM_OLV_MAIN is only requested when we are actually entering the
+         * Cafe OLV portal; Mii Link keeps the First Run audio context.
+         */
+        playNativeSound("SE_WAVE_MENU", 1);
+
+        if (portalUrl.indexOf("cafe-olv-portal.html") === 0) {
+            playNativeSound(
+                "BGM_OLV_MAIN",
+                3,
+                "firstrun-bgm-main"
+            );
+        }
 
         if (
             window.WUTSession &&
@@ -373,9 +478,11 @@
         }
 
         if (copy) {
-            copy.innerHTML =
-                "Setup saved. WUT can now reuse your Game Experience " +
-                "when the Portal Home is connected.";
+            copy.innerHTML = (
+                portalUrl.indexOf("cafe-olv-portal.html") === 0
+            ) ?
+                "Setup saved. Opening Cafe OLV Portal..." :
+                "Setup saved. Opening Mii Link debug tool...";
         }
 
         setControl("wut-setup-close", null);
@@ -401,7 +508,16 @@
         });
 
         if (window.console && console.log) {
-            console.log("[WUT:FIRSTRUN] Setup complete; profile state persisted");
+            console.log("[WUT:FIRSTRUN] Setup complete; opening Cafe OLV Portal");
+        }
+
+        if (typeof window.setTimeout === "function" && window.location) {
+            window.setTimeout(
+                function () {
+                    window.location.href = portalUrl;
+                },
+                180
+            );
         }
     }
 
@@ -470,13 +586,15 @@
 
         if (copy) {
             copy.innerHTML =
-                "Select Start to save this setup for WUT-Miiverse.";
+                "Select Start to save this setup and connect your Mii.";
         }
 
         showStep(0);
     }
 
     if (window.addEventListener) {
+        window.addEventListener("resize", fitStage, false);
+
         window.addEventListener(
             "wut:session-ready",
             function () {
@@ -502,6 +620,7 @@
         back: back,
         scroll: scrollManners,
         showStep: showStep,
+        fitStage: fitStage,
         selectSkill: selectSkill,
 
         getState: function () {
@@ -518,6 +637,7 @@
     };
 
     function boot() {
+        fitStage();
         start();
 
         if (

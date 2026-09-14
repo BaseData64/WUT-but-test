@@ -154,6 +154,41 @@
         }
     }
 
+    function reportBootstrap(worked) {
+        var state;
+
+        if (!window.console || !console.log) {
+            return;
+        }
+
+        state = window.WUTSession ? window.WUTSession.getState() : {};
+
+        if (worked && state.nativeIdentityAccepted && state.miiRenderable) {
+            console.log("[WUT:IDENTITY] Native Wii U account + Mii received automatically.");
+        }
+        else if (worked && state.identityResolved && state.miiRenderable) {
+            console.log("[WUT:IDENTITY] Linked identity and Mii render source ready.");
+        }
+        else if (worked && state.serviceTokenPresent && state.paramPackPresent) {
+            console.log("[WUT:IDENTITY] Miiverse applet headers detected by server.");
+        }
+        else if (worked) {
+            console.log("[WUT:IDENTITY] Bootstrap ready; no resolved console identity yet.");
+        }
+        else {
+            console.log("[WUT:IDENTITY] PHP bootstrap unavailable; local setup mode active.");
+        }
+    }
+
+    function refresh(callback) {
+        fetchBootstrap(function (worked) {
+            reportBootstrap(worked);
+            if (typeof callback === "function") {
+                callback(worked);
+            }
+        });
+    }
+
     function start() {
         /*
          * Apply body data immediately so a future PHP-rendered portal can boot
@@ -161,29 +196,20 @@
          */
         apply(bodyFallback(), "body-fallback");
 
-        fetchBootstrap(function (worked) {
-            var state;
-
-            if (window.console && console.log) {
-                state = window.WUTSession ? window.WUTSession.getState() : {};
-
-                if (worked && state.serviceTokenPresent && state.paramPackPresent) {
-                    console.log("[WUT:IDENTITY] Miiverse applet headers detected by server.");
-                }
-                else if (worked) {
-                    console.log("[WUT:IDENTITY] Bootstrap ready; no resolved console identity yet.");
-                }
-                else {
-                    console.log("[WUT:IDENTITY] PHP bootstrap unavailable; local setup mode active.");
-                }
-            }
-        });
+        refresh();
     }
 
     window.WUTIdentity = {
         start: start,
+        refresh: refresh,
         bootstrapUrl: bootstrapUrl
     };
+
+    /* A future link screen only needs to complete its server request and emit
+     * this event. WUT then refreshes the session and every bound Mii image. */
+    window.addEventListener("wut:account-linked", function () {
+        refresh();
+    }, false);
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", start, false);

@@ -1263,3 +1263,3003 @@
         line-height: 68px;
     }
 }
+
+/* ============================================================
+   WUT-MIIVERSE — REAL GAMEPAD / 1280 x 720 LOGICAL FIRST RUN
+   ============================================================
+
+   This pass deliberately mirrors WUT's portal runtime instead of hand-
+   converting every Miiverse pixel to an 854px browser layout.
+
+   - Logical UI canvas: 1280 x 720 (Miiverse portal geometry)
+   - Runtime scale: handled by olv_setup.js, same model as olv_portal.js
+   - On an 854 x 480 GamePad viewport the scale is 2/3
+   - Welcome card dimensions are based on Makii's Makiiverse prototype:
+       520px content + 25px padding per side on an 854px canvas
+     multiplied by 1.5 => 855px outer width on the 1280px canvas.
+   - Old WebKit only: no flexbox, grid, CSS variables, or animations.
+   ============================================================ */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #bccb68;
+    -webkit-text-size-adjust: none;
+}
+
+#wut-cafe-stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 1280px;
+    max-width: none;
+    height: 720px;
+    min-height: 720px;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+
+    background-color: #bccb68;
+    background-image: url("../res/olv/wut-firstrun-bg.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+#wut-cafe-stage:before {
+    left: 0;
+    right: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+.wut-view,
+.wut-step {
+    width: 1280px;
+    height: 720px;
+}
+
+/* The old prototype did not present itself as a numbered wizard. */
+.wut-step-kicker {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+   WELCOME — proportions taken directly from Makii's prototype
+   ------------------------------------------------------------ */
+
+.wut-hero-window {
+    top: 30px;
+    left: 50%;
+
+    width: 855px;
+    height: 525px;
+
+    margin-left: -427px;
+
+    background: #ffffff;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        from(#ffffff),
+        color-stop(.88, #ffffff),
+        to(#f4f4f1)
+    );
+
+    border: 2px solid #c7cac3;
+
+    border-radius: 38px;
+    -webkit-border-radius: 38px;
+
+    box-shadow: 0 15px 38px rgba(0,0,0,.18);
+    -webkit-box-shadow: 0 15px 38px rgba(0,0,0,.18);
+
+    overflow: hidden;
+}
+
+.wut-hero-window .wut-window-body {
+    width: 100%;
+    height: 100%;
+
+    padding: 38px 38px 0;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    text-align: center;
+}
+
+.wut-hero-window .wut-welcome-title {
+    position: static;
+
+    margin: 7px 0 22px;
+    padding: 0;
+
+    color: #5ac800;
+
+    font-size: 39px;
+    line-height: 47px;
+    font-weight: bold;
+    letter-spacing: 0;
+
+    text-align: center;
+    text-shadow: none;
+}
+
+.wut-hero-window .wut-welcome-title:after {
+    display: none;
+    content: none;
+}
+
+.wut-hero-window .wut-hero-copy {
+    position: relative;
+
+    width: 780px;
+
+    margin: 0 auto;
+
+    color: #3f3f3f;
+
+    font-size: 27px;
+    line-height: 40px;
+    font-weight: normal;
+
+    text-align: left;
+    text-shadow: none;
+
+    z-index: 3;
+}
+
+.wut-hero-window .wut-hero-art-stage {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 630px;
+    height: 255px;
+
+    margin-left: -315px;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+.wut-hero-window .wut-hero-art {
+    position: absolute;
+
+    left: 50%;
+    bottom: -1px;
+
+    width: 630px;
+    height: auto;
+
+    max-width: 630px;
+    max-height: 255px;
+
+    margin-left: -315px;
+}
+
+/* ------------------------------------------------------------
+   ABOUT — same compact presentation language as Makii's page 2
+   ------------------------------------------------------------ */
+
+.wut-about-window {
+    top: 30px;
+    left: 50%;
+
+    width: 855px;
+    height: 525px;
+
+    margin-left: -427px;
+
+    border-radius: 38px;
+    -webkit-border-radius: 38px;
+}
+
+.wut-about-window .wut-window-body {
+    padding: 38px 45px 22px;
+}
+
+.wut-about-window .wut-welcome-title {
+    margin: 7px 0 20px;
+
+    color: #5ac800;
+
+    font-size: 39px;
+    line-height: 47px;
+
+    text-shadow: none;
+}
+
+.wut-about-copy {
+    width: 760px;
+
+    margin: 0 auto;
+
+    color: #3f3f3f;
+
+    font-size: 25px;
+    line-height: 35px;
+    font-weight: normal;
+
+    text-align: left;
+    text-shadow: none;
+}
+
+.wut-about-art {
+    width: auto;
+    height: auto;
+
+    max-width: 330px;
+    max-height: 150px;
+
+    margin: 17px auto 10px;
+}
+
+.wut-about-copy-lower {
+    margin-top: 5px;
+
+    font-size: 23px;
+    line-height: 32px;
+}
+
+/* ------------------------------------------------------------
+   MANNERS — wider document view, based on Makii's long page
+   ------------------------------------------------------------ */
+
+.wut-manners-window {
+    top: 20px;
+    bottom: auto;
+    left: 50%;
+
+    width: 1050px;
+    height: 590px;
+
+    margin-left: -525px;
+
+    border-radius: 26px;
+    -webkit-border-radius: 26px;
+}
+
+.wut-manners-heading {
+    top: 20px;
+    left: 38px;
+    right: 38px;
+}
+
+.wut-manners-heading .wut-welcome-title {
+    position: static;
+
+    color: #323232;
+
+    font-size: 34px;
+    line-height: 42px;
+
+    text-shadow: none;
+}
+
+.wut-manners-heading p {
+    position: static;
+
+    margin-top: 3px;
+
+    font-size: 18px;
+    line-height: 23px;
+}
+
+.wut-manners-scroll {
+    top: 100px;
+    left: 32px;
+    right: 32px;
+    bottom: 36px;
+
+    padding: 5px 14px 27px 5px;
+}
+
+.wut-manners-intro {
+    margin: 0 10px 17px;
+
+    font-size: 19px;
+    line-height: 26px;
+}
+
+.wut-manner-card {
+    margin-bottom: 19px;
+
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+
+.wut-manner-card h2 {
+    padding: 11px 23px;
+
+    font-size: 25px;
+    line-height: 32px;
+}
+
+.wut-manner-layout {
+    min-height: 246px;
+}
+
+.wut-manner-art-cell {
+    width: 383px;
+    padding: 14px 15px;
+}
+
+.wut-manner-art-cell img {
+    max-width: 353px;
+    max-height: 219px;
+}
+
+.wut-manner-copy-cell {
+    padding: 18px 30px 18px 12px;
+
+    font-size: 21px;
+    line-height: 29px;
+    font-weight: normal;
+}
+
+.wut-manner-layout-wide-art .wut-manner-art-cell {
+    width: 428px;
+}
+
+.wut-manner-layout-wide-art .wut-manner-art-cell img {
+    max-width: 398px;
+    max-height: 188px;
+}
+
+.wut-manner-layout-small-art .wut-manner-art-cell {
+    width: 285px;
+}
+
+.wut-manner-layout-small-art .wut-manner-art-cell img {
+    max-width: 233px;
+    max-height: 203px;
+}
+
+.wut-manners-agreement {
+    margin: 29px 33px 6px;
+    padding: 20px 24px;
+
+    font-size: 21px;
+    line-height: 29px;
+}
+
+.wut-scroll-hint {
+    right: 30px;
+    bottom: 9px;
+
+    font-size: 14px;
+    line-height: 18px;
+}
+
+/* ------------------------------------------------------------
+   GAME EXPERIENCE — Miiverse portal-sized card
+   ------------------------------------------------------------ */
+
+.wut-game-window,
+.wut-ready-window {
+    top: 30px;
+    left: 50%;
+
+    width: 940px;
+    height: 540px;
+
+    margin-left: -470px;
+
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+}
+
+.wut-game-window .wut-window-body,
+.wut-ready-window .wut-window-body {
+    padding: 34px 60px 24px;
+}
+
+.wut-game-window .wut-welcome-title,
+.wut-ready-window .wut-welcome-title {
+    margin: 0 0 17px;
+
+    color: #5ac800;
+
+    font-size: 38px;
+    line-height: 46px;
+
+    text-shadow: none;
+}
+
+.wut-game-copy,
+.wut-ready-copy {
+    width: 800px;
+
+    margin: 0 auto;
+
+    font-size: 27px;
+    line-height: 37px;
+    font-weight: normal;
+
+    text-align: left;
+}
+
+.wut-skill-list {
+    margin-top: 24px;
+}
+
+.wut-skill-slot {
+    width: 265px;
+}
+
+.wut-skill-option {
+    width: 237px;
+    height: 168px;
+
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
+
+.wut-skill-option img {
+    max-width: 120px;
+    max-height: 95px;
+    margin-top: 15px;
+}
+
+.wut-skill-option span {
+    font-size: 21px;
+    line-height: 27px;
+}
+
+.wut-skill-hint {
+    margin-top: 12px;
+
+    font-size: 17px;
+    line-height: 23px;
+}
+
+.wut-ready-art {
+    width: auto;
+    height: auto;
+
+    max-width: 600px;
+    max-height: 285px;
+
+    bottom: 0;
+}
+
+/* ------------------------------------------------------------
+   FINISH — use Makii's welcome8-3 as the page's hero artwork
+   ------------------------------------------------------------ */
+
+.wut-finish-window {
+    top: 30px;
+    left: 50%;
+
+    width: 940px;
+    height: 560px;
+
+    margin-left: -470px;
+
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+}
+
+.wut-finish-art {
+    width: 940px;
+    height: 560px;
+    max-width: 940px;
+    max-height: 560px;
+}
+
+.wut-finish-copy-wrap {
+    top: 155px;
+    left: 200px;
+    right: 200px;
+
+    padding: 14px 18px;
+
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
+
+.wut-finish-copy-wrap .wut-welcome-title {
+    color: #5ac800;
+
+    font-size: 34px;
+    line-height: 42px;
+}
+
+.wut-finish-copy {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+/* ------------------------------------------------------------
+   BOTTOM ACTIONS — native 1280px portal geometry
+   ------------------------------------------------------------ */
+
+.wut-corner-button,
+.wut-corner-button-left,
+.wut-corner-button-right {
+    bottom: 0;
+
+    width: 290px;
+    min-width: 290px;
+    height: 100px;
+
+    font-size: 28px;
+    line-height: 100px;
+
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.wut-corner-button-left {
+    left: 0;
+    right: auto;
+
+    padding: 0 36px 0 25px;
+
+    border-radius: 0 80px 0 0;
+    -webkit-border-radius: 0 80px 0 0;
+}
+
+.wut-corner-button-right {
+    left: auto;
+    right: 0;
+
+    padding: 0 25px 0 36px;
+
+    border-radius: 80px 0 0 0;
+    -webkit-border-radius: 80px 0 0 0;
+}
+
+.wut-action-label {
+    line-height: 100px;
+}
+
+.wut-action-icon {
+    height: 100px;
+}
+
+/* Restore the original Portal symbol sizes on the 1280px logical canvas. */
+#wut-setup-close[data-wut-action="close"] .wut-action-icon {
+    width: 45px;
+    margin-right: 11px;
+    -webkit-background-size: 32px 34px;
+    background-size: 32px 34px;
+}
+
+#wut-setup-close[data-wut-action="back"] .wut-action-icon {
+    width: 70px;
+    margin-right: 6px;
+    -webkit-background-size: 64px 40px;
+    background-size: 64px 40px;
+}
+
+#wut-setup-next[data-wut-action="next"] .wut-action-icon,
+#wut-setup-next[data-wut-action="accept"] .wut-action-icon,
+#wut-setup-next[data-wut-action="start"] .wut-action-icon {
+    width: 56px;
+    margin-right: 8px;
+    -webkit-background-size: 37px 36px;
+    background-size: 37px 36px;
+}
+
+.wut-corner-button.wut-focused {
+    border-width: 5px !important;
+
+    box-shadow:
+        0 0 0 5px #087db5,
+        inset 0 0 0 999px rgba(0,174,255,.12),
+        inset 0 2px 0 rgba(255,255,255,.72) !important;
+
+    -webkit-box-shadow:
+        0 0 0 5px #087db5,
+        inset 0 0 0 999px rgba(0,174,255,.12),
+        inset 0 2px 0 rgba(255,255,255,.72) !important;
+}
+/* ============================================================
+   WUT FIRST RUN — EARLY Wii U / SOCIAL CONCEPT DEMO PASS
+   This layer intentionally stays compatible with old Cafe WebKit.
+   No flexbox/grid; presentation is built with absolute positioning,
+   inline-block and table-like layout patterns.
+   ============================================================ */
+
+/* Kill the legacy 68px pseudo header/divider on every setup window.
+   That strip is the green line that was crossing the title. */
+.wut-welcome-window:before,
+.wut-manners-window:before {
+    display: none !important;
+    content: none !important;
+    border: 0 !important;
+    height: 0 !important;
+}
+
+/* The old title divider is also removed for this demonstrable beta pass. */
+.wut-welcome-title:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Reuse the subtle Miiverse dot texture as the actual panel surface. */
+.wut-welcome-window,
+.wut-manners-window {
+    background-color: #fbfcfa;
+    background-image: url("../res/olv/bg-gray-dot.png");
+    background-repeat: repeat;
+}
+
+/* Keep the small family/M mark, but make it a watermark-like corner mark. */
+.wut-welcome-window:after,
+.wut-manners-window:after {
+    top: 22px;
+    left: 28px;
+    opacity: .92;
+}
+
+.wut-beta-window .wut-window-body,
+.wut-beta-ready-window .wut-window-body {
+    position: relative;
+    padding-top: 29px;
+}
+
+.wut-beta-topline {
+    position: relative;
+    height: 29px;
+    margin: 0 0 8px 0;
+    padding-left: 76px;
+    padding-right: 4px;
+
+    color: #6d756a;
+    font-size: 14px;
+    line-height: 29px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-align: left;
+}
+
+.wut-beta-badge {
+    display: inline-block;
+    color: #5a9f27;
+}
+
+.wut-beta-build {
+    float: right;
+    color: #9aa296;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* ------------------------------------------------------------
+   SCREEN 02 — SOCIAL CONCEPT BOARD
+   ------------------------------------------------------------ */
+
+.wut-about-window.wut-beta-window {
+    top: 24px;
+    width: 940px;
+    height: 555px;
+    margin-left: -470px;
+}
+
+.wut-about-window.wut-beta-window .wut-window-body {
+    padding: 26px 42px 24px;
+}
+
+.wut-about-window.wut-beta-window .wut-welcome-title {
+    margin: 0 0 8px;
+    color: #4bbd00;
+    font-size: 38px;
+    line-height: 43px;
+    text-align: center;
+}
+
+.wut-beta-lead {
+    width: 770px;
+    margin: 0 auto 12px;
+    color: #515851;
+    font-size: 21px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.wut-beta-demo-board {
+    position: relative;
+    width: 820px;
+    height: 286px;
+    margin: 8px auto 0;
+
+    background: rgba(255,255,255,.78);
+    border: 2px solid #d2d7cf;
+    border-radius: 22px;
+    -webkit-border-radius: 22px;
+
+    box-shadow: inset 0 1px 0 #ffffff, 0 4px 12px rgba(68,77,56,.12);
+    -webkit-box-shadow: inset 0 1px 0 #ffffff, 0 4px 12px rgba(68,77,56,.12);
+
+    overflow: hidden;
+}
+
+.wut-beta-community-tag {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+
+    padding: 7px 12px 6px;
+    color: #ffffff;
+    background: #6bc826;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.wut-beta-about-art {
+    position: absolute;
+    left: 44px;
+    bottom: 17px;
+    width: 345px;
+    max-height: 190px;
+}
+
+.wut-beta-message {
+    position: absolute;
+    left: 425px;
+    width: 340px;
+    min-height: 48px;
+    padding: 10px 14px 9px;
+
+    color: #555c54;
+    background: #ffffff;
+    border: 1px solid #cfd5cc;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+
+    box-shadow: 0 2px 5px rgba(52,62,45,.10);
+    -webkit-box-shadow: 0 2px 5px rgba(52,62,45,.10);
+
+    font-size: 15px;
+    line-height: 18px;
+    text-align: left;
+}
+
+.wut-beta-message b {
+    display: block;
+    margin-bottom: 3px;
+    color: #16afc0;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.wut-beta-message span {
+    display: block;
+}
+
+.wut-beta-message-one { top: 28px; }
+.wut-beta-message-two { top: 108px; }
+.wut-beta-message-three { top: 188px; }
+
+.wut-beta-flow {
+    margin-top: 10px;
+    color: #687167;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.wut-beta-flow span {
+    display: inline-block;
+    padding: 3px 13px;
+    background: rgba(255,255,255,.62);
+    border: 1px solid #d7dbd4;
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+}
+
+.wut-beta-flow em {
+    display: inline-block;
+    margin: 0 8px;
+    color: #55c30c;
+    font-size: 25px;
+    font-style: normal;
+    vertical-align: -2px;
+}
+
+/* ------------------------------------------------------------
+   SCREEN 03 — THREE-CARD COMMUNITY CHECK
+   ------------------------------------------------------------ */
+
+.wut-beta-manners-window {
+    top: 24px;
+    width: 1030px;
+    height: 575px;
+    margin-left: -515px;
+}
+
+.wut-beta-manners-window .wut-manners-heading {
+    top: 24px;
+    left: 42px;
+    right: 42px;
+}
+
+.wut-beta-manners-window .wut-manners-heading .wut-beta-topline {
+    padding-left: 72px;
+}
+
+.wut-beta-manners-window .wut-manners-heading .wut-welcome-title {
+    margin: 1px 0 2px;
+    color: #4bbd00;
+    font-size: 34px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.wut-beta-manners-window .wut-manners-heading p {
+    margin: 0;
+    color: #626a60;
+    font-size: 17px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.wut-beta-rule-strip {
+    top: 132px;
+    left: 34px;
+    right: 34px;
+    bottom: 28px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.wut-beta-rule-card {
+    position: relative;
+    display: inline-block;
+    width: 286px;
+    height: 330px;
+    margin: 2px 8px 0;
+    padding: 14px 14px 12px;
+
+    color: #555c54;
+    background: rgba(255,255,255,.82);
+    border: 1px solid #cdd3ca;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    box-shadow: 0 4px 9px rgba(51,61,44,.11), inset 0 1px 0 #ffffff;
+    -webkit-box-shadow: 0 4px 9px rgba(51,61,44,.11), inset 0 1px 0 #ffffff;
+
+    vertical-align: top;
+    text-align: center;
+}
+
+.wut-beta-rule-number {
+    position: absolute;
+    top: 11px;
+    left: 12px;
+    width: 35px;
+    height: 25px;
+
+    color: #ffffff;
+    background: #18b8c8;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: bold;
+}
+
+.wut-beta-rule-card img {
+    display: block;
+    max-width: 238px;
+    max-height: 150px;
+    margin: 14px auto 8px;
+}
+
+.wut-beta-rule-card h2 {
+    margin: 5px 0 5px;
+    padding: 0;
+    color: #4da90f;
+    background: transparent;
+    border: 0;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.wut-beta-rule-card p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.wut-beta-accept-note {
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    width: 520px;
+    margin: 0 0 0 -260px;
+    padding: 0;
+    color: #7b8378;
+    background: transparent;
+    border: 0;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.wut-scroll-hint {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+   SCREEN 04 — PLAYER PROFILE / CHOICE
+   ------------------------------------------------------------ */
+
+.wut-game-window {
+    background-color: #fbfcfa;
+    background-image: url("../res/olv/bg-gray-dot.png");
+}
+
+.wut-game-window .wut-welcome-title {
+    color: #4bbd00;
+}
+
+/* ------------------------------------------------------------
+   SCREEN 05 — PLAZA READY PREVIEW
+   ------------------------------------------------------------ */
+
+.wut-beta-ready-window {
+    top: 25px;
+    width: 940px;
+    height: 555px;
+    margin-left: -470px;
+}
+
+.wut-beta-ready-window .wut-window-body {
+    padding: 26px 42px 20px;
+}
+
+.wut-beta-ready-window .wut-welcome-title {
+    margin: 0 0 8px;
+    color: #4bbd00;
+    font-size: 37px;
+    line-height: 43px;
+    text-align: center;
+}
+
+.wut-beta-ready-copy {
+    position: absolute;
+    top: 125px;
+    left: 54px;
+    width: 430px;
+    color: #50584e;
+    text-align: left;
+}
+
+.wut-beta-ready-copy p {
+    margin: 0 0 18px;
+    font-size: 21px;
+    line-height: 29px;
+}
+
+.wut-beta-status-row span {
+    display: block;
+    width: 330px;
+    margin: 0 0 8px;
+    padding: 8px 12px;
+    color: #626a60;
+    background: rgba(255,255,255,.76);
+    border: 1px solid #d3d8d0;
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    letter-spacing: .8px;
+}
+
+.wut-beta-status-row b {
+    display: inline-block;
+    width: 35px;
+    color: #15b3c3;
+}
+
+.wut-beta-ready-art {
+    position: absolute;
+    right: 42px;
+    bottom: 28px;
+    width: 410px;
+    max-width: 410px;
+    max-height: 315px;
+}
+
+.wut-beta-live-dot {
+    position: absolute;
+    left: 54px;
+    bottom: 32px;
+    color: #68a83b;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.wut-beta-live-dot i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 7px;
+    background: #65ce19;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    vertical-align: -1px;
+}
+
+/* ------------------------------------------------------------
+   SCREEN 06 — DEMO END CARD
+   ------------------------------------------------------------ */
+
+.wut-beta-finish-window {
+    background-color: #fbfcfa;
+    background-image: url("../res/olv/bg-gray-dot.png");
+}
+
+.wut-beta-finish-window .wut-finish-art {
+    opacity: .95;
+}
+
+.wut-beta-finish-center {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    width: 540px;
+    margin-left: -270px;
+    padding: 22px 25px 20px;
+
+    background: rgba(255,255,255,.88);
+    border: 1px solid #d2d7cf;
+    border-radius: 22px;
+    -webkit-border-radius: 22px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    box-shadow: 0 6px 18px rgba(55,64,48,.14);
+    -webkit-box-shadow: 0 6px 18px rgba(55,64,48,.14);
+
+    text-align: center;
+}
+
+.wut-beta-preview-stamp {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 6px 11px;
+    color: #ffffff;
+    background: #18b6c7;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    letter-spacing: 1.3px;
+}
+
+.wut-beta-finish-center .wut-welcome-title {
+    margin: 0 0 7px;
+    color: #4bbd00;
+    font-size: 39px;
+    line-height: 45px;
+}
+
+.wut-beta-finish-center .wut-finish-copy {
+    position: static;
+    width: auto;
+    margin: 0;
+    color: #555d53;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+}
+
+/* Prevent the older finish copy container from appearing behind our center card. */
+.wut-beta-finish-window .wut-finish-copy-wrap {
+    display: none;
+}
+/* ============================================================
+   WUT BETA DEMO — SCREEN 04 / PLAYER PROFILE LAB
+   Demonstrable early-Wii-U-style concept screen.
+
+   Important:
+   - Keeps the existing skill button IDs/actions.
+   - No JS changes are required.
+   - Uses old WebKit-friendly block/absolute layout.
+   - Built on the 1280x720 logical WUT stage.
+   ============================================================ */
+
+.wut-beta-player-window {
+    top: 24px;
+    left: 50%;
+
+    width: 980px;
+    height: 570px;
+
+    margin-left: -490px;
+
+    overflow: hidden;
+
+    background-color: #f8faf6;
+    background-image: url("../res/olv/bg-gray-dot.png");
+    background-repeat: repeat;
+
+    border-radius: 28px;
+    -webkit-border-radius: 28px;
+
+    box-shadow:
+        0 13px 34px rgba(35,58,22,.22),
+        inset 0 1px 0 rgba(255,255,255,.95);
+
+    -webkit-box-shadow:
+        0 13px 34px rgba(35,58,22,.22),
+        inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.wut-beta-player-window:before {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-beta-player-window .wut-window-body {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.wut-player-topline {
+    position: absolute;
+    top: 21px;
+    left: 33px;
+    right: 33px;
+
+    height: 30px;
+
+    margin: 0;
+
+    z-index: 8;
+}
+
+.wut-player-heading {
+    position: absolute;
+    top: 72px;
+    left: 54px;
+
+    width: 872px;
+
+    text-align: left;
+}
+
+.wut-player-overline {
+    margin: 0 0 2px;
+
+    color: #8b9686;
+
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: bold;
+    letter-spacing: 1.4px;
+
+    text-align: center;
+}
+
+.wut-beta-player-window .wut-welcome-title {
+    margin: 0;
+
+    color: #4fc600;
+
+    font-size: 36px;
+    line-height: 43px;
+    font-weight: bold;
+
+    text-align: center;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-beta-player-window .wut-welcome-title:after {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-beta-player-window .wut-game-copy {
+    width: 690px;
+
+    margin: 6px auto 0;
+
+    color: #60675f;
+
+    font-size: 17px;
+    line-height: 23px;
+    font-weight: normal;
+
+    text-align: center;
+}
+
+.wut-player-demo {
+    position: absolute;
+    top: 190px;
+    left: 43px;
+
+    width: 894px;
+    height: 330px;
+}
+
+/* ---------------- LEFT: demo player card ---------------- */
+
+.wut-player-preview-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 338px;
+    height: 316px;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(rgba(255,255,255,.93)),
+            to(rgba(237,241,234,.93))
+        );
+
+    border: 1px solid #c9cec6;
+
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+
+    box-shadow:
+        0 4px 10px rgba(43,56,37,.13),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 4px 10px rgba(43,56,37,.13),
+        inset 0 1px 0 #ffffff;
+}
+
+.wut-player-preview-label,
+.wut-player-choice-label {
+    position: absolute;
+    top: 15px;
+    left: 18px;
+
+    color: #879080;
+
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    letter-spacing: 1.25px;
+}
+
+.wut-player-preview-card {
+    position: absolute;
+    top: 48px;
+    left: 17px;
+
+    width: 302px;
+    height: 137px;
+
+    background-color: #ffffff;
+    background-image:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            to(#f1f4ef)
+        );
+
+    border: 2px solid #b8c0b4;
+
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+
+    box-shadow:
+        inset 0 1px 0 #ffffff,
+        0 2px 5px rgba(42,53,38,.12);
+
+    -webkit-box-shadow:
+        inset 0 1px 0 #ffffff,
+        0 2px 5px rgba(42,53,38,.12);
+}
+
+.wut-player-preview-card:before {
+    display: block;
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 9px;
+
+    background: #64ce27;
+
+    border-radius: 14px 0 0 14px;
+    -webkit-border-radius: 14px 0 0 14px;
+}
+
+.wut-player-preview-avatar {
+    position: absolute;
+    top: 19px;
+    left: 25px;
+
+    width: 82px;
+    height: 82px;
+
+    background: #f4f6f2;
+
+    border: 1px solid #d1d5ce;
+
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+
+    text-align: center;
+
+    overflow: hidden;
+}
+
+.wut-player-preview-avatar img {
+    width: 78px;
+    height: 78px;
+
+    margin-top: 2px;
+}
+
+.wut-player-preview-info {
+    position: absolute;
+    top: 24px;
+    left: 123px;
+
+    width: 160px;
+}
+
+.wut-player-preview-name {
+    display: block;
+
+    color: #4c544a;
+
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: bold;
+}
+
+.wut-player-preview-sub {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #949b91;
+
+    font-size: 11px;
+    line-height: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.wut-player-preview-signal {
+    position: absolute;
+    left: 123px;
+    bottom: 25px;
+
+    color: #74806e;
+
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+.wut-player-signal-dot {
+    display: inline-block;
+
+    width: 9px;
+    height: 9px;
+
+    margin-right: 6px;
+
+    background: #65d522;
+
+    border: 1px solid #51a91d;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    vertical-align: -1px;
+}
+
+.wut-player-preview-note {
+    position: absolute;
+    top: 202px;
+    left: 22px;
+
+    width: 292px;
+
+    color: #777f74;
+
+    font-size: 13px;
+    line-height: 18px;
+
+    text-align: left;
+}
+
+.wut-player-demo-meter {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 20px;
+
+    height: 30px;
+}
+
+.wut-player-demo-meter-label {
+    float: left;
+
+    width: 92px;
+
+    color: #91988e;
+
+    font-size: 10px;
+    line-height: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.wut-player-demo-meter-track {
+    display: block;
+
+    margin-left: 94px;
+
+    padding-top: 6px;
+}
+
+.wut-player-demo-meter-track i {
+    display: inline-block;
+
+    width: 55px;
+    height: 9px;
+
+    margin-right: 5px;
+
+    background: #dce1d8;
+
+    border: 1px solid #c8cec4;
+
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+.wut-player-demo-meter-track i:first-child {
+    background: #74d43d;
+    border-color: #5ebc2c;
+}
+
+/* ---------------- RIGHT: selection console ---------------- */
+
+.wut-player-choice-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 530px;
+    height: 316px;
+
+    background: rgba(255,255,255,.42);
+
+    border: 1px solid rgba(183,193,178,.75);
+
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+}
+
+.wut-player-choice-label {
+    left: 22px;
+}
+
+.wut-player-choice-panel .wut-skill-list {
+    position: absolute;
+    top: 45px;
+    left: 18px;
+
+    width: 494px;
+    height: 218px;
+
+    margin: 0;
+}
+
+.wut-player-choice-panel .wut-skill-slot {
+    display: block;
+
+    width: 494px;
+    height: 70px;
+
+    margin: 0 0 4px;
+
+    text-align: left;
+}
+
+.wut-player-choice-panel .wut-skill-option {
+    position: relative;
+    display: block;
+
+    width: 494px;
+    height: 66px;
+
+    margin: 0;
+    padding: 0;
+
+    color: #4e574b;
+
+    background-color: #ffffff;
+    background-image:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            to(#edf1ea)
+        );
+
+    border: 2px solid #b9c0b5;
+
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+
+    box-shadow:
+        0 2px 5px rgba(36,47,32,.11),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 2px 5px rgba(36,47,32,.11),
+        inset 0 1px 0 #ffffff;
+
+    text-align: left;
+}
+
+.wut-player-choice-panel .wut-skill-option:before {
+    display: block;
+
+    top: 9px;
+    left: 0;
+
+    width: 5px;
+    height: 44px;
+
+    background: #78cf3d;
+
+    border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+}
+
+.wut-player-choice-panel #wut-skill-intermediate:before {
+    background: #25b5c6;
+}
+
+.wut-player-choice-panel #wut-skill-expert:before {
+    background: #e1a02d;
+}
+
+.wut-player-choice-panel .wut-skill-number {
+    position: absolute;
+    top: 19px;
+    left: 18px;
+
+    width: 28px;
+
+    color: #a0a79d;
+
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.wut-player-choice-panel .wut-skill-option img {
+    position: absolute;
+    top: 8px;
+    left: 60px;
+
+    width: auto;
+    height: auto;
+
+    max-width: 49px;
+    max-height: 49px;
+
+    margin: 0;
+}
+
+.wut-player-choice-panel .wut-skill-copy {
+    position: absolute;
+    top: 11px;
+    left: 128px;
+
+    width: 305px;
+
+    margin: 0;
+}
+
+.wut-player-choice-panel .wut-skill-copy b {
+    display: block;
+
+    color: #414a3f;
+
+    font-size: 17px;
+    line-height: 21px;
+    font-weight: bold;
+}
+
+.wut-player-choice-panel .wut-skill-copy em {
+    display: block;
+
+    margin-top: 1px;
+
+    color: #899087;
+
+    font-size: 11px;
+    line-height: 15px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.wut-player-choice-panel .wut-skill-option.wut-focused {
+    border: 4px solid #00b4e6;
+
+    box-shadow:
+        0 0 0 2px #087eb4,
+        inset 0 0 0 999px rgba(0,177,235,.06);
+
+    -webkit-box-shadow:
+        0 0 0 2px #087eb4,
+        inset 0 0 0 999px rgba(0,177,235,.06);
+}
+
+.wut-player-choice-panel .wut-skill-option.wut-selected {
+    background-color: #65bfe5;
+    background-image:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#8bd6f1),
+            to(#3fa6d4)
+        );
+
+    border-color: #268cb7;
+}
+
+.wut-player-choice-panel .wut-skill-option.wut-selected .wut-skill-number,
+.wut-player-choice-panel .wut-skill-option.wut-selected .wut-skill-copy b,
+.wut-player-choice-panel .wut-skill-option.wut-selected .wut-skill-copy em {
+    color: #ffffff;
+
+    text-shadow: 0 -1px 0 rgba(0,0,0,.18);
+}
+
+.wut-player-choice-panel .wut-skill-option.wut-selected:before {
+    background: rgba(255,255,255,.76);
+}
+
+.wut-player-choice-panel .wut-skill-option.wut-selected:after {
+    top: 20px;
+    right: 18px;
+
+    width: 24px;
+    height: 22px;
+}
+
+.wut-player-choice-panel .wut-skill-hint {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 14px;
+
+    margin: 0;
+
+    color: #7b8378;
+
+    font-size: 12px;
+    line-height: 17px;
+
+    text-align: center;
+}
+
+.wut-player-choice-panel .wut-skill-hint.wut-skill-ready {
+    color: #4f9a2c;
+    font-weight: bold;
+}
+/* ============================================================
+   WUT BETA DEMO — SCREEN 05 / LIVE PLAZA SOCIAL BOARD
+   A demonstrable early-Wii-U concept screen.
+   Old WebKit friendly: no grid/flex dependency.
+   ============================================================ */
+
+.wut-plaza-demo-window {
+    top: 24px;
+    left: 50%;
+
+    width: 980px;
+    height: 570px;
+
+    margin-left: -490px;
+
+    overflow: hidden;
+
+    background-color: #f8faf6;
+    background-image: url("../res/olv/bg-gray-dot.png");
+    background-repeat: repeat;
+
+    border-radius: 28px;
+    -webkit-border-radius: 28px;
+
+    box-shadow:
+        0 13px 34px rgba(35,58,22,.22),
+        inset 0 1px 0 rgba(255,255,255,.95);
+
+    -webkit-box-shadow:
+        0 13px 34px rgba(35,58,22,.22),
+        inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.wut-plaza-demo-window:before {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-plaza-demo-window .wut-window-body {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.wut-plaza-topline {
+    position: absolute;
+    top: 21px;
+    left: 33px;
+    right: 33px;
+
+    height: 30px;
+
+    margin: 0;
+
+    z-index: 20;
+}
+
+.wut-plaza-heading {
+    position: absolute;
+    top: 66px;
+    left: 52px;
+
+    width: 876px;
+
+    text-align: center;
+}
+
+.wut-plaza-overline {
+    margin: 0 0 1px;
+
+    color: #8d9788;
+
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.wut-plaza-demo-window .wut-welcome-title {
+    margin: 0;
+
+    color: #4fc600;
+
+    font-size: 35px;
+    line-height: 41px;
+    font-weight: bold;
+
+    text-align: center;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-plaza-demo-window .wut-welcome-title:after {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-plaza-lead {
+    width: 680px;
+
+    margin: 4px auto 0;
+
+    color: #667064;
+
+    font-size: 15px;
+    line-height: 20px;
+
+    text-align: center;
+}
+
+.wut-plaza-demo {
+    position: absolute;
+    top: 182px;
+    left: 34px;
+
+    width: 912px;
+    height: 294px;
+}
+
+/* ---------------- CURRENT GAME ---------------- */
+
+.wut-plaza-game-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 244px;
+    height: 286px;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(rgba(255,255,255,.96)),
+            to(rgba(236,241,232,.96))
+        );
+
+    border: 1px solid #c6cec2;
+
+    border-radius: 19px;
+    -webkit-border-radius: 19px;
+
+    box-shadow:
+        0 4px 10px rgba(45,60,39,.13),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 4px 10px rgba(45,60,39,.13),
+        inset 0 1px 0 #ffffff;
+
+    text-align: center;
+}
+
+.wut-plaza-card-label {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+
+    color: #8e978a;
+
+    font-size: 11px;
+    line-height: 15px;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+}
+
+.wut-plaza-game-disc {
+    position: absolute;
+    top: 43px;
+    left: 70px;
+
+    width: 104px;
+    height: 104px;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#88df4e),
+            to(#45b914)
+        );
+
+    border: 5px solid #ffffff;
+    border-radius: 58px;
+    -webkit-border-radius: 58px;
+
+    box-shadow:
+        0 0 0 2px #77a66d,
+        0 7px 12px rgba(62,98,50,.18),
+        inset 0 1px 0 rgba(255,255,255,.45);
+
+    -webkit-box-shadow:
+        0 0 0 2px #77a66d,
+        0 7px 12px rgba(62,98,50,.18),
+        inset 0 1px 0 rgba(255,255,255,.45);
+}
+
+.wut-plaza-game-mark {
+    display: block;
+
+    margin-top: 12px;
+
+    color: #ffffff;
+
+    font-size: 52px;
+    line-height: 58px;
+    font-weight: bold;
+
+    text-shadow: 0 -2px 0 rgba(37,108,11,.25);
+}
+
+.wut-plaza-game-code {
+    display: block;
+
+    margin-top: -7px;
+
+    color: rgba(255,255,255,.9);
+
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.wut-plaza-game-name {
+    position: absolute;
+    top: 159px;
+    left: 15px;
+    right: 15px;
+
+    color: #465144;
+
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.wut-plaza-game-sub {
+    position: absolute;
+    top: 184px;
+    left: 25px;
+    right: 25px;
+
+    color: #888f85;
+
+    font-size: 11px;
+    line-height: 15px;
+}
+
+.wut-plaza-signal-row {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 15px;
+
+    text-align: left;
+}
+
+.wut-plaza-signal-row span {
+    display: block;
+
+    height: 20px;
+
+    color: #70796d;
+
+    font-size: 9px;
+    line-height: 20px;
+    font-weight: bold;
+    letter-spacing: .9px;
+}
+
+.wut-plaza-signal-row i {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 7px;
+
+    background: #66ce2c;
+
+    border: 1px solid #53aa26;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+
+    vertical-align: 0;
+}
+
+/* ---------------- LIVE SOCIAL FLOW ---------------- */
+
+.wut-plaza-flow {
+    position: absolute;
+    top: 0;
+    left: 263px;
+
+    width: 322px;
+    height: 286px;
+}
+
+.wut-plaza-flow-line {
+    position: absolute;
+    top: 24px;
+    left: 23px;
+
+    width: 2px;
+    height: 230px;
+
+    background: #cdd5c9;
+}
+
+.wut-plaza-flow-dot {
+    position: absolute;
+    left: 18px;
+
+    width: 10px;
+    height: 10px;
+
+    background: #5ccc25;
+
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    box-shadow: 0 0 0 1px #86b871;
+    -webkit-box-shadow: 0 0 0 1px #86b871;
+
+    z-index: 4;
+}
+
+.wut-flow-dot-a { top: 40px; }
+.wut-flow-dot-b { top: 127px; background: #22b2c4; }
+.wut-flow-dot-c { top: 214px; background: #efaa20; }
+
+.wut-plaza-post {
+    position: absolute;
+    left: 43px;
+
+    width: 266px;
+    height: 70px;
+
+    padding: 10px 12px;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            to(#f1f4ef)
+        );
+
+    border: 1px solid #cbd1c7;
+
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+
+    box-shadow:
+        0 2px 6px rgba(45,57,40,.10),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 2px 6px rgba(45,57,40,.10),
+        inset 0 1px 0 #ffffff;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.wut-plaza-post-a { top: 12px; }
+.wut-plaza-post-b { top: 99px; }
+.wut-plaza-post-c { top: 186px; }
+
+.wut-plaza-post-type {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #57ae2f;
+
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+}
+
+.wut-plaza-post-b .wut-plaza-post-type {
+    color: #159eb4;
+}
+
+.wut-plaza-post-c .wut-plaza-post-type {
+    color: #d68c05;
+}
+
+.wut-plaza-post b {
+    display: block;
+
+    overflow: hidden;
+
+    color: #50594d;
+
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.wut-plaza-post-meta {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #9ba197;
+
+    font-size: 8px;
+    line-height: 10px;
+    font-weight: bold;
+    letter-spacing: .8px;
+}
+
+.wut-plaza-sketch {
+    position: relative;
+
+    width: 118px;
+    height: 20px;
+
+    margin: 0 0 1px;
+}
+
+.wut-plaza-sketch i {
+    position: absolute;
+    display: block;
+
+    width: 47px;
+    height: 3px;
+
+    background: #687067;
+
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+
+    -webkit-transform: rotate(-8deg);
+}
+
+.wut-plaza-sketch i:first-child {
+    top: 3px;
+    left: 2px;
+}
+
+.wut-plaza-sketch i:nth-child(2) {
+    top: 10px;
+    left: 30px;
+
+    width: 72px;
+
+    -webkit-transform: rotate(5deg);
+}
+
+.wut-plaza-sketch i:nth-child(3) {
+    top: 16px;
+    left: 10px;
+
+    width: 55px;
+
+    -webkit-transform: rotate(-3deg);
+}
+
+/* ---------------- CROWD / Mii SIDE ---------------- */
+
+.wut-plaza-crowd-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 309px;
+    height: 286px;
+
+    overflow: hidden;
+
+    background:
+        -webkit-gradient(
+            radial,
+            50% 45%,
+            15,
+            50% 45%,
+            180,
+            from(#ffffff),
+            color-stop(.68, #f4f8f1),
+            to(#e6eee1)
+        );
+
+    border: 1px solid #c6cec2;
+
+    border-radius: 19px;
+    -webkit-border-radius: 19px;
+
+    box-shadow:
+        0 4px 10px rgba(45,60,39,.13),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 4px 10px rgba(45,60,39,.13),
+        inset 0 1px 0 #ffffff;
+}
+
+.wut-plaza-live-tag {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+
+    height: 19px;
+    padding: 0 9px;
+
+    color: #5e6a59;
+
+    background: rgba(255,255,255,.80);
+
+    border: 1px solid #cbd2c8;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    font-size: 9px;
+    line-height: 19px;
+    font-weight: bold;
+    letter-spacing: .8px;
+
+    z-index: 10;
+}
+
+.wut-plaza-live-tag i {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 4px;
+
+    background: #61d020;
+
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+
+    vertical-align: 0;
+}
+
+.wut-plaza-crowd-ring {
+    position: absolute;
+    top: 34px;
+    left: 65px;
+
+    width: 180px;
+    height: 180px;
+
+    border: 1px solid rgba(87,179,48,.22);
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+}
+
+.wut-plaza-crowd-ring-two {
+    top: 57px;
+    left: 88px;
+
+    width: 134px;
+    height: 134px;
+
+    border-color: rgba(29,169,190,.20);
+}
+
+.wut-plaza-art {
+    position: absolute;
+    top: 53px;
+    left: 12px;
+    right: auto;
+    bottom: auto;
+
+    width: 292px;
+    max-width: 292px;
+    max-height: 194px;
+
+    margin: 0;
+
+    z-index: 5;
+}
+
+.wut-plaza-bubble {
+    position: absolute;
+
+    min-width: 38px;
+    height: 22px;
+
+    padding: 0 8px;
+
+    color: #687166;
+
+    background: rgba(255,255,255,.91);
+
+    border: 1px solid #c8d0c4;
+
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+
+    font-size: 9px;
+    line-height: 22px;
+    font-weight: bold;
+
+    text-align: center;
+
+    z-index: 8;
+}
+
+.wut-plaza-bubble-one {
+    top: 43px;
+    left: 19px;
+}
+
+.wut-plaza-bubble-two {
+    top: 37px;
+    left: 119px;
+
+    color: #159cb0;
+}
+
+.wut-plaza-bubble-three {
+    top: 63px;
+    right: 15px;
+
+    color: #68ae2f;
+}
+
+.wut-plaza-crowd-caption {
+    position: absolute;
+    left: 19px;
+    right: 19px;
+    bottom: 13px;
+
+    text-align: center;
+
+    z-index: 9;
+}
+
+.wut-plaza-crowd-caption b {
+    display: block;
+
+    color: #566151;
+
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: 1px;
+}
+
+.wut-plaza-crowd-caption span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #939a90;
+
+    font-size: 9px;
+    line-height: 12px;
+}
+
+/* ---------------- BOTTOM DEMO ROUTE ---------------- */
+
+.wut-plaza-route {
+    position: absolute;
+    left: 34px;
+    right: 34px;
+    bottom: 24px;
+
+    height: 42px;
+
+    padding: 0 14px;
+
+    background: rgba(255,255,255,.80);
+
+    border: 1px solid #ccd3c8;
+
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    color: #737c70;
+
+    font-size: 10px;
+    line-height: 40px;
+    font-weight: bold;
+    letter-spacing: .6px;
+}
+
+.wut-plaza-route span {
+    display: inline-block;
+
+    margin-right: 4px;
+}
+
+.wut-plaza-route span b {
+    margin-right: 3px;
+    color: #16aabe;
+}
+
+.wut-plaza-route > i {
+    display: inline-block;
+
+    margin: 0 7px;
+
+    color: #aeb5ab;
+
+    font-size: 19px;
+    line-height: 36px;
+    font-style: normal;
+
+    vertical-align: -2px;
+}
+
+.wut-plaza-route em {
+    float: right;
+
+    color: #5e9f37;
+
+    font-size: 10px;
+    line-height: 40px;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: .8px;
+}
+
+.wut-plaza-route em u {
+    display: inline-block;
+
+    width: 8px;
+    height: 8px;
+
+    margin-right: 6px;
+
+    background: #61ce20;
+
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+
+    text-decoration: none;
+
+    vertical-align: 0;
+}
+/* ============================================================
+   WUT BETA DEMO — SCREEN 06 / FINAL LAUNCH
+   Uses welcome8-3 as a frame around a compact central launch core.
+   Designed on the same 1280x720 logical canvas used by the applet.
+   ============================================================ */
+
+.wut-launch-window {
+    top: 31px;
+    left: 50%;
+
+    width: 900px;
+    height: 535px;
+
+    margin-left: -450px;
+
+    overflow: hidden;
+
+    background-color: #f7f9f4;
+    background-image: url("../res/olv/bg-gray-dot.png");
+    background-repeat: repeat;
+
+    border: 1px solid #c7cec2;
+
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+
+    box-shadow:
+        0 14px 36px rgba(35,55,28,.22),
+        inset 0 1px 0 rgba(255,255,255,.96);
+
+    -webkit-box-shadow:
+        0 14px 36px rgba(35,55,28,.22),
+        inset 0 1px 0 rgba(255,255,255,.96);
+}
+
+.wut-launch-window:before,
+.wut-launch-window:after {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-launch-topline {
+    position: absolute;
+    top: 20px;
+    left: 28px;
+    right: 28px;
+
+    height: 30px;
+
+    z-index: 30;
+}
+
+.wut-launch-topline .wut-beta-badge {
+    float: left;
+}
+
+.wut-launch-build {
+    float: right;
+
+    color: #98a092;
+
+    font-size: 11px;
+    line-height: 24px;
+    font-weight: bold;
+    letter-spacing: 1.15px;
+}
+
+/* Soft concentric "social signal" rings behind the center. */
+.wut-launch-radar {
+    position: absolute;
+
+    border: 1px solid rgba(83,188,44,.18);
+    border-radius: 400px;
+    -webkit-border-radius: 400px;
+
+    z-index: 1;
+}
+
+.wut-launch-radar-a {
+    top: 84px;
+    left: 239px;
+
+    width: 420px;
+    height: 420px;
+}
+
+.wut-launch-radar-b {
+    top: 128px;
+    left: 283px;
+
+    width: 330px;
+    height: 330px;
+
+    border-color: rgba(22,172,195,.16);
+}
+
+/*
+ * The source art is transparent in the center. We use it as a frame,
+ * instead of stretching it to become the whole panel.
+ */
+.wut-launch-art {
+    position: absolute;
+    top: 70px;
+    left: 62px;
+
+    width: 776px;
+    height: auto;
+
+    max-width: 776px;
+    max-height: none;
+
+    opacity: .98;
+
+    z-index: 4;
+}
+
+/* Compact "launch console" in the transparent center of the Mii artwork. */
+.wut-launch-core {
+    position: absolute;
+    top: 126px;
+    left: 50%;
+
+    width: 390px;
+    height: 292px;
+
+    margin-left: -195px;
+    padding: 18px 22px 16px;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(rgba(255,255,255,.96)),
+            to(rgba(242,246,239,.93))
+        );
+
+    border: 1px solid #c9d1c5;
+
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    box-shadow:
+        0 8px 22px rgba(44,59,38,.16),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 8px 22px rgba(44,59,38,.16),
+        inset 0 1px 0 #ffffff;
+
+    text-align: center;
+
+    z-index: 12;
+}
+
+.wut-launch-status {
+    display: inline-block;
+
+    height: 22px;
+    padding: 0 10px;
+
+    color: #64825a;
+
+    background: #f4f8f1;
+
+    border: 1px solid #c8d3c2;
+
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+
+    font-size: 9px;
+    line-height: 22px;
+    font-weight: bold;
+    letter-spacing: 1.15px;
+}
+
+.wut-launch-status-dot {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 5px;
+
+    background: #61cf21;
+
+    border: 1px solid #4faf1a;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+
+    vertical-align: 0;
+}
+
+.wut-launch-mark {
+    height: 50px;
+
+    margin: 8px 0 0;
+
+    line-height: 50px;
+}
+
+.wut-launch-mark-w {
+    color: #54c900;
+
+    font-size: 46px;
+    line-height: 50px;
+    font-weight: bold;
+
+    letter-spacing: -5px;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-launch-mark-ut {
+    margin-left: 2px;
+
+    color: #13adc2;
+
+    font-size: 22px;
+    line-height: 50px;
+    font-weight: bold;
+
+    letter-spacing: -1px;
+
+    vertical-align: 4px;
+}
+
+.wut-launch-overline {
+    margin: 0 0 1px;
+
+    color: #92998f;
+
+    font-size: 9px;
+    line-height: 13px;
+    font-weight: bold;
+    letter-spacing: 1.3px;
+}
+
+.wut-launch-core .wut-welcome-title {
+    margin: 0 0 6px;
+
+    color: #4ac200;
+
+    font-size: 31px;
+    line-height: 37px;
+    font-weight: bold;
+
+    text-align: center;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-launch-core .wut-welcome-title:after {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-launch-core .wut-finish-copy {
+    position: static;
+
+    width: 318px;
+
+    margin: 0 auto;
+
+    color: #626a60;
+
+    font-size: 14px;
+    line-height: 19px;
+
+    text-align: center;
+}
+
+.wut-launch-checks {
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #d8ddd5;
+
+    text-align: center;
+}
+
+.wut-launch-checks span {
+    display: inline-block;
+
+    margin: 0 5px;
+
+    color: #747d71;
+
+    font-size: 8px;
+    line-height: 13px;
+    font-weight: bold;
+    letter-spacing: .45px;
+}
+
+.wut-launch-checks i {
+    display: inline-block;
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 4px;
+
+    background: #64ce27;
+
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+
+    vertical-align: 1px;
+}
+
+/* Bottom information rail inside the card. */
+.wut-launch-footer {
+    position: absolute;
+    left: 27px;
+    right: 27px;
+    bottom: 19px;
+
+    height: 35px;
+    padding: 0 14px;
+
+    color: #7e877a;
+
+    background: rgba(255,255,255,.82);
+
+    border: 1px solid #cbd2c7;
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    font-size: 9px;
+    line-height: 33px;
+    font-weight: bold;
+    letter-spacing: .55px;
+
+    z-index: 20;
+}
+
+.wut-launch-route {
+    float: left;
+}
+
+.wut-launch-route b {
+    margin: 0 4px;
+
+    color: #a3aba0;
+
+    font-size: 14px;
+    font-weight: normal;
+
+    vertical-align: -1px;
+}
+
+.wut-launch-enter {
+    float: right;
+
+    color: #5d9e35;
+
+    letter-spacing: .85px;
+}
+
+.wut-launch-enter i {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 5px;
+
+    background: #63d020;
+
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+
+    vertical-align: 0;
+}
+
+/* The older beta finish card is no longer used on this screen. */
+.wut-launch-window .wut-beta-finish-center,
+.wut-launch-window .wut-finish-copy-wrap {
+    display: none !important;
+}
+/* ============================================================
+   WUT BETA DEMO — FINAL SCREEN / SIMPLE MIIVERSE STYLE
+   Intentionally minimal, based on the original Miiverse finish:
+   one rounded card, Mii artwork, one centered message, Start.
+   ============================================================ */
+
+.wut-final-simple-window {
+    top: 24px;
+    left: 50%;
+
+    width: 940px;
+    height: 560px;
+
+    margin-left: -470px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #d0d0d0;
+
+    border-radius: 28px;
+    -webkit-border-radius: 28px;
+
+    box-shadow:
+        0 7px 18px rgba(0,0,0,.18),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 7px 18px rgba(0,0,0,.18),
+        inset 0 1px 0 #ffffff;
+}
+
+.wut-final-simple-window:before,
+.wut-final-simple-window:after {
+    display: none !important;
+    content: none !important;
+}
+
+/*
+ * welcome8-3.png is already 940x560 and was made for this composition.
+ * Keep it at its native logical size instead of stretching/cropping it.
+ */
+.wut-final-simple-art {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 940px;
+    height: 560px;
+
+    max-width: none;
+    max-height: none;
+
+    margin: 0;
+
+    z-index: 1;
+}
+
+/* Clean message in the transparent center of the artwork. */
+.wut-final-simple-copy {
+    position: absolute;
+    top: 244px;
+    left: 50%;
+
+    width: 430px;
+
+    margin-left: -215px;
+
+    text-align: center;
+
+    z-index: 5;
+}
+
+.wut-final-simple-copy .wut-welcome-title {
+    margin: 0;
+
+    color: #4d4d4d;
+
+    font-size: 34px;
+    line-height: 42px;
+    font-weight: bold;
+
+    text-align: center;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-final-simple-copy .wut-welcome-title:after {
+    display: none !important;
+    content: none !important;
+}
+
+.wut-final-simple-copy .wut-finish-copy {
+    position: static;
+
+    width: auto;
+
+    margin: 8px 0 0;
+
+    color: #8a8a8a;
+
+    font-size: 14px;
+    line-height: 19px;
+
+    text-align: center;
+}
+
+/*
+ * Kill the previous "launch console" decorations if this CSS is layered
+ * over an older BetaDemo build.
+ */
+.wut-final-simple-window .wut-launch-topline,
+.wut-final-simple-window .wut-launch-radar,
+.wut-final-simple-window .wut-launch-core,
+.wut-final-simple-window .wut-launch-footer,
+.wut-final-simple-window .wut-beta-finish-center,
+.wut-final-simple-window .wut-finish-copy-wrap {
+    display: none !important;
+}

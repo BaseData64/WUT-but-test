@@ -1,12 +1,9 @@
 /*
- * WUT Mii adapter.
+ * WUT Mii image adapter (ES5 / Wii U old WebKit).
  *
- * The API shape follows ariankordi/nwf-mii-cemu-toy:
- *   /mii_data/{nnid}?api_id=1
- *   /miis/image.png?data=...|nnid=...|pid=...
- *
- * WUT normally uses the same-origin PHP proxy so the Wii U never needs to
- * know where the renderer process is running.
+ * The browser never receives raw StoreData and never contacts FFL directly.
+ * It requests a same-origin PNG from WUT's PHP gateway. The gateway then uses
+ * the linked server session to call ariankordi/nwf-mii-cemu-toy.
  */
 (function () {
     "use strict";
@@ -25,67 +22,125 @@
         return width;
     }
 
-    function currentUserImageURL(width, type) {
+    function appendParameter(url, name, value) {
+        var separator = url.indexOf("?") === -1 ? "?" : "&";
+        return url + separator + encodeURIComponent(name) + "=" +
+            encodeURIComponent(String(value));
+    }
+
+    function canUseProxy(state) {
+        var inferredSource;
+
+        if (!state || !state.miiRendererConfigured || !state.miiProxyUrl) {
+            return false;
+        }
+
+        inferredSource = !!(
+            state.miiDataPresent ||
+            state.pid ||
+            state.pnid
+        );
+
+        return !!(
+            state.miiRenderable ||
+            inferredSource
+        );
+    }
+
+    function proxyImageURL(state, width, type, expression) {
+        var url = state.miiProxyUrl;
+
+        url = appendParameter(url, "width", clampWidth(width));
+        url = appendParameter(url, "type", type || "face");
+        url = appendParameter(url, "expression", expression || "normal");
+
+        /*
+         * This short server-generated hash changes when a linked identity or
+         * StoreData changes. It prevents old WebKit from showing the previous
+         * user's cached icon after an account link/switch.
+         */
+        if (state.miiCacheKey) {
+            url = appendParameter(url, "v", state.miiCacheKey);
+        }
+
+        return url;
+    }
+
+    function currentUserImageURL(width, type, expression) {
         var state;
-        var separator;
-        var url;
 
         if (!window.WUTSession) {
             return null;
         }
 
         state = window.WUTSession.getState();
-        width = clampWidth(width);
-        type = type || "face";
+
+        if (canUseProxy(state)) {
+            return proxyImageURL(state, width, type, expression);
+        }
 
         if (state.miiImageUrl) {
             return state.miiImageUrl;
         }
 
-        if (!state.miiProxyUrl) {
-            return null;
-        }
-
-        if (!state.identityResolved && !state.miiData && !state.pid && !state.pnid) {
-            return null;
-        }
-
-        url = state.miiProxyUrl;
-        separator = url.indexOf("?") === -1 ? "?" : "&";
-
-        return url + separator +
-            "width=" + encodeURIComponent(String(width)) +
-            "&type=" + encodeURIComponent(type);
+        return null;
     }
 
-    function bindImage(image, fallbackUrl, width, type) {
-        var url;
+    function bindImage(image, fallbackUrl, width, type, expression) {
+        var state;
+        var primaryUrl;
+        var secondaryUrl = null;
+        var triedSecondary = false;
 
-        if (!image) {
+        if (!image || !window.WUTSession) {
             return false;
         }
 
-        url = currentUserImageURL(width, type);
+        state = window.WUTSession.getState();
+        primaryUrl = currentUserImageURL(width, type, expression);
+        image.onerror = null;
+        image.onload = null;
 
-        if (!url) {
+        if (!primaryUrl) {
+            image.setAttribute("data-wut-mii-state", "unlinked");
             if (fallbackUrl) {
                 image.src = fallbackUrl;
             }
             return false;
         }
 
+        if (canUseProxy(state) && state.miiImageUrl && state.miiImageUrl !== primaryUrl) {
+            secondaryUrl = state.miiImageUrl;
+        }
+
+        image.onload = function () {
+            image.setAttribute("data-wut-mii-state", "ready");
+        };
+
         image.onerror = function () {
+            if (!triedSecondary && secondaryUrl) {
+                triedSecondary = true;
+                image.setAttribute("data-wut-mii-state", "remote-fallback");
+                image.src = secondaryUrl;
+                return;
+            }
+
             image.onerror = null;
+            image.onload = null;
+            image.setAttribute("data-wut-mii-state", "fallback");
             if (fallbackUrl) {
                 image.src = fallbackUrl;
             }
         };
-        image.src = url;
+
+        image.setAttribute("data-wut-mii-state", "loading");
+        image.src = primaryUrl;
         return true;
     }
 
     window.WUTMii = {
         currentUserImageURL: currentUserImageURL,
-        bindImage: bindImage
+        bindImage: bindImage,
+        canUseProxy: canUseProxy
     };
 }());

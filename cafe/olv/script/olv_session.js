@@ -30,20 +30,28 @@
         identitySource: "none",
         network: null,
         pid: null,
+        persistentId: null,
         userId: null,
         pnid: null,
         miiName: null,
-        miiData: null,
+        miiDataPresent: false,
         miiImageUrl: null,
         serviceTokenPresent: false,
         paramPackPresent: false,
+        nativeIdentityPresent: false,
+        nativeIdentityAccepted: false,
+        nativeMiiPresent: false,
         serviceTokenFingerprint: null,
         gameSkill: null,
         gameExperience: null,
         setupComplete: false,
         serverProfileAvailable: false,
         miiRendererConfigured: false,
-        miiProxyUrl: "../../net/olv/v1/mii/render.php"
+        miiRenderable: false,
+        miiSource: "none",
+        miiCacheKey: null,
+        miiProxyUrl: "../../net/olv/v1/mii/render.php",
+        miiStatusUrl: "../../net/olv/v1/mii/status.php"
     };
 
     function emit(name, detail) {
@@ -183,21 +191,61 @@
         state.consoleContext = !!consoleInfo.detected;
         state.serviceTokenPresent = !!consoleInfo.service_token_present;
         state.paramPackPresent = !!consoleInfo.param_pack_present;
+        state.nativeIdentityPresent = !!consoleInfo.native_identity_present;
+        state.nativeIdentityAccepted = !!consoleInfo.native_identity_accepted;
+        state.nativeMiiPresent = !!consoleInfo.native_mii_present;
         state.serviceTokenFingerprint = consoleInfo.service_token_fingerprint || null;
 
-        state.identityResolved = !!identity.resolved;
-        state.authenticated = !!identity.authenticated;
-        state.identitySource = identity.source || state.identitySource;
-        state.network = identity.network || state.network;
-        state.pid = identity.pid !== undefined && identity.pid !== null ? identity.pid : state.pid;
-        state.userId = identity.user_id || state.userId;
-        state.pnid = identity.pnid || state.pnid;
-        state.miiName = identity.mii_name || state.miiName;
-        state.miiData = identity.mii_data || state.miiData;
-        state.miiImageUrl = identity.mii_image_url || state.miiImageUrl;
+        if (identity.hasOwnProperty("resolved")) {
+            state.identityResolved = !!identity.resolved;
+        }
+        if (identity.hasOwnProperty("authenticated")) {
+            state.authenticated = !!identity.authenticated;
+        }
+        if (identity.hasOwnProperty("source")) {
+            state.identitySource = identity.source || "none";
+        }
+        if (identity.hasOwnProperty("network")) {
+            state.network = identity.network || null;
+        }
+        if (identity.hasOwnProperty("pid")) {
+            state.pid = identity.pid !== undefined && identity.pid !== null ? identity.pid : null;
+        }
+        if (identity.hasOwnProperty("persistent_id")) {
+            state.persistentId = identity.persistent_id !== undefined && identity.persistent_id !== null ?
+                identity.persistent_id :
+                null;
+        }
+        if (identity.hasOwnProperty("user_id")) {
+            state.userId = identity.user_id || null;
+        }
+        if (identity.hasOwnProperty("pnid")) {
+            state.pnid = identity.pnid || null;
+        }
+        if (identity.hasOwnProperty("mii_name")) {
+            state.miiName = identity.mii_name || null;
+        }
+        if (identity.hasOwnProperty("mii_data_present")) {
+            state.miiDataPresent = !!identity.mii_data_present;
+        }
+        if (identity.hasOwnProperty("mii_image_url")) {
+            state.miiImageUrl = identity.mii_image_url || null;
+        }
 
-        state.miiRendererConfigured = !!mii.renderer_configured;
+        if (mii.hasOwnProperty("renderer_configured")) {
+            state.miiRendererConfigured = !!mii.renderer_configured;
+        }
+        if (mii.hasOwnProperty("renderable")) {
+            state.miiRenderable = !!mii.renderable;
+        }
+        if (mii.hasOwnProperty("render_source")) {
+            state.miiSource = mii.render_source || "none";
+        }
+        if (mii.hasOwnProperty("cache_key")) {
+            state.miiCacheKey = mii.cache_key || null;
+        }
         state.miiProxyUrl = mii.proxy_url || state.miiProxyUrl;
+        state.miiStatusUrl = mii.status_url || state.miiStatusUrl;
 
         skill = normalizeSkill(profile.game_skill);
         if (skill !== null) {
@@ -275,19 +323,27 @@
             identitySource: state.identitySource,
             network: state.network,
             pid: state.pid,
+            persistentId: state.persistentId,
             userId: state.userId,
             pnid: state.pnid,
             miiName: state.miiName,
-            miiData: state.miiData,
+            miiDataPresent: state.miiDataPresent,
             miiImageUrl: state.miiImageUrl,
             serviceTokenPresent: state.serviceTokenPresent,
             paramPackPresent: state.paramPackPresent,
+            nativeIdentityPresent: state.nativeIdentityPresent,
+            nativeIdentityAccepted: state.nativeIdentityAccepted,
+            nativeMiiPresent: state.nativeMiiPresent,
             serviceTokenFingerprint: state.serviceTokenFingerprint,
             gameSkill: state.gameSkill,
             gameExperience: state.gameExperience,
             setupComplete: state.setupComplete,
             miiRendererConfigured: state.miiRendererConfigured,
-            miiProxyUrl: state.miiProxyUrl
+            miiRenderable: state.miiRenderable,
+            miiSource: state.miiSource,
+            miiCacheKey: state.miiCacheKey,
+            miiProxyUrl: state.miiProxyUrl,
+            miiStatusUrl: state.miiStatusUrl
         };
     }
 
