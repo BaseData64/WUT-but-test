@@ -1,0 +1,1794 @@
+/* ---- migrated from cafe_base.css ---- */
+/* ============================================================
+   WUT-MIIVERSE V7.0
+   CAFE BASE / WII U INTERNET BROWSER
+   ============================================================ */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #eeeeee;
+}
+
+body {
+    position: relative;
+
+    color: #323232;
+
+    font-family: sans-serif;
+
+    font-size: 18px;
+    line-height: 1.45;
+
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#f7f7f7),
+            color-stop(.58, #eeeeee),
+            to(#e7e7e7)
+        );
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: sans-serif;
+}
+
+button {
+    -webkit-appearance: none;
+    appearance: none;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+img {
+    border: 0;
+}
+
+#wut-cafe-stage {
+    position: relative;
+
+    width: 100%;
+    max-width: 854px;
+    height: 100%;
+
+    min-height: 400px;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    background-color: #c8d574;
+    background-image: url("../res/olv/wut-firstrun-bg.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+/*
+ * Keep the supplied Makiiverse texture inside the 854px Cafe surface.
+ */
+#wut-cafe-stage:before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    border-left: 1px solid rgba(255,255,255,.65);
+    border-right: 1px solid rgba(0,0,0,.04);
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+/* ---- migrated from portal_layout.css ---- */
+/* ============================================================
+   WUT-MIIVERSE V6.3
+   MULTI-STEP FIRST-RUN SHELL
+   ============================================================ */
+
+.wut-view {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 2;
+}
+
+
+/* ============================================================
+   BOTTOM SETUP BUTTONS
+
+   Geometry follows the Wii U / Miiverse first-run idea:
+   large fixed touch targets, rounded toward the page,
+   no JavaScript animation.
+   ============================================================ */
+
+.wut-corner-button {
+    position: absolute;
+
+    bottom: 0;
+
+    height: 72px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    font-size: 19px;
+    font-weight: bold;
+
+    text-align: center;
+
+    z-index: 30;
+}
+
+.wut-corner-button:focus {
+    outline: none;
+}
+
+.wut-corner-button:disabled {
+    cursor: default;
+    opacity: .48;
+}
+
+.wut-corner-button-left {
+    left: 0;
+
+    width: 218px;
+
+    padding-right: 34px;
+
+    color: #f4f4f4;
+
+    text-shadow:
+        0 -1px 0 rgba(0,0,0,.65);
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#696969),
+            color-stop(.55, #4c4c4c),
+            to(#272727)
+        );
+
+    border-radius: 0 58px 0 0;
+    -webkit-border-radius: 0 58px 0 0;
+
+    box-shadow:
+        0 -2px 8px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.18);
+
+    -webkit-box-shadow:
+        0 -2px 8px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.wut-corner-button-right {
+    right: 0;
+
+    width: 230px;
+
+    padding-left: 38px;
+
+    color: #454545;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            color-stop(.52, #ffffff),
+            color-stop(.84, #f1f1f1),
+            to(#c8c8c8)
+        );
+
+    border-radius: 58px 0 0 0;
+    -webkit-border-radius: 58px 0 0 0;
+
+    box-shadow:
+        0 -2px 8px rgba(0,0,0,.25),
+        inset 0 2px 0 rgba(255,255,255,.95);
+
+    -webkit-box-shadow:
+        0 -2px 8px rgba(0,0,0,.25),
+        inset 0 2px 0 rgba(255,255,255,.95);
+}
+
+.wut-action-icon,
+.wut-action-label {
+    display: inline-block;
+
+    vertical-align: middle;
+}
+
+.wut-action-label {
+    line-height: 72px;
+}
+
+.wut-action-icon {
+    width: 33px;
+
+    margin-right: 4px;
+
+    font-family: sans-serif;
+
+    font-size: 31px;
+    font-weight: bold;
+
+    line-height: 72px;
+}
+
+.wut-action-icon-close {
+    color: #d5d5d5;
+}
+
+.wut-action-icon-next {
+    color: #19b7c9;
+
+    font-size: 25px;
+
+    text-shadow:
+        0 1px 0 #ffffff;
+}
+
+
+/* ============================================================
+   GAMEPAD / TOUCH CURSOR
+
+   Requested behavior:
+   - strong blue cursor/border
+   - a visible blue margin around it
+   - transparent blue fill inside
+   - NO animation
+   ============================================================ */
+
+.wut-corner-button.wut-focused {
+    border: 4px solid #00b6e6 !important;
+
+    box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.18),
+        inset 0 2px 0 rgba(255,255,255,.70) !important;
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.18),
+        inset 0 2px 0 rgba(255,255,255,.70) !important;
+}
+
+.wut-corner-button-left.wut-focused {
+    box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.25),
+        inset 0 1px 0 rgba(255,255,255,.16) !important;
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.25),
+        inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+
+
+/* Browser chrome visible: preserve comfortable touch targets. */
+@media screen and (max-height: 420px) {
+    .wut-corner-button {
+        height: 66px;
+    }
+
+    .wut-action-label,
+    .wut-action-icon {
+        line-height: 66px;
+    }
+}
+
+/* ---- migrated from firstrun.css ---- */
+/* ============================================================
+   WUT-MIIVERSE V6.3
+   MAKIIVERSE FIRST-RUN PORT FOR WII U
+   ============================================================
+
+   Visual thesis:
+   - preserve Makii's green patterned welcome and supplied artwork
+   - retain WUT's measured 628px standard card
+   - use fixed Cafe actions and a strong static blue focus cursor
+   - keep runtime CSS friendly to the Wii U's older WebKit
+
+   No animation, flexbox, CSS variables or object-fit is required.
+   ============================================================ */
+
+.wut-step {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wut-step-hidden,
+.wut-control-hidden {
+    display: none !important;
+}
+
+
+/* ------------------------------------------------------------
+   STANDARD FIRST-RUN WINDOW
+
+   940 / 1280 × 854 = 627.06. WUT rounds the source proportion
+   to 628px, leaving 113px on either side of the target viewport.
+   ------------------------------------------------------------ */
+
+.wut-welcome-window {
+    position: absolute;
+
+    top: 14px;
+    left: 50%;
+
+    width: 628px;
+    height: 348px;
+
+    margin-left: -314px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    background: #fbfbfa;
+
+    border: 2px solid #bdc1b5;
+
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+
+    box-shadow:
+        0 5px 13px rgba(48,66,12,.30),
+        inset 0 2px 0 rgba(255,255,255,.96);
+
+    -webkit-box-shadow:
+        0 5px 13px rgba(48,66,12,.30),
+        inset 0 2px 0 rgba(255,255,255,.96);
+
+    overflow: hidden;
+}
+
+.wut-window-body {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 17px 34px 12px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    text-align: center;
+}
+
+.wut-step-kicker {
+    margin-bottom: 2px;
+
+    color: #91988a;
+
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.wut-welcome-title {
+    margin: 0;
+
+    color: #58b72f;
+
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: bold;
+
+    text-align: center;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+
+/* ------------------------------------------------------------
+   WELCOME
+   ------------------------------------------------------------ */
+
+.wut-hero-copy {
+    position: relative;
+
+    width: 520px;
+
+    margin: 5px auto 0;
+
+    color: #424242;
+
+    font-size: 15px;
+    line-height: 19px;
+    font-weight: bold;
+
+    text-align: center;
+
+    z-index: 3;
+}
+
+.wut-hero-art-stage {
+    position: absolute;
+
+    left: 50%;
+    bottom: 2px;
+
+    width: 540px;
+    height: 205px;
+
+    margin-left: -270px;
+
+    text-align: center;
+}
+
+.wut-hero-art {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 500px;
+    height: auto;
+
+    max-width: 500px;
+    max-height: 203px;
+
+    margin-left: -250px;
+}
+
+
+/* ------------------------------------------------------------
+   ABOUT
+   ------------------------------------------------------------ */
+
+.wut-about-copy {
+    width: 500px;
+
+    margin: 8px auto 0;
+
+    color: #444444;
+
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.wut-about-copy-lower {
+    margin-top: 4px;
+
+    color: #5c5c5c;
+
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: normal;
+}
+
+.wut-about-art {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 340px;
+    max-height: 118px;
+
+    margin: 10px auto 0;
+}
+
+
+/* ------------------------------------------------------------
+   MANNERS
+
+   Makii's six original topics are retained as a real scrollable
+   document. Fixed actions remain outside the scrolling region.
+   ------------------------------------------------------------ */
+
+.wut-manners-window {
+    position: absolute;
+
+    top: 9px;
+    bottom: 82px;
+    left: 50%;
+
+    width: 720px;
+
+    margin-left: -360px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    background: #fbfbfa;
+
+    border: 2px solid #bdc1b5;
+
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+
+    box-shadow:
+        0 5px 13px rgba(48,66,12,.28),
+        inset 0 2px 0 rgba(255,255,255,.96);
+
+    -webkit-box-shadow:
+        0 5px 13px rgba(48,66,12,.28),
+        inset 0 2px 0 rgba(255,255,255,.96);
+
+    overflow: hidden;
+}
+
+.wut-manners-heading {
+    position: absolute;
+
+    top: 8px;
+    left: 25px;
+    right: 25px;
+
+    text-align: center;
+}
+
+.wut-manners-heading .wut-step-kicker {
+    margin-bottom: 0;
+}
+
+.wut-manners-heading .wut-welcome-title {
+    font-size: 23px;
+    line-height: 27px;
+}
+
+.wut-manners-heading p {
+    margin: 1px 0 0;
+
+    color: #6a6a6a;
+
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: bold;
+}
+
+.wut-manners-scroll {
+    position: absolute;
+
+    top: 67px;
+    left: 22px;
+    right: 22px;
+    bottom: 27px;
+
+    padding: 2px 9px 18px 2px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.wut-manners-intro {
+    margin: 0 6px 11px;
+
+    color: #616161;
+
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.wut-manner-card {
+    margin: 0 0 13px;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d1ce;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,.12);
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.12);
+}
+
+.wut-manner-card h2 {
+    margin: 0;
+    padding: 7px 15px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: bold;
+
+    text-align: left;
+
+    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+}
+
+.wut-manner-orange h2 {
+    background: #e49a28;
+}
+
+.wut-manner-red h2 {
+    background: #d9544f;
+}
+
+.wut-manner-pink h2 {
+    background: #d56b8f;
+}
+
+.wut-manner-blue h2 {
+    background: #467fc2;
+}
+
+.wut-manner-cyan h2 {
+    background: #28aeb7;
+}
+
+.wut-manner-green h2 {
+    background: #68ad3b;
+}
+
+.wut-manner-layout {
+    display: table;
+
+    width: 100%;
+    min-height: 164px;
+
+    table-layout: fixed;
+}
+
+.wut-manner-art-cell,
+.wut-manner-copy-cell {
+    display: table-cell;
+
+    vertical-align: middle;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.wut-manner-art-cell {
+    width: 255px;
+
+    padding: 9px 10px;
+
+    text-align: center;
+}
+
+.wut-manner-art-cell img {
+    width: auto;
+    height: auto;
+
+    max-width: 235px;
+    max-height: 146px;
+
+    vertical-align: middle;
+}
+
+.wut-manner-copy-cell {
+    padding: 12px 20px 12px 8px;
+
+    color: #4b4b4b;
+
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: bold;
+
+    text-align: left;
+}
+
+.wut-manner-copy-cell p {
+    margin: 0 0 9px;
+}
+
+.wut-manner-copy-cell p:last-child {
+    margin-bottom: 0;
+}
+
+.wut-manner-layout-wide-art .wut-manner-art-cell {
+    width: 285px;
+}
+
+.wut-manner-layout-wide-art .wut-manner-art-cell img {
+    max-width: 265px;
+    max-height: 125px;
+}
+
+.wut-manner-layout-small-art .wut-manner-art-cell {
+    width: 190px;
+}
+
+.wut-manner-layout-small-art .wut-manner-art-cell img {
+    max-width: 155px;
+    max-height: 135px;
+}
+
+.wut-manners-agreement {
+    margin: 19px 22px 4px;
+    padding: 13px 16px;
+
+    color: #4d4d4d;
+
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: bold;
+
+    text-align: center;
+
+    background: #edf5e8;
+
+    border: 2px solid #8bbb6e;
+
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+}
+
+.wut-scroll-hint {
+    position: absolute;
+
+    right: 28px;
+    bottom: 7px;
+
+    color: #7c7c7c;
+
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: bold;
+}
+
+
+/* ------------------------------------------------------------
+   GAME EXPERIENCE
+   ------------------------------------------------------------ */
+
+.wut-game-copy {
+    width: 510px;
+
+    margin: 7px auto 0;
+
+    color: #4b4b4b;
+
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.wut-skill-list {
+    display: table;
+
+    width: 540px;
+
+    margin: 17px auto 0;
+
+    table-layout: fixed;
+}
+
+.wut-skill-slot {
+    display: table-cell;
+
+    width: 180px;
+
+    text-align: center;
+    vertical-align: top;
+}
+
+.wut-skill-option {
+    position: relative;
+
+    display: inline-block;
+
+    width: 154px;
+    height: 116px;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    color: #444444;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            to(#e9e9e6)
+        );
+
+    border: 3px solid #c9c9c5;
+
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+
+    box-shadow:
+        0 3px 6px rgba(0,0,0,.18),
+        inset 0 2px 0 rgba(255,255,255,.95);
+
+    -webkit-box-shadow:
+        0 3px 6px rgba(0,0,0,.18),
+        inset 0 2px 0 rgba(255,255,255,.95);
+
+    text-align: center;
+}
+
+.wut-skill-option:focus {
+    outline: none;
+}
+
+.wut-skill-option img {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 53px;
+    max-height: 55px;
+
+    margin: 11px auto 4px;
+}
+
+.wut-skill-option span {
+    display: block;
+
+    font-size: 15px;
+    line-height: 21px;
+    font-weight: bold;
+}
+
+.wut-skill-option.wut-focused {
+    border-color: #00b6e6;
+
+    box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.15);
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.15);
+}
+
+.wut-skill-option.wut-selected {
+    color: #ffffff;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#78cf4f),
+            to(#45a523)
+        );
+
+    border-color: #3c8f20;
+
+    text-shadow: 0 -1px 0 rgba(0,0,0,.28);
+}
+
+.wut-skill-option.wut-selected:after {
+    content: "✓";
+
+    position: absolute;
+
+    top: 4px;
+    right: 7px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.wut-skill-hint {
+    margin: 10px 0 0;
+
+    color: #777777;
+
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.wut-skill-hint.wut-skill-ready {
+    color: #438e27;
+}
+
+
+/* ------------------------------------------------------------
+   READY
+   ------------------------------------------------------------ */
+
+.wut-ready-copy {
+    position: relative;
+
+    width: 515px;
+
+    margin: 7px auto 0;
+
+    color: #444444;
+
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: bold;
+
+    text-align: center;
+
+    z-index: 3;
+}
+
+.wut-ready-art {
+    position: absolute;
+
+    left: 50%;
+    bottom: 3px;
+
+    width: auto;
+    height: auto;
+
+    max-width: 390px;
+    max-height: 185px;
+
+    margin-left: -195px;
+}
+
+
+/* ------------------------------------------------------------
+   FINISH
+   ------------------------------------------------------------ */
+
+.wut-finish-art {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 560px;
+    height: auto;
+
+    margin-left: -280px;
+
+    z-index: 1;
+}
+
+.wut-finish-copy-wrap {
+    position: absolute;
+
+    top: 105px;
+    left: 50%;
+
+    width: 330px;
+
+    margin-left: -165px;
+
+    text-align: center;
+
+    z-index: 3;
+}
+
+.wut-finish-copy-wrap .wut-welcome-title {
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.wut-finish-copy {
+    margin: 8px auto 0;
+
+    color: #4b4b4b;
+
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   BROWSER CHROME VISIBLE (~400px useful height)
+   ============================================================ */
+
+@media screen and (max-height: 420px) {
+
+    .wut-welcome-window {
+        top: 7px;
+
+        height: 310px;
+    }
+
+    .wut-window-body {
+        padding-top: 10px;
+    }
+
+    .wut-step-kicker {
+        line-height: 12px;
+    }
+
+    .wut-welcome-title {
+        font-size: 23px;
+        line-height: 27px;
+    }
+
+    .wut-hero-copy {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .wut-hero-art-stage {
+        height: 181px;
+    }
+
+    .wut-hero-art {
+        width: 445px;
+
+        max-width: 445px;
+        max-height: 181px;
+
+        margin-left: -223px;
+    }
+
+    .wut-about-copy {
+        margin-top: 5px;
+
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .wut-about-art {
+        max-width: 300px;
+        max-height: 105px;
+
+        margin-top: 6px;
+    }
+
+    .wut-about-copy-lower {
+        margin-top: 2px;
+
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    .wut-manners-window {
+        top: 7px;
+        bottom: 72px;
+    }
+
+    .wut-manners-heading {
+        top: 5px;
+    }
+
+    .wut-manners-heading .wut-welcome-title {
+        font-size: 21px;
+        line-height: 24px;
+    }
+
+    .wut-manners-scroll {
+        top: 59px;
+        bottom: 24px;
+    }
+
+    .wut-scroll-hint {
+        bottom: 5px;
+    }
+
+    .wut-game-copy {
+        margin-top: 4px;
+
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .wut-skill-list {
+        margin-top: 10px;
+    }
+
+    .wut-skill-option {
+        height: 107px;
+    }
+
+    .wut-skill-option img {
+        margin-top: 7px;
+    }
+
+    .wut-skill-hint {
+        margin-top: 6px;
+    }
+
+    .wut-ready-copy {
+        margin-top: 4px;
+
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .wut-ready-art {
+        max-width: 345px;
+        max-height: 164px;
+
+        margin-left: -173px;
+    }
+
+    .wut-finish-art {
+        width: 510px;
+
+        margin-left: -255px;
+    }
+
+    .wut-finish-copy-wrap {
+        top: 87px;
+    }
+}
+
+
+/* ============================================================
+   PC / PHONE DEBUG PREVIEW ONLY
+   ============================================================ */
+
+@media screen and (max-width: 700px) {
+
+    .wut-welcome-window {
+        left: 5%;
+
+        width: 90%;
+
+        margin-left: 0;
+    }
+
+    .wut-window-body {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .wut-hero-copy,
+    .wut-about-copy,
+    .wut-game-copy,
+    .wut-ready-copy {
+        width: 90%;
+    }
+
+    .wut-hero-art-stage,
+    .wut-finish-art {
+        left: 5%;
+
+        width: 90%;
+
+        margin-left: 0;
+    }
+
+    .wut-hero-art {
+        left: 50%;
+
+        width: 90%;
+
+        max-width: 90%;
+
+        margin-left: -45%;
+    }
+
+    .wut-manners-window {
+        left: 3%;
+
+        width: 94%;
+
+        margin-left: 0;
+    }
+
+    .wut-skill-list {
+        width: 100%;
+    }
+
+    .wut-skill-slot {
+        width: 33%;
+    }
+
+    .wut-skill-option {
+        width: 88%;
+    }
+}
+
+/* ---- migrated from cafe_classic.css ---- */
+/* ============================================================
+   WUT-MIIVERSE V7.0
+   CLASSIC NINTENDO / MII UNIVERSE FIRST-RUN PASS
+   ============================================================
+
+   Visual-only override layer for the Wii U-tested V6 layout.
+
+   Direction:
+   - recognizable Miiverse cyan + green family
+   - soft Wii / Nintendo 3DS system-panel treatment
+   - white rounded windows instead of desktop/dashboard chrome
+   - Wii U runtime uses no downloaded icon font
+   - old WebKit-era CSS: blocks, tables and -webkit-gradient
+
+   No remote assets. No transitions. No animations. No flexbox.
+   No CSS variables. No filters. No generated images.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   WII U RUNTIME TYPOGRAPHY
+   ------------------------------------------------------------
+
+   Keep the console path on the generic sans-serif family so the
+   Wii U environment resolves its own system face. Iconography in
+   this stylesheet is image/CSS based and has no font dependency.
+*/
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+    font-family: sans-serif;
+}
+
+
+/* ------------------------------------------------------------
+   WII / 3DS / MII UNIVERSE SURFACE
+   ------------------------------------------------------------ */
+
+#wut-cafe-stage {
+    background-color: #bccb68;
+    background-image: url("../res/olv/wut-firstrun-bg.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+#wut-cafe-stage:before {
+    border-left: 1px solid rgba(255,255,255,.52);
+    border-right: 1px solid rgba(83,96,26,.10);
+
+    box-shadow:
+        inset 0 30px 38px rgba(255,255,255,.08),
+        inset 0 -25px 34px rgba(72,87,18,.05);
+
+    -webkit-box-shadow:
+        inset 0 30px 38px rgba(255,255,255,.08),
+        inset 0 -25px 34px rgba(72,87,18,.05);
+}
+
+
+/* ------------------------------------------------------------
+   MAIN FIRST-RUN WINDOWS
+   ------------------------------------------------------------ */
+
+.wut-welcome-window,
+.wut-manners-window {
+    background: #fbfbfa;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            color-stop(.70, #ffffff),
+            to(#f2f2ee)
+        );
+
+    border: 2px solid #babdb3;
+
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+
+    box-shadow:
+        0 4px 10px rgba(61,74,18,.26),
+        inset 0 2px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(188,190,180,.35);
+
+    -webkit-box-shadow:
+        0 4px 10px rgba(61,74,18,.26),
+        inset 0 2px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(188,190,180,.35);
+}
+
+/* V6.2 used extra build plates / rails. V6.3 deliberately has none. */
+.wut-welcome-window:before,
+.wut-welcome-window:after,
+.wut-manners-window:before,
+.wut-manners-window:after {
+    display: none;
+    content: none;
+}
+
+.wut-step-kicker {
+    display: block;
+
+    margin: 0 0 2px;
+    padding: 0;
+
+    color: #9b9d95;
+    background: transparent;
+
+    border: 0;
+
+    font-size: 9px;
+    line-height: 13px;
+    font-weight: bold;
+    letter-spacing: .7px;
+
+    text-align: center;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-welcome-title {
+    color: #17b9cb;
+
+    letter-spacing: -.25px;
+
+    text-shadow:
+        0 1px 0 #ffffff,
+        0 2px 0 rgba(90,184,193,.10);
+}
+
+.wut-welcome-title:after {
+    display: none;
+    content: none;
+}
+
+.wut-hero-copy,
+.wut-about-copy,
+.wut-game-copy,
+.wut-ready-copy,
+.wut-finish-copy {
+    color: #464646;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-about-copy-lower {
+    color: #666666;
+}
+
+/* No pseudo-platform / mini-card beneath the artwork. */
+.wut-hero-art-stage:before {
+    display: none;
+    content: none;
+}
+
+
+/* ------------------------------------------------------------
+   MANNERS — COLORFUL MII UNIVERSE DOCUMENT
+   ------------------------------------------------------------ */
+
+.wut-manners-heading p,
+.wut-manners-intro {
+    color: #666666;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-manners-scroll {
+    background: transparent;
+    border: 0;
+}
+
+.wut-manners-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.wut-manners-scroll::-webkit-scrollbar-track {
+    background: #e6e7e2;
+
+    border-left: 1px solid #d0d1ca;
+    border-right: 1px solid #ffffff;
+
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+}
+
+.wut-manners-scroll::-webkit-scrollbar-thumb {
+    background: #7dc8d0;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            right top,
+            from(#a8e1e6),
+            color-stop(.48, #6fc5cf),
+            to(#45aeb9)
+        );
+
+    border: 1px solid #4aa1aa;
+
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+
+    box-shadow: inset 1px 0 0 rgba(255,255,255,.58);
+    -webkit-box-shadow: inset 1px 0 0 rgba(255,255,255,.58);
+}
+
+.wut-manner-card {
+    background: #ffffff;
+
+    border: 1px solid #d0d0ca;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    box-shadow:
+        0 2px 4px rgba(62,67,41,.12),
+        inset 0 1px 0 #ffffff;
+
+    -webkit-box-shadow:
+        0 2px 4px rgba(62,67,41,.12),
+        inset 0 1px 0 #ffffff;
+}
+
+.wut-manner-card h2 {
+    border-bottom: 1px solid rgba(0,0,0,.10);
+
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.34);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.34);
+
+    text-shadow: 0 -1px 0 rgba(0,0,0,.18);
+}
+
+.wut-manner-orange h2 { background: #e6a03a; }
+.wut-manner-red h2    { background: #dc625c; }
+.wut-manner-pink h2   { background: #d97b9b; }
+.wut-manner-blue h2   { background: #5b8dcc; }
+.wut-manner-cyan h2   { background: #35b6bf; }
+.wut-manner-green h2  { background: #72b947; }
+
+.wut-manner-art-cell {
+    background: #fafaf7;
+    border-right: 1px solid #ecece6;
+}
+
+.wut-manner-copy-cell {
+    color: #4a4a4a;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-manners-agreement {
+    color: #4f643f;
+
+    background: #f0f7e8;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#f9fcf5),
+            to(#e8f2de)
+        );
+
+    border: 2px solid #9bbc7d;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    box-shadow: inset 0 1px 0 #ffffff;
+    -webkit-box-shadow: inset 0 1px 0 #ffffff;
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-scroll-hint {
+    padding: 0;
+
+    color: #7a7d73;
+    background: transparent;
+
+    border: 0;
+
+    font-size: 10px;
+    letter-spacing: 0;
+}
+
+
+/* ------------------------------------------------------------
+   GAME EXPERIENCE — SOFT Wii / 3DS CHANNEL BUTTONS
+   ------------------------------------------------------------ */
+
+.wut-skill-option {
+    color: #484848;
+
+    background: #f7f7f4;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            color-stop(.55, #fbfbf9),
+            to(#e7e8e3)
+        );
+
+    border: 2px solid #c6c8c0;
+
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+
+    box-shadow:
+        0 3px 5px rgba(66,73,42,.16),
+        inset 0 2px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(159,164,151,.22);
+
+    -webkit-box-shadow:
+        0 3px 5px rgba(66,73,42,.16),
+        inset 0 2px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(159,164,151,.22);
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-skill-option.wut-focused {
+    border-color: #00b6e6;
+
+    box-shadow:
+        0 0 0 4px #007dbb,
+        0 3px 5px rgba(0,85,125,.16),
+        inset 0 0 0 999px rgba(0,174,255,.12),
+        inset 0 2px 0 rgba(255,255,255,.96);
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        0 3px 5px rgba(0,85,125,.16),
+        inset 0 0 0 999px rgba(0,174,255,.12),
+        inset 0 2px 0 rgba(255,255,255,.96);
+}
+
+.wut-skill-option.wut-selected {
+    color: #ffffff;
+
+    background: #65b63e;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#8fd565),
+            color-stop(.50, #69bd43),
+            to(#49a52a)
+        );
+
+    border-color: #4a972c;
+
+    box-shadow:
+        0 3px 5px rgba(49,91,28,.20),
+        inset 0 1px 0 rgba(255,255,255,.42);
+
+    -webkit-box-shadow:
+        0 3px 5px rgba(49,91,28,.20),
+        inset 0 1px 0 rgba(255,255,255,.42);
+
+    text-shadow: 0 -1px 0 rgba(53,104,30,.38);
+}
+
+.wut-skill-option.wut-selected.wut-focused {
+    border-color: #00b6e6;
+
+    box-shadow:
+        0 0 0 4px #007dbb,
+        0 3px 5px rgba(0,85,125,.18),
+        inset 0 0 0 999px rgba(0,174,255,.08),
+        inset 0 1px 0 rgba(255,255,255,.48);
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        0 3px 5px rgba(0,85,125,.18),
+        inset 0 0 0 999px rgba(0,174,255,.08),
+        inset 0 1px 0 rgba(255,255,255,.48);
+}
+
+.wut-skill-option.wut-selected:after {
+    content: "";
+
+    top: 10px;
+    right: 10px;
+
+    width: 10px;
+    height: 10px;
+
+    background: #67b736;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+
+    box-shadow: 0 1px 2px rgba(45,93,25,.28);
+    -webkit-box-shadow: 0 1px 2px rgba(45,93,25,.28);
+}
+
+.wut-skill-hint {
+    color: #777970;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-skill-hint.wut-skill-ready {
+    color: #529633;
+}
+
+
+/* ------------------------------------------------------------
+   MII UNIVERSE BOTTOM ACTIONS
+   ------------------------------------------------------------ */
+
+.wut-corner-button {
+    letter-spacing: 0;
+}
+
+.wut-corner-button-left {
+    color: #f4f4f4;
+
+    background: #4a4a4a;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#737373),
+            color-stop(.54, #4f4f4f),
+            to(#292929)
+        );
+
+    border-top: 0;
+    border-right: 0;
+
+    border-radius: 0 58px 0 0;
+    -webkit-border-radius: 0 58px 0 0;
+
+    box-shadow:
+        0 -2px 8px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.20);
+
+    -webkit-box-shadow:
+        0 -2px 8px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.20);
+
+    text-shadow: 0 -1px 0 rgba(0,0,0,.55);
+}
+
+.wut-corner-button-right {
+    color: #454545;
+
+    background: #ffffff;
+    background:
+        -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#ffffff),
+            color-stop(.55, #ffffff),
+            color-stop(.84, #f2f2ef),
+            to(#cfd0ca)
+        );
+
+    border-top: 0;
+    border-left: 0;
+
+    border-radius: 58px 0 0 0;
+    -webkit-border-radius: 58px 0 0 0;
+
+    box-shadow:
+        0 -2px 8px rgba(0,0,0,.22),
+        inset 0 2px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(126,130,118,.18);
+
+    -webkit-box-shadow:
+        0 -2px 8px rgba(0,0,0,.22),
+        inset 0 2px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(126,130,118,.18);
+
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-action-icon {
+    display: inline-block;
+    width: 28px;
+    height: 72px;
+    margin-right: 5px;
+    vertical-align: middle;
+
+    font-size: 0;
+    line-height: 0;
+
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    border: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.wut-action-icon-close {
+    color: #e2e2e2;
+}
+
+.wut-action-icon-next {
+    color: #17b9cb;
+    padding-left: 0;
+    font-size: 28px;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-corner-button.wut-focused {
+    border: 4px solid #00b6e6 !important;
+
+    box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.16),
+        inset 0 2px 0 rgba(255,255,255,.72) !important;
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.16),
+        inset 0 2px 0 rgba(255,255,255,.72) !important;
+}
+
+.wut-corner-button-left.wut-focused {
+    box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.16) !important;
+
+    -webkit-box-shadow:
+        0 0 0 4px #007dbb,
+        inset 0 0 0 999px rgba(0,174,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+
+.wut-corner-button.wut-focused .wut-action-icon {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+
+/* ------------------------------------------------------------
+   BROWSER CHROME VISIBLE (~400px usable height)
+   ------------------------------------------------------------ */
+
+@media screen and (max-height: 420px) {
+    .wut-action-icon {
+        line-height: 66px;
+    }
+}

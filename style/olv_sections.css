@@ -1,0 +1,869 @@
+/*
+ * WUT-Miiverse — Cafe OLV demo sections.
+ *
+ * The information hierarchy is adapted from the supplied Cf_Miiverse Portal:
+ * post stream, user profile, conversation directory and notification tabs.
+ * It is rewritten and namespaced for WUT; no clone backend is required.
+ * Old-WebKit-safe layout only: positioned blocks, floats and gradients.
+ */
+
+#wut-activity-feed-view,
+#wut-user-page-view,
+#wut-messages-view,
+#wut-notifications-view {
+    position: absolute;
+    top: 70px;
+    left: 160px;
+    width: 1120px;
+    height: 650px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.wut-section-demo-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 39px;
+    padding: 0 20px;
+    overflow: hidden;
+    color: #656b68;
+    background: rgba(255, 255, 255, .45);
+    border-bottom: 1px solid rgba(190, 194, 191, .72);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .75);
+    -webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .75);
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 39px;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-section-demo-strip strong {
+    float: left;
+    color: #505653;
+    font-size: 13px;
+    letter-spacing: .5px;
+}
+
+.wut-section-demo-strip small {
+    float: left;
+    margin-left: 28px;
+    color: #848a87;
+    font-size: 10px;
+}
+
+.wut-section-demo-strip > span {
+    float: right;
+}
+
+.wut-section-demo-strip b {
+    color: #47a900;
+    font-size: 14px;
+}
+
+.wut-section-scroll {
+    position: absolute;
+    left: 0;
+    width: 1120px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.wut-section-scroll::-webkit-scrollbar {
+    width: 14px;
+}
+
+.wut-section-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .30);
+}
+
+.wut-section-scroll::-webkit-scrollbar-thumb {
+    background: #a9aeac;
+    border: 3px solid rgba(255, 255, 255, .55);
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+.wut-section-status {
+    position: absolute;
+    right: 16px;
+    bottom: 0;
+    left: 16px;
+    height: 26px;
+    overflow: hidden;
+    color: #787e7b;
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 26px;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+   ACTIVITY FEED
+   ------------------------------------------------------------ */
+
+.wut-feed-scroll {
+    top: 40px;
+    height: 584px;
+}
+
+.wut-feed-list {
+    width: 1088px;
+    margin: 0;
+    padding: 16px 0 24px 18px;
+}
+
+.wut-feed-list > li {
+    position: relative;
+    min-height: 218px;
+    margin: 0 0 13px;
+}
+
+.wut-feed-list > li > a {
+    position: relative;
+    display: block;
+    width: 1045px;
+    min-height: 202px;
+    padding: 8px 8px 8px 15px;
+    overflow: hidden;
+    color: #323232;
+    border: 3px solid transparent;
+    border-radius: 19px;
+    -webkit-border-radius: 19px;
+}
+
+.wut-post-user-icon {
+    position: absolute;
+    top: 19px;
+    left: 20px;
+    display: block;
+    width: 78px;
+    height: 78px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid #d5d5d5;
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, .30);
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .30);
+    z-index: 2;
+}
+
+.wut-post-user-icon img {
+    display: block;
+    width: 78px;
+    height: 78px;
+}
+
+.wut-post-body {
+    position: relative;
+    display: block;
+    width: 900px;
+    min-height: 174px;
+    margin-left: 96px;
+    padding: 14px 16px 12px;
+    background: rgba(255, 255, 255, .94);
+    border: 1px solid #d8dcda;
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .23);
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .23);
+}
+
+.wut-post-body:before {
+    position: absolute;
+    top: 32px;
+    left: -13px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-top: 11px solid transparent;
+    border-right: 14px solid #ffffff;
+    border-bottom: 11px solid transparent;
+}
+
+.wut-post-head {
+    display: block;
+    height: 28px;
+    overflow: hidden;
+    line-height: 28px;
+}
+
+.wut-post-head strong {
+    float: left;
+    max-width: 330px;
+    overflow: hidden;
+    font-size: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-post-head small {
+    float: left;
+    max-width: 230px;
+    margin-left: 10px;
+    overflow: hidden;
+    color: #969c99;
+    font-family: monospace;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-post-head em {
+    float: right;
+    color: #999e9b;
+    font-size: 11px;
+    font-style: normal;
+}
+
+.wut-post-community {
+    display: block;
+    height: 30px;
+    margin: 4px 0 9px;
+    overflow: hidden;
+    color: #848986;
+    background: #eeeeee;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    font-size: 13px;
+    line-height: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-post-community img {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+}
+
+.wut-post-copy {
+    display: block;
+    height: 50px;
+    overflow: hidden;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.wut-post-meta {
+    display: block;
+    height: 34px;
+    margin-top: 8px;
+    color: #777d7a;
+    font-size: 12px;
+    line-height: 32px;
+}
+
+.wut-post-meta > span {
+    margin-left: 18px;
+}
+
+.wut-post-meta i {
+    float: right;
+    color: #a2a7a4;
+    font-family: monospace;
+    font-size: 9px;
+    font-style: normal;
+}
+
+.wut-yeah-control {
+    display: inline-block;
+    min-width: 68px;
+    height: 30px;
+    padding: 0 9px 0 31px;
+    color: #4a8f16;
+    background: #ffffff url("../res/olv/feeling-happy.png") 7px center no-repeat;
+    background-size: 22px 22px;
+    border: 1px solid #c9cecb;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .18);
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, .18);
+    font-size: 13px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.wut-feed-list a.wut-section-focused {
+    background: rgba(232, 249, 255, .70);
+    border-color: #5cc7f0;
+    box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
+    -webkit-box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
+}
+
+/* ------------------------------------------------------------
+   SHARED DEMO TABS
+   ------------------------------------------------------------ */
+
+.wut-demo-tabs {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #dfe2e0;
+    border: 1px solid #bfc5c2;
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+    box-shadow: inset 0 1px 0 #ffffff, 0 2px 5px rgba(0, 0, 0, .22);
+    -webkit-box-shadow: inset 0 1px 0 #ffffff, 0 2px 5px rgba(0, 0, 0, .22);
+}
+
+.wut-demo-tabs li {
+    float: left;
+    height: 56px;
+    border-right: 1px solid #bcc1bf;
+}
+
+.wut-demo-tabs li:last-child {
+    border-right: 0;
+}
+
+.wut-demo-tabs a {
+    position: relative;
+    display: block;
+    height: 56px;
+    overflow: hidden;
+    color: #555b58;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f7f8f7), to(#d9dddb));
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 56px;
+    text-align: center;
+    text-shadow: 0 1px 0 #ffffff;
+    white-space: nowrap;
+}
+
+.wut-demo-tabs li.selected a {
+    color: #ffffff;
+    background: #5ac800;
+    background: -webkit-gradient(linear, left top, left bottom, from(#79df25), to(#50b800));
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+
+.wut-demo-tabs a.wut-section-focused:after {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    bottom: 3px;
+    left: 3px;
+    content: "";
+    border: 3px solid #5cc7f0;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    box-shadow: 0 0 7px rgba(17, 154, 219, .55);
+    -webkit-box-shadow: 0 0 7px rgba(17, 154, 219, .55);
+}
+
+/* ------------------------------------------------------------
+   USER PAGE
+   ------------------------------------------------------------ */
+
+.wut-profile-page {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 1120px;
+    height: 584px;
+    overflow: hidden;
+}
+
+.wut-profile-card {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    width: 1030px;
+    height: 190px;
+    overflow: hidden;
+    background: #f8f8f5 url("../res/olv/profile-bg.png") right center no-repeat;
+    border: 1px solid #cfd4d1;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, .26);
+    -webkit-box-shadow: 0 4px 9px rgba(0, 0, 0, .26);
+}
+
+.wut-profile-mii-frame {
+    position: absolute;
+    top: 25px;
+    left: 28px;
+    display: block;
+    width: 136px;
+    height: 136px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
+}
+
+.wut-profile-mii-frame img {
+    display: block;
+    width: 136px;
+    height: 136px;
+}
+
+.wut-profile-identity {
+    position: absolute;
+    top: 31px;
+    left: 192px;
+    width: 360px;
+    height: 122px;
+    overflow: hidden;
+}
+
+.wut-profile-identity h2 {
+    height: 41px;
+    margin: 0;
+    overflow: hidden;
+    color: #333836;
+    font-size: 27px;
+    line-height: 41px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-profile-identity p {
+    height: 24px;
+    overflow: hidden;
+    color: #838985;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-profile-identity span {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 2px 9px;
+    color: #ffffff;
+    background: #57bd12;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 22px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .22);
+}
+
+.wut-profile-skill {
+    position: absolute;
+    top: 41px;
+    left: 570px;
+    width: 180px;
+    height: 90px;
+    padding-left: 18px;
+    border-left: 1px solid #d2d7d4;
+}
+
+.wut-profile-skill small,
+.wut-profile-skill strong {
+    display: block;
+}
+
+.wut-profile-skill small {
+    color: #8b918e;
+    font-family: monospace;
+    font-size: 9px;
+    line-height: 25px;
+}
+
+.wut-profile-skill strong {
+    color: #4e9e13;
+    font-size: 18px;
+    line-height: 38px;
+}
+
+.wut-profile-counts {
+    position: absolute;
+    top: 27px;
+    right: 25px;
+    width: 208px;
+    height: 132px;
+    margin: 0;
+    padding: 0 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .72);
+    border: 1px solid #d2d7d4;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+}
+
+.wut-profile-counts dt,
+.wut-profile-counts dd {
+    float: left;
+    height: 43px;
+    margin: 0;
+    border-bottom: 1px dotted #c5cac7;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 43px;
+}
+
+.wut-profile-counts dt {
+    width: 132px;
+    color: #7d8380;
+}
+
+.wut-profile-counts dd {
+    width: 72px;
+    color: #4bae0c;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.wut-profile-tabs {
+    top: 226px;
+    left: 24px;
+    width: 1032px;
+}
+
+.wut-profile-tabs li,
+.wut-profile-tabs a {
+    width: 343px;
+}
+
+.wut-profile-preview {
+    position: absolute;
+    top: 301px;
+    left: 24px;
+    width: 1032px;
+    height: 245px;
+}
+
+.wut-profile-post {
+    position: relative;
+    display: block;
+    width: 962px;
+    min-height: 153px;
+    padding: 24px 31px;
+    color: #323232;
+    background: rgba(255, 255, 255, .90);
+    border: 3px solid transparent;
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .23);
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .23);
+}
+
+.wut-profile-post-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    color: #ffffff;
+    background: #5ac800;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-family: monospace;
+    font-size: 9px;
+    line-height: 20px;
+}
+
+.wut-profile-post > strong,
+.wut-profile-post > span,
+.wut-profile-post > small {
+    display: block;
+}
+
+.wut-profile-post > strong {
+    margin-top: 8px;
+    font-size: 21px;
+    line-height: 30px;
+}
+
+.wut-profile-post > span {
+    height: 46px;
+    overflow: hidden;
+    color: #5e6461;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+.wut-profile-post > small {
+    margin-top: 10px;
+    color: #929794;
+    font-size: 11px;
+}
+
+.wut-profile-post.wut-section-focused {
+    border-color: #5cc7f0;
+    box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
+    -webkit-box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
+}
+
+/* ------------------------------------------------------------
+   MESSAGES + NOTIFICATIONS
+   ------------------------------------------------------------ */
+
+.wut-section-tip {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 1080px;
+    height: 79px;
+    padding: 0 20px;
+    overflow: hidden;
+    color: #5f6662;
+    background: rgba(255, 255, 255, .72);
+    border-bottom: 1px solid #ced3d0;
+}
+
+.wut-section-tip img {
+    float: left;
+    width: 64px;
+    height: 64px;
+    margin: 7px 16px 0 0;
+}
+
+.wut-section-tip p {
+    float: left;
+    width: 830px;
+    height: 48px;
+    margin-top: 14px;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.wut-section-tip > b {
+    float: right;
+    margin-top: 24px;
+    padding: 1px 7px;
+    color: #ffffff;
+    background: #20b5c3;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-family: monospace;
+    font-size: 9px;
+    line-height: 24px;
+}
+
+.wut-message-scroll {
+    top: 120px;
+    height: 504px;
+}
+
+.wut-directory-list {
+    width: 1088px;
+    margin: 0;
+    padding: 0 0 18px 18px;
+}
+
+.wut-directory-list > li {
+    position: relative;
+    width: 1067px;
+    min-height: 139px;
+    margin: 0;
+    border-bottom: 3px dashed #cfd4d1;
+}
+
+.wut-directory-list > li > a {
+    position: relative;
+    display: block;
+    width: 1031px;
+    min-height: 109px;
+    padding: 14px 15px;
+    overflow: hidden;
+    color: #323232;
+    background: rgba(255, 255, 255, .28);
+    border: 3px solid transparent;
+}
+
+.wut-directory-list > li:nth-child(even) > a {
+    background: rgba(255, 255, 255, .13);
+}
+
+.wut-directory-icon {
+    position: relative;
+    float: left;
+    display: block;
+    width: 92px;
+    height: 92px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, .30);
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .30);
+}
+
+.wut-directory-icon img {
+    display: block;
+    width: 92px;
+    height: 92px;
+}
+
+.wut-unread .wut-directory-icon:after {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 17px;
+    height: 17px;
+    content: "";
+    background: #ff8a00;
+    border: 3px solid #ffffff;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .35);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .35);
+}
+
+.wut-directory-body {
+    position: relative;
+    display: block;
+    height: 94px;
+    margin-left: 117px;
+    padding-right: 78px;
+    overflow: hidden;
+}
+
+.wut-directory-body > strong {
+    display: block;
+    height: 35px;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-directory-body > strong small {
+    margin-left: 9px;
+    color: #8d9390;
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.wut-directory-body > em {
+    position: absolute;
+    top: 6px;
+    right: 2px;
+    color: #969c99;
+    font-size: 10px;
+    font-style: normal;
+}
+
+.wut-directory-body > span {
+    display: block;
+    height: 50px;
+    overflow: hidden;
+    color: #626865;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.wut-directory-body > span.placeholder {
+    color: #999e9b;
+    font-style: italic;
+}
+
+.wut-directory-arrow {
+    position: absolute;
+    top: 45px;
+    right: 24px;
+    display: block;
+    width: 28px;
+    height: 28px;
+    background: #ffffff url("../res/olv/icon-right.png") center center no-repeat;
+    border: 1px solid #bdc3c0;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.wut-directory-list a.wut-section-focused {
+    min-height: 107px;
+    background: rgba(232, 249, 255, .76);
+    border-top-color: #5cc7f0;
+    border-bottom-color: #5cc7f0;
+    box-shadow: inset 7px 0 0 #5ac800, inset -7px 0 0 #5ac800;
+    -webkit-box-shadow: inset 7px 0 0 #5ac800, inset -7px 0 0 #5ac800;
+}
+
+.wut-notification-tabs {
+    top: 49px;
+    left: 24px;
+    width: 1032px;
+}
+
+.wut-notification-tabs li,
+.wut-notification-tabs a {
+    width: 515px;
+}
+
+.wut-notification-tabs a b {
+    display: inline-block;
+    min-width: 20px;
+    height: 20px;
+    margin-left: 7px;
+    color: #ffffff;
+    background: #ff8a00;
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+    font-size: 11px;
+    line-height: 20px;
+    text-shadow: none;
+    vertical-align: 2px;
+}
+
+.wut-notification-scroll {
+    top: 115px;
+    height: 509px;
+}
+
+.wut-news-list > li {
+    min-height: 132px;
+}
+
+.wut-news-list > li > a {
+    min-height: 102px;
+}
+
+.wut-news-list .wut-directory-icon {
+    width: 82px;
+    height: 82px;
+    margin: 5px;
+}
+
+.wut-news-list .wut-directory-icon img {
+    width: 82px;
+    height: 82px;
+}
+
+.wut-news-list .wut-directory-body {
+    margin-left: 117px;
+}
+
+.wut-news-icon {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 82px;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .28);
+}
+
+.wut-news-yeah {
+    background: #75cf31;
+}
+
+.wut-news-yeah img {
+    background: #75cf31;
+}
+
+.wut-news-comment {
+    background: #25b9c7;
+}

@@ -1,0 +1,241 @@
+/* WUT browser-session Mii linker — ES5 / Wii U old WebKit presentation. */
+
+.wut-mii-link-stage {
+    color: #343835;
+    background-color: #eeeeee !important;
+    background-image: url("../res/olv/bg-gray-dot.png") !important;
+    background-repeat: repeat !important;
+    background-size: auto !important;
+}
+
+.wut-link-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    overflow: hidden;
+    color: #ffffff;
+    background: #5ac800;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        from(#81e52e),
+        to(#5ac800)
+    );
+    border-bottom: 2px solid #49a10f;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, .20);
+    -webkit-box-shadow: 0 2px 7px rgba(0, 0, 0, .20);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .20);
+    z-index: 5;
+}
+
+.wut-link-header small {
+    position: absolute;
+    top: 9px;
+    left: 30px;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: .5px;
+}
+
+.wut-link-header h1 {
+    margin: 21px 0 0 29px;
+    font-size: 29px;
+    line-height: 45px;
+}
+
+.wut-link-window {
+    position: absolute;
+    top: 86px;
+    left: 43px;
+    width: 766px;
+    height: 308px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .94);
+    border: 1px solid #ccd2ce;
+    border-radius: 22px;
+    -webkit-border-radius: 22px;
+    box-shadow: 0 4px 13px rgba(0, 0, 0, .24);
+    -webkit-box-shadow: 0 4px 13px rgba(0, 0, 0, .24);
+    z-index: 4;
+}
+
+.wut-link-preview {
+    position: absolute;
+    top: 24px;
+    left: 25px;
+    width: 205px;
+    height: 237px;
+    padding-top: 9px;
+    overflow: hidden;
+    text-align: center;
+    background: #edf0ed url("../res/olv/profile-bg.png") center bottom no-repeat;
+    border: 1px solid #d0d5d2;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    box-shadow: inset 0 1px 0 #ffffff;
+    -webkit-box-shadow: inset 0 1px 0 #ffffff;
+}
+
+.wut-link-mii-frame {
+    display: block;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 7px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .34);
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .34);
+}
+
+.wut-link-mii-frame img {
+    display: block;
+    width: 160px;
+    height: 160px;
+}
+
+.wut-link-preview strong,
+.wut-link-preview small {
+    display: block;
+    padding: 0 9px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-link-preview strong {
+    color: #3d423f;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.wut-link-preview small {
+    color: #64ad24;
+    font-family: monospace;
+    font-size: 9px;
+    line-height: 20px;
+}
+
+.wut-link-form {
+    position: absolute;
+    top: 20px;
+    left: 257px;
+    width: 478px;
+    height: 251px;
+}
+
+.wut-link-intro {
+    height: 34px;
+    margin: 0 0 8px;
+    overflow: hidden;
+    color: #666d69;
+    font-size: 12px;
+    line-height: 17px;
+}
+
+.wut-link-form label {
+    float: left;
+    clear: left;
+    width: 127px;
+    height: 44px;
+    color: #5b625e;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 44px;
+}
+
+.wut-link-form label small {
+    font-size: 9px;
+    font-weight: normal;
+}
+
+.wut-link-form select,
+.wut-link-form input {
+    float: left;
+    width: 339px;
+    height: 38px;
+    margin: 2px 0 4px;
+    padding: 0 12px;
+    color: #343936;
+    background: #f8f9f8;
+    border: 2px solid #c8cdca;
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 16px;
+    line-height: 34px;
+    outline: none;
+}
+
+.wut-link-form select {
+    -webkit-appearance: menulist;
+}
+
+.wut-link-form input:focus,
+.wut-link-form select:focus,
+.wut-link-form .wut-link-field-focus {
+    border-color: #57c4ef;
+    box-shadow: 0 0 7px rgba(17, 154, 219, .55);
+    -webkit-box-shadow: 0 0 7px rgba(17, 154, 219, .55);
+}
+
+.wut-link-form input {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+.wut-link-note {
+    clear: both;
+    margin: 4px 0 0 127px;
+    color: #8a908d;
+    font-size: 9px;
+    line-height: 13px;
+}
+
+.wut-link-status {
+    position: absolute;
+    right: 25px;
+    bottom: 10px;
+    left: 25px;
+    height: 26px;
+    margin: 0;
+    overflow: hidden;
+    color: #777e7a;
+    border-top: 1px dotted #c7cbc8;
+    font-size: 11px;
+    line-height: 26px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-link-status.wut-link-ok {
+    color: #439a08;
+    font-weight: bold;
+}
+
+.wut-link-status.wut-link-error {
+    color: #c44d3b;
+    font-weight: bold;
+}
+
+.wut-mii-link-stage .wut-corner-button.wut-focused {
+    box-shadow:
+        0 -2px 8px rgba(0, 0, 0, .25),
+        inset 0 0 0 4px #5cc7f0,
+        inset 0 0 0 7px rgba(255, 255, 255, .82);
+    -webkit-box-shadow:
+        0 -2px 8px rgba(0, 0, 0, .25),
+        inset 0 0 0 4px #5cc7f0,
+        inset 0 0 0 7px rgba(255, 255, 255, .82);
+}
+
+.wut-mii-link-stage .wut-corner-button:disabled {
+    opacity: .58;
+}

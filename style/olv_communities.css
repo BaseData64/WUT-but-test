@@ -1,0 +1,235 @@
+/*
+ * Cafe OLV Communities — flat list prototype.
+ *
+ * This view intentionally follows the supplied unfinished Makiiverse list:
+ * long transparent rows, square artwork and dotted separators. It avoids
+ * Flexbox, Grid, transitions, webfonts and other modern browser requirements.
+ */
+
+#wut-communities-view {
+    position: absolute;
+    top: 70px;
+    left: 160px;
+    width: 1120px;
+    height: 650px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.wut-community-demo-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 39px;
+    padding: 0 20px;
+    overflow: hidden;
+    color: #656b68;
+    background: rgba(255, 255, 255, .45);
+    border-bottom: 1px solid rgba(190, 194, 191, .72);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .75);
+    -webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .75);
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 39px;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.wut-community-demo-strip strong {
+    float: left;
+    color: #505653;
+    font-size: 13px;
+    letter-spacing: .5px;
+}
+
+.wut-community-demo-strip small {
+    float: left;
+    margin-left: 28px;
+    color: #848a87;
+    font-size: 10px;
+}
+
+.wut-community-demo-strip span {
+    float: right;
+}
+
+.wut-community-demo-strip b {
+    color: #47a900;
+    font-size: 14px;
+}
+
+.wut-community-scroll {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 1120px;
+    height: 610px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.wut-community-scroll::-webkit-scrollbar {
+    width: 14px;
+}
+
+.wut-community-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .30);
+}
+
+.wut-community-scroll::-webkit-scrollbar-thumb {
+    background: #a9aeac;
+    border: 3px solid rgba(255, 255, 255, .55);
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+.wut-community-grid {
+    width: 1102px;
+    margin: 0;
+    padding: 0 0 16px;
+}
+
+.wut-community-grid > li {
+    position: relative;
+    width: 1102px;
+    height: 160px;
+    margin: 0;
+}
+
+.wut-community-grid > li.wut-community-hidden {
+    display: none;
+}
+
+.wut-community-card {
+    position: relative;
+    display: block;
+    width: 1102px;
+    height: 157px;
+    overflow: hidden;
+    color: #323232;
+    background: rgba(255, 255, 255, .30);
+    border-bottom: 3px dotted rgba(197, 201, 199, .88);
+}
+
+.wut-community-grid > li:nth-child(even) .wut-community-card {
+    background: rgba(255, 255, 255, .15);
+}
+
+.wut-community-card:focus {
+    outline: none;
+}
+
+.wut-community-icon {
+    position: absolute;
+    top: 19px;
+    left: 24px;
+    display: block;
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid rgba(255, 255, 255, .95);
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+    box-shadow: 0 3px 7px rgba(48, 58, 16, .34);
+    -webkit-box-shadow: 0 3px 7px rgba(48, 58, 16, .34);
+}
+
+.wut-community-icon img {
+    display: block;
+    width: 112px;
+    height: 112px;
+    background: #ffffff;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+}
+
+.wut-community-body {
+    position: absolute;
+    top: 43px;
+    left: 170px;
+    display: block;
+    width: 760px;
+    height: 70px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.wut-community-body strong,
+.wut-community-body small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-community-body strong {
+    color: #343434;
+    font-size: 24px;
+    line-height: 34px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .72);
+}
+
+.wut-community-body small {
+    margin-top: 3px;
+    color: #747a77;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 21px;
+    letter-spacing: .5px;
+}
+
+.wut-community-body em {
+    display: inline-block;
+    margin-right: 7px;
+    padding: 0 6px;
+    color: #ffffff;
+    background: #5ac800;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-size: 11px;
+    line-height: 19px;
+    font-style: normal;
+    font-weight: bold;
+    vertical-align: 3px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+
+/* Legacy row ornaments stay hidden in this flatter presentation. */
+.wut-community-channel,
+.wut-community-arrow {
+    display: none;
+}
+
+.wut-community-focused .wut-community-card {
+    height: 154px;
+    background: rgba(235, 250, 255, .72);
+    border-top: 3px solid rgba(92, 199, 240, .95);
+    border-bottom: 3px solid rgba(92, 199, 240, .95);
+    box-shadow:
+        inset 8px 0 0 rgba(90, 200, 0, .75),
+        inset -8px 0 0 rgba(90, 200, 0, .75);
+    -webkit-box-shadow:
+        inset 8px 0 0 rgba(90, 200, 0, .75),
+        inset -8px 0 0 rgba(90, 200, 0, .75);
+}
+
+.wut-community-focused .wut-community-icon {
+    border-color: #ffffff;
+    box-shadow:
+        0 3px 8px rgba(48, 58, 16, .36),
+        0 0 8px rgba(17, 154, 219, .58);
+    -webkit-box-shadow:
+        0 3px 8px rgba(48, 58, 16, .36),
+        0 0 8px rgba(17, 154, 219, .58);
+}
+
+.wut-community-opened .wut-community-card {
+    background: rgba(238, 251, 229, .68);
+}
+
+/* Kept for the controller, but hidden until community detail pages exist. */
+.wut-community-status {
+    display: none;
+}
