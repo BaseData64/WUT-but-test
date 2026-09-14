@@ -3,109 +3,95 @@
 declare(strict_types=1);
 
 require dirname(__DIR__) . '/_common.php';
+require __DIR__ . '/_renderer.php';
 
 wut_start_session();
 $config = wut_config();
-$rendererBase = rtrim(trim((string) ($config['mii_renderer_base'] ?? '')), '/');
+$settings = wut_mii_renderer_settings($config);
+$method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 
-if ($rendererBase === '') {
+if ($method !== 'GET' && $method !== 'HEAD') {
+    http_response_code(405);
+    header('Allow: GET, HEAD');
+    header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
+    echo "Method not allowed.\n";
+    exit;
+}
+
+if (empty($settings['configured'])) {
     http_response_code(503);
     header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
     echo "WUT Mii renderer is not configured.\n";
     exit;
 }
 
 $identity = wut_identity_from_session();
 
-if (empty($identity['resolved'])) {
+if (empty($identity['resolved']) || empty($identity['authenticated'])) {
     http_response_code(401);
     header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
     echo "WUT identity is not resolved yet.\n";
     exit;
 }
 
 $width = isset($_GET['width']) ? (int) $_GET['width'] : 96;
-if ($width < 48) {
-    $width = 48;
-}
-if ($width > 512) {
-    $width = 512;
-}
-
-$allowedTypes = array(
-    'face',
-    'face_only',
-    'all_body',
-    'fflmakeicon',
-    'ffliconwithbody',
-    'variableiconbody',
-    'all_body_sugar',
-);
-$type = isset($_GET['type']) && in_array((string) $_GET['type'], $allowedTypes, true)
-    ? (string) $_GET['type']
-    : 'face';
-
-$query = array(
-    'width' => $width,
-    'type' => $type,
+$type = wut_mii_allowed_type($_GET['type'] ?? 'face');
+$expression = wut_mii_allowed_expression($_GET['expression'] ?? 'normal');
+$query = wut_mii_render_query(
+    $identity,
+    $settings,
+    $width,
+    $type,
+    $expression
 );
 
-if (!empty($identity['mii_data'])) {
-    $query['data'] = (string) $identity['mii_data'];
-} elseif (!empty($identity['pid'])) {
-    $query['pid'] = (string) $identity['pid'];
-    if (($identity['network'] ?? '') === 'pretendo') {
-        $query['api_id'] = 1;
-    }
-} elseif (!empty($identity['pnid'])) {
-    $query['nnid'] = (string) $identity['pnid'];
-    $query['api_id'] = (($identity['network'] ?? '') === 'pretendo') ? 1 : 0;
-} else {
+if ($query === null) {
     http_response_code(404);
     header('Content-Type: text/plain; charset=utf-8');
-    echo "Resolved WUT identity has no Mii lookup key.\n";
+    header('Cache-Control: no-store');
+    echo "Resolved WUT identity has no valid Mii render source.\n";
     exit;
 }
 
-$upstream = $rendererBase . '/miis/image.png?' . http_build_query($query, '', '&', PHP_QUERY_RFC3986);
-$body = false;
-$contentType = 'image/png';
-$status = 502;
-
-if (function_exists('curl_init')) {
-    $ch = curl_init($upstream);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 4);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 12);
-    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-    $body = curl_exec($ch);
-    $status = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-    $reportedType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-    if (is_string($reportedType) && $reportedType !== '') {
-        $contentType = $reportedType;
-    }
-    curl_close($ch);
-} else {
-    $context = stream_context_create(array(
-        'http' => array(
-            'timeout' => 12,
-            'ignore_errors' => true,
-            'protocol_version' => 1.1,
-        ),
-    ));
-    $body = @file_get_contents($upstream, false, $context);
-    $status = $body === false ? 502 : 200;
+/* The renderer can take seconds; do not hold the user's PHP session lock. */
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_write_close();
 }
 
-if ($body === false || $status < 200 || $status >= 300) {
-    http_response_code($status >= 400 ? $status : 502);
+$render = wut_mii_fetch_render($settings, $query);
+
+if (empty($render['ok'])) {
+    $upstreamStatus = (int) ($render['upstream_status'] ?? 0);
+    http_response_code($upstreamStatus === 404 ? 404 : 502);
     header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
+    header('X-WUT-Mii-Cache: ERROR');
     echo "WUT Mii renderer request failed.\n";
     exit;
 }
 
-http_response_code(200);
-header('Content-Type: ' . $contentType);
+$body = (string) $render['body'];
+$modified = (int) $render['modified'];
+$etag = '"' . hash('sha256', $body) . '"';
+
+header('Content-Type: image/png');
 header('Cache-Control: private, max-age=300');
-echo $body;
+header('Vary: Cookie');
+header('ETag: ' . $etag);
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $modified) . ' GMT');
+header('X-Content-Type-Options: nosniff');
+header('X-WUT-Mii-Cache: ' . (string) $render['cache']);
+
+if (trim((string) ($_SERVER['HTTP_IF_NONE_MATCH'] ?? '')) === $etag) {
+    http_response_code(304);
+    exit;
+}
+
+header('Content-Length: ' . strlen($body));
+http_response_code(200);
+if ($method !== 'HEAD') {
+    echo $body;
+}

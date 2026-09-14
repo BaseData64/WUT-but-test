@@ -27,7 +27,7 @@ WUT's PHP bootstrap now detects those headers automatically. The raw ServiceToke
 
 ### ariankordi/nwf-mii-cemu-toy
 
-That renderer frontend accepts Mii data, NNID/PNID, or PID and can render a PNG through `/miis/image.png`. It also documents `/mii_data/{nnid}`, with `api_id=1` for Pretendo IDs. WUT's Mii proxy follows that API contract.
+That renderer frontend accepts Mii data, NNID/PNID, or PID and can render a PNG through `/miis/image.png`. It also documents `/mii_data/{nnid}`, with `api_id=1` for Pretendo IDs. WUT's Mii gateway follows that API contract and fixes the `wiiu` shader plus `middle` resources for the Miiverse-era look.
 
 ## Runtime files
 
@@ -37,7 +37,9 @@ That renderer frontend accepts Mii data, NNID/PNID, or PID and can render a PNG 
 - `cafe/olv/script/olv_mii.js` — current-user Mii image adapter.
 - `net/olv/v1/bootstrap.php` — safe server-side console/header probe.
 - `net/olv/v1/profile/setup.php` — prototype profile setup persistence.
-- `net/olv/v1/mii/render.php` — same-origin proxy to an FFL renderer.
+- `net/olv/v1/mii/_renderer.php` — validated renderer HTTP/cache adapter.
+- `net/olv/v1/mii/render.php` — same-origin session-bound PNG endpoint.
+- `net/olv/v1/mii/status.php` — safe renderer/link diagnostics.
 
 ## Current behavior
 
@@ -46,7 +48,9 @@ That renderer frontend accepts Mii data, NNID/PNID, or PID and can render a PNG 
 3. Finishing First Run stores `setup_complete=1`.
 4. When running under PHP/XAMPP, setup state is also mirrored to the PHP session.
 5. `bootstrap.php` automatically detects Miiverse request headers when they reach WUT.
-6. If identity has been resolved and an FFL renderer is configured, `wut_mii.js` can obtain the current user's Mii without asking the user to type an ID.
+6. If identity has been resolved and an FFL renderer is configured, `olv_mii.js` obtains the current user's Mii without asking the user to type an ID.
+7. StoreData stays in PHP; browser JavaScript receives only a presence flag and a short cache key.
+8. Linking or switching accounts refreshes visible Mii icons through the `wut:account-linked` event.
 
 ## Renderer configuration
 
@@ -58,12 +62,12 @@ Example:
 'mii_renderer_base' => 'http://127.0.0.1:8080'
 ```
 
-The Wii U requests WUT's same-origin `mii/render.php`; PHP talks to the local renderer. This avoids requiring the console to reach a localhost-only renderer port.
+The Wii U requests WUT's same-origin `mii/render.php`; PHP talks to the local renderer. This avoids requiring the console to reach a localhost-only renderer port. See `MII-RENDERER.md` for the full account-link contract, diagnostics, cache behavior and self-hosting boundary.
 
 ## Development identity test
 
 Only from localhost, this build supports a development identity injection so the Mii pipeline can be tested before the ServiceToken resolver exists:
 
-`net/olv/v1/bootstrap.php?wutdev=1&pid=123&pnid=ExamplePNID&network=pretendo&mii_name=Example`
+`net/olv/v1/bootstrap.php?wutdev=1&pnid=YOUR_PNID&network=pretendo&mii_name=Example`
 
 This is development-only and is not the production identity mechanism.

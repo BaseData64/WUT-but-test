@@ -1,7 +1,26 @@
 <?php
 return array(
-    // Same machine is fine: the PHP proxy fetches it server-side.
+    /*
+     * Point this at ariankordi/nwf-mii-cemu-toy's HTTP frontend.
+     * Same machine is recommended: PHP fetches it server-side, while the Wii U
+     * only sees WUT's same-origin PNG endpoint.
+     */
     'mii_renderer_base' => 'http://127.0.0.1:8080',
+
+    'mii_renderer_connect_timeout' => 4,
+    'mii_renderer_timeout' => 15,
+    'mii_renderer_max_bytes' => 4 * 1024 * 1024,
+
+    // Empty uses the operating-system temp directory plus /wut-mii-cache.
+    'mii_renderer_cache_dir' => '',
+    'mii_renderer_cache_ttl' => 3600,
+    'mii_renderer_stale_ttl' => 7 * 24 * 3600,
+
+    // Keep enabled for HTTPS. Do not disable certificate checks in production.
+    'mii_renderer_verify_tls' => true,
+
+    // Wii U/Miiverse-style renders use the middle resource and no 2x SSAA.
+    'mii_renderer_scale' => 1,
 
     // Development identity injection is only honored from localhost.
     'allow_local_dev_identity' => true,

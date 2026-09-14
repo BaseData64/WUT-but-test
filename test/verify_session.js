@@ -17,6 +17,8 @@ const html = read('cafe/olv/index.html');
 const bootstrap = read('net/olv/v1/bootstrap.php');
 const setup = read('net/olv/v1/profile/setup.php');
 const render = read('net/olv/v1/mii/render.php');
+const renderer = read('net/olv/v1/mii/_renderer.php');
+const rendererStatus = read('net/olv/v1/mii/status.php');
 
 assert(session.includes('beginner: 0'), 'Beginner must map to 0');
 assert(session.includes('intermediate: 1'), 'Intermediate must map to 1');
@@ -30,9 +32,16 @@ assert(html.includes('script/olv_mii.js'), 'mii JS must load');
 assert(bootstrap.includes('HTTP_X_NINTENDO_SERVICETOKEN'), 'bootstrap must detect ServiceToken');
 assert(bootstrap.includes('HTTP_X_NINTENDO_PARAMPACK'), 'bootstrap must detect ParamPack');
 assert(!bootstrap.includes("'service_token' => $serviceToken"), 'raw ServiceToken must not be returned');
+assert(bootstrap.includes('wut_public_identity($identity)'), 'bootstrap must use the public identity projection');
+assert(!bootstrap.includes("'identity' => $identity"), 'raw server identity must not be returned');
 assert(setup.includes("array('0', '1', '2')"), 'server must validate game skill 0..2');
-assert(render.includes("'/miis/image.png?'"), 'Mii proxy must target renderer image endpoint');
-assert(render.includes("$query['api_id'] = 1"), 'Pretendo Mii lookup must use api_id=1');
+assert(renderer.includes("'/miis/image.png?'"), 'Mii gateway must target renderer image endpoint');
+assert(renderer.includes("$query['api_id'] = 1"), 'Pretendo Mii lookup must use api_id=1');
+assert(renderer.includes("'shaderType' => 'wiiu'"), 'Mii gateway must select the Wii U shader');
+assert(renderer.includes("'resourceType' => 'middle'"), 'Mii gateway must select Wii U-era resources');
+assert(renderer.includes('wut_mii_is_png'), 'Mii gateway must validate PNG output');
+assert(rendererStatus.includes("'contract' => 'ariankordi-nwf-mii-cemu-toy'"), 'Mii status must expose the adapter contract');
 assert(mii.includes('miiProxyUrl'), 'client Mii adapter must use same-origin proxy');
+assert(mii.includes('miiCacheKey'), 'client Mii adapter must version linked icons');
 
 console.log('WUT session/Mii bootstrap checks passed.');
