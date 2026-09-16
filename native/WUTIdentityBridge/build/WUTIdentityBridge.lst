@@ -1,0 +1,338 @@
+         w __deregister_frame_info
+         w __register_frame_info
+02000000 T __init
+02000024 t __do_global_dtors_aux
+020000f0 t frame_dummy
+02000114 00000004 T on_init_wut_stdcpp()
+02000118 00000004 T on_init_wut_malloc()
+0200011c 00000004 T on_fini_wut_malloc()
+02000120 00000014 T on_init_wut_sockets()
+02000134 00000014 T on_fini_wut_sockets()
+02000148 00000004 T on_init_wut_newlib()
+0200014c 00000004 T on_fini_wut_newlib()
+02000150 00000004 T on_init_wut_thread()
+02000154 00000040 T __init_wrapper()
+020001a4 00000004 T __fini_wrapper()
+020001a8 00000038 T wups_init_config_functions(wups_loader_init_config_args_t)
+020001e0 00000034 T wups_init_button_combo_functions(wups_loader_init_button_combo_args_t_)
+02000214 00000040 T wups_init_reent_functions(wups_loader_init_reent_args_t_)
+02000254 00000004 T on_init_wut_devoptab()
+02000258 00000004 T on_fini_wut_devoptab()
+0200025c 00000194 t HttpPostJson(char const*, char const*)
+02000410 00000080 t ReportStage(char const*, int)
+02000490 00000158 T on_app_starting()
+02000628 00000388 t WorkerThreadMain(int, char const**)
+02000a40 00000004 T on_fini_wut_stdcpp()
+02000a44 000000c4 T WUPSButtonComboAPI_InitInternal
+02000b08 000000b4 T WUPSConfigAPI_GetVersion
+02000bdc 00000220 T WUPSConfigAPI_InitLibrary_Internal
+02000e1c 0000000c T __wups_start
+02000e38 00000060 W __init_wut_socket
+02000ea8 0000005c W __fini_wut_socket
+02000f04 00000004 T __getreent
+02000f08 0000005c W wut_get_thread_specific
+02000f84 00000134 W __assert_func
+020010c8 0000004c t reclaim_reent_trampoline(void*)
+02001114 00000034 T WUPSReentAPI_InitInternal
+02001158 000001a4 T __wups_getreent()
+0200131c 00000014 T __init_wut_newlib
+02001330 00000004 T __fini_wut_newlib
+02001334 00000078 T __fini_wut_sbrk_heap
+020013bc 00000030 T __init_wut_thread
+020013fc 000000ac T __syscall_lock_acquire
+020014e8 000000ac T __syscall_lock_release
+020015d4 00000004 T __init_wut_malloc
+020015d8 00000004 T __fini_wut_malloc
+020015dc 0000006c T _malloc_r
+02001648 00000018 T _free_r
+02001660 000000e0 T _realloc_r
+02001750 0000009c T _calloc_r
+020017ec 00000070 T _memalign_r
+0200185c 0000006c T connect
+020018d8 00000080 T recv
+02001968 00000080 T send
+020019f8 000000d0 T socket
+02001ad8 0000000c T __wut_socket_init_devoptab
+02001ae4 0000000c T __wut_socket_fini_devoptab
+02001af0 0000008c T __wut_get_nsysnet_fd
+02001b7c 00000080 T __wut_get_nsysnet_result
+02001c0c 00000010 T __wut_socket_open
+02001c1c 00000048 T __wut_socket_read
+02001c74 00000048 T __wut_socket_write
+02001ccc 000001bc T __init_wut_devoptab
+02001ed8 0000008c T __fini_wut_devoptab
+02001f84 000000a0 T __wut_fsa_dirclose
+02002054 000001ac T __wut_fsa_dirnext
+02002230 0000017c T __wut_fsa_diropen
+020023ec 000000a0 T __wut_fsa_dirreset
+020024bc 000000d4 T __wut_fsa_fstat
+020025c0 0000009c T __wut_fsa_fsync
+0200268c 000000e0 T __wut_fsa_mkdir
+0200277c 000004cc T __wut_fsa_open
+02002cb8 000001bc T __wut_fsa_read
+02002ea4 00000114 T __wut_fsa_rename
+02002fc8 000000c4 T __wut_fsa_rmdir
+0200309c 00000188 T __wut_fsa_seek
+02003264 00000118 T __wut_fsa_stat
+0200338c 00000168 T __wut_fsa_statvfs
+02003504 000000c8 T __wut_fsa_ftruncate
+0200360c 000000c4 T __wut_fsa_unlink
+020036e0 00000040 T __wut_fsa_hashstring
+02003720 00000368 T __wut_fsa_fixpath
+02003a88 0000007c T __wut_fsa_translate_stat_mode
+02003b04 00000144 T __wut_fsa_translate_stat
+02003c48 00000028 T __wut_fsa_translate_error
+02003c70 000001d4 T __wut_fsa_write
+02003e74 0000003c T __wut_socket_close
+02003ec0 0000011c T __wut_fsa_chdir
+02003fec 000000e0 T __wut_fsa_chmod
+020040dc 0000009c T __wut_fsa_close
+020041a8 00000448 T __divdi3
+020045f0 000003c4 T __udivdi3
+020049b4 000001b8 T chdir
+02004b6c 0000027c T _concatenate_path
+02004de8 000000b4 T __release_handle
+02004e9c 0000010c T __alloc_handle
+02004fa8 00000060 T __get_handle
+02005008 00000168 T _close_r
+02005170 00000008 t null_write
+02005178 00000018 T setDefaultDevice
+02005190 00000108 T FindDevice
+02005298 00000040 T RemoveDevice
+020052d8 000000f4 T AddDevice
+020053cc 00000014 T __libc_lock_acquire
+020053e0 00000014 T __libc_lock_release
+020053f4 0000014c T memcpy
+02005540 00000080 T strlen
+020055c0 00000030 T close
+020055f0 00000040 T memalign
+02005630 00000130 T snprintf
+02005760 00000154 T strchr
+020058b4 00000124 T memcmp
+020059d8 00000020 T __errno
+020059f8 00000180 T memset
+02005b78 00000104 T strncpy
+02005c7c 0000009c T strcmp
+02005d18 00000058 T malloc
+02005d70 00000030 T free
+02005da0 00000078 T strrchr
+02005e18 00000030 T strdup
+02005e48 0000010c T _reclaim_reent
+02005f54 000007bc t get_arg
+02006710 000039f8 T _svfprintf_r
+0200a108 000000c0 T strnlen
+0200a1c8 000000c8 T strncmp
+0200a290 00000090 T frexp
+0200a320 00000070 T _strdup_r
+0200a390 00000104 T _wcrtomb_r
+0200a494 00000148 T memchr
+0200a5dc 0000010c T __ssprint_r
+0200a6e8 0000004c T __locale_mb_cur_max
+0200a734 00000340 t quorem
+0200aa74 00001720 T _dtoa_r
+0200c194 00000010 T _wcsrtombs_r
+0200c1a4 0000004c T _localeconv_r
+0200c1f0 00000194 T __ssputs_r
+0200c384 00000108 T __utf8_wctomb
+0200c48c 000001e4 T _wcsnrtombs_l
+0200c670 000000d8 T _wcsnrtombs_r
+0200c748 000000f4 T _Balloc
+0200c83c 00000024 T _Bfree
+0200c860 00000174 T __multadd
+0200c9d4 00000098 T __hi0bits
+0200ca6c 0000010c T __lo0bits
+0200cb78 00000108 T __i2b
+0200cc80 00000338 T __multiply
+0200cfb8 0000019c T __pow5mult
+0200d154 0000026c T __lshift
+0200d3c0 000000dc T __mcmp
+0200d49c 00000314 T __mdiff
+0200d7b0 00000194 T __d2b
+0200d944 00000604 T __utf8_mbtowc
+0200df48 00000254 T memmove
+0200e19c 00000380 T __umoddi3
+0200e51c 00000058 T _restgpr_14_x
+0200e520 00000054 T _restgpr_15_x
+0200e524 00000050 T _restgpr_16_x
+0200e528 0000004c T _restgpr_17_x
+0200e52c 00000048 T _restgpr_18_x
+0200e530 00000044 T _restgpr_19_x
+0200e534 00000040 T _restgpr_20_x
+0200e538 0000003c T _restgpr_21_x
+0200e53c 00000038 T _restgpr_22_x
+0200e540 00000034 T _restgpr_23_x
+0200e544 00000030 T _restgpr_24_x
+0200e548 0000002c T _restgpr_25_x
+0200e54c 00000028 T _restgpr_26_x
+0200e550 00000024 T _restgpr_27_x
+0200e554 00000020 T _restgpr_28_x
+0200e558 0000001c T _restgpr_29_x
+0200e55c 00000018 T _restgpr_30_x
+0200e560 00000014 T _restgpr_31_x
+0200e574 t __do_global_ctors_aux
+0200e5c4 T __fini
+10000638 d .LC2
+1000073c 00000011 d BytesToHex(unsigned char const*, unsigned int, char*)::hex
+10000750 00000004 d sReentPluginId
+10000754 00000034 d __wut_nsysnet_error_code_map
+10000788 00000080 d __wut_fsa_devoptab
+10000808 00000042 d CSWTCH.24
+1000084c 00000080 D dotab_stdnull
+10000b24 00000010 d zeroes.0
+10000b34 00000010 d blanks.1
+10000b98 0000006c D __action_table
+10000c04 0000006c D __state_table
+10000c70 00000100 D __chclass
+10000d70 00000101 D _ctype_
+10000e74 0000000c d p05.0
+10000e80 00000028 D __mprec_bigtens
+10000ea8 000000c8 D __mprec_tens
+10000f70 d __CTOR_LIST__
+10000f74 d __CTOR_END__
+10000f74 D __CTOR_END__
+10000f74 D __CTOR_LIST__
+10000f78 d __DTOR_LIST__
+10000f7c D __DTOR_END__
+10000f7c D __DTOR_LIST__
+10000f80 d __EH_FRAME_BEGIN__
+10000f80 D __EH_FRAME_BEGIN__
+10002de4 D __EH_FRAME_END__
+10002de4 d __FRAME_END__
+10002de8 00000004 d sConfigPluginIdentifier
+10002dec 00000004 d sConfigAPIVersion
+10002df0 00000080 d __wut_socket_devoptab
+10002e70 00000400 d _current_working_directory
+10003270 00001000 d handles
+10004270 0000000c d __stderr_handle
+1000427c 0000000c d __stdout_handle
+10004288 0000000c d __stdin_handle
+10004294 0000008c D devoptab_list
+10004320 00000004 d defaultDevice
+10004328 00000200 D _impure_data
+10004528 00000254 D __global_locale
+1000477c 00000004 D _impure_ptr
+10004780 00000004 B __wut_exit
+10004784 b completed.2
+10004788 b dtor_idx.1
+1000478c b object.0
+100047c0 00000008 b gTitleId
+100047c8 000006a0 b gWorkerThread
+10004e80 00010000 b gWorkerStack
+10014e80 00000038 b __internal_functions
+10014eb8 00000001 b sConfigLibInitDone
+10014ebc 00000004 b sAPIMenuGetStatus
+10014ec0 00000004 b sAPIItemDestroy
+10014ec4 00000004 b sAPIItemCreateEx
+10014ec8 00000004 b sAPICategoryAddItem
+10014ecc 00000004 b sAPICategoryAddCategory
+10014ed0 00000004 b sAPICategoryDestroy
+10014ed4 00000004 b sAPICategoryCreateEx
+10014ed8 00000004 b sAPIInitEx
+10014edc 00000004 b sAPIGetVersion
+10014ee0 00000004 b sModuleHandle
+10014ee4 00000004 b __wut_socket_devoptab_added
+10014ee8 00000008 b __internal_functions
+10014ef0 00000004 b sHeapSize
+10014ef4 00000004 b sHeapMaxSize
+10014ef8 00000004 b sHeapBase
+10014efc 00000004 b sHeapHandle
+10014f00 00000010 b sMallocSpinLock
+10014f10 00000010 b sSyncSpinLock
+10014f20 000003b8 B __wut_fsa_device_data
+100152d8 00000400 b temp_cwd
+100156d8 00000004 b __hndl_lock
+100156e0 00000150 B __sf
+10015830 00000099 R wups_meta_info_linking_order
+100158cc 0000000c R wups_meta_license
+100158d8 0000000d R wups_meta_author
+100158e8 00000015 R wups_meta_version
+10015900 00000042 R wups_meta_description
+10015944 00000049 R wups_meta_info_dump
+10015990 00000014 R wups_meta_plugin_name
+100159a4 00000024 R wups_meta_buildtimestamp
+100159c8 0000000b R wups_meta_wups
+100159d4 00000019 R wups_meta_name
+100159f0 00000008 R wups_hooks_on_app_starting
+100159f8 00000008 R wups_hooks_on_fini_wut_devoptab
+10015a00 00000008 R wups_hooks_on_init_wut_devoptab
+10015a08 00000008 R wups_hooks_wups_init_reent_functions
+10015a10 00000008 R wups_hooks_wups_init_button_combo_functions
+10015a18 00000008 R wups_hooks_wups_init_config_functions
+10015a20 00000008 R wups_hooks___fini_wrapper
+10015a28 00000008 R wups_hooks___init_wrapper
+10015a30 00000008 R wups_hooks_on_init_wut_thread
+10015a38 00000008 R wups_hooks_on_fini_wut_stdcpp
+10015a40 00000008 R wups_hooks_on_init_wut_stdcpp
+10015a48 00000008 R wups_hooks_on_fini_wut_newlib
+10015a50 00000008 R wups_hooks_on_init_wut_newlib
+10015a58 00000008 R wups_hooks_on_fini_wut_sockets
+10015a60 00000008 R wups_hooks_on_init_wut_sockets
+10015a68 00000008 R wups_hooks_on_fini_wut_malloc
+10015a70 00000008 R wups_hooks_on_init_wut_malloc
+c0000038 T FSAAddClient
+c0000040 T FSAChangeDir
+c0000048 T FSAChangeMode
+c0000050 T FSACloseDir
+c0000058 T FSACloseFile
+c0000060 T FSADelClient
+c0000068 T FSAFlushFile
+c0000070 T FSAGetDeviceInfo
+c0000078 T FSAGetFreeSpaceSize
+c0000080 T FSAGetStat
+c0000088 T FSAGetStatFile
+c0000090 T FSAInit
+c0000098 T FSAMakeDir
+c00000a0 T FSAMount
+c00000a8 T FSAOpenDir
+c00000b0 T FSAOpenFileEx
+c00000b8 T FSAReadDir
+c00000c0 T FSAReadFile
+c00000c8 T FSARemove
+c00000d0 T FSARename
+c00000d8 T FSARewindDir
+c00000e0 T FSASetPosFile
+c00000e8 T FSATruncateFile
+c00000f0 T FSAUnmount
+c00000f8 T FSAWriteFile
+c0000100 T MEMFreeToExpHeap
+c0000108 T MEMGetSizeForMBlockExpHeap
+c0000110 T OSCreateThread
+c0000118 T OSDynLoad_Acquire
+c0000120 T OSDynLoad_FindExport
+c0000128 T OSFastMutex_Init
+c0000130 T OSFastMutex_Lock
+c0000138 T OSFastMutex_Unlock
+c0000140 T OSFatal
+c0000148 T OSGetCurrentThread
+c0000150 T OSGetSystemInfo
+c0000158 T OSGetTitleID
+c0000160 T OSInitMutexEx
+c0000168 T OSInitSpinLock
+c0000170 T OSLockMutex
+c0000178 T OSReport
+c0000180 T OSResumeThread
+c0000188 T OSSetThreadName
+c0000190 T OSSleepTicks
+c0000198 T OSUninterruptibleSpinLock_Acquire
+c00001a0 T OSUninterruptibleSpinLock_Release
+c00001a8 T OSUnlockMutex
+c00001b0 T __rplwrap_exit
+c00001e0 T Finalize__Q2_2nn3actFv
+c00001e8 T GetAccountId__Q2_2nn3actFPc
+c00001f0 T GetMii__Q2_2nn3actFP12FFLStoreData
+c00001f8 T GetPersistentId__Q2_2nn3actFv
+c0000200 T GetPrincipalId__Q2_2nn3actFv
+c0000208 T GetSlotNo__Q2_2nn3actFv
+c0000210 T Initialize__Q2_2nn3actFv
+c0000230 T htonl
+c0000238 T htons
+c0000240 T socket_lib_init
+c0000248 T __rplwrap_connect
+c0000250 T __rplwrap_recv
+c0000258 T __rplwrap_send
+c0000260 T __rplwrap_socket
+c0000268 T __rplwrap_socketclose
+c0000270 T __rplwrap_socketlasterr
+c0000298 R MEMAllocFromDefaultHeap
+c00002a0 R MEMAllocFromDefaultHeapEx
+c00002a8 R MEMFreeToDefaultHeap

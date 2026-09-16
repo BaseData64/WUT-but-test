@@ -326,6 +326,7 @@ function wut_mii_fetch_render(array $settings, array $query): array
             'modified' => $cached['modified'],
             'cache' => 'HIT',
             'upstream_status' => 0,
+            'upstream_error' => '',
         );
     }
 
@@ -341,6 +342,7 @@ function wut_mii_fetch_render(array $settings, array $query): array
             'modified' => time(),
             'cache' => 'MISS',
             'upstream_status' => $response['status'],
+            'upstream_error' => '',
         );
     }
 
@@ -351,6 +353,7 @@ function wut_mii_fetch_render(array $settings, array $query): array
             'modified' => $cached['modified'],
             'cache' => 'STALE',
             'upstream_status' => $response['status'],
+            'upstream_error' => $response['error'],
         );
     }
 
@@ -360,6 +363,6 @@ function wut_mii_fetch_render(array $settings, array $query): array
         'modified' => time(),
         'cache' => 'ERROR',
         'upstream_status' => $response['status'],
-        'error' => $response['error'],
+        'upstream_error' => $response['error'],
     );
 }

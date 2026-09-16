@@ -31,8 +31,8 @@ assert(endpoint.includes("'mii_not_found'"), 'not-found feedback missing');
 assert(render.includes('wut_identity_can_render'), 'PNG gateway rejects browser-linked sessions');
 assert(page.includes('id="wut-mii-link-form"'), 'Mii link form missing');
 assert(page.includes('script/olv_mii_link.js'), 'Mii link client missing');
-assert(setup.includes('portalUrl = "mii-link.html"'), 'First Run does not offer Mii linking');
-assert(portal.includes('data-wut-demo-action="connect-mii"'), 'User Page link entry missing');
+assert(!setup.includes('portalUrl = "mii-link.html"'), 'First Run still forces the manual Mii-link page');
+assert(setup.includes('cafe-olv-portal.html'), 'First Run no longer opens the Portal');
 assert(!/\b(?:let|const)\b|=>|\?\.|\basync\b|\bawait\b/.test(client), 'modern JS token in Mii linker');
 assert(!/display\s*:\s*(?:flex|grid)/i.test(css), 'modern layout in Mii link CSS');
 
