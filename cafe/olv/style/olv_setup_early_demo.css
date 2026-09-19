@@ -550,9 +550,7 @@ body {
 }
 
 .wut-skill-option.wut-focused {
-    border-color: #18b9c6;
-    box-shadow: 0 0 0 4px rgba(24,185,198,.22), 0 4px 8px rgba(55,70,55,.12);
-    -webkit-box-shadow: 0 0 0 4px rgba(24,185,198,.22), 0 4px 8px rgba(55,70,55,.12);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-skill-option.wut-selected {
@@ -732,8 +730,12 @@ body {
 }
 
 .wut-corner-button .wut-action-label { line-height: 60px; }
-.wut-corner-button.wut-focused { box-shadow: 0 0 0 4px rgba(27,183,196,.34), 0 -2px 7px rgba(52,90,39,.17); -webkit-box-shadow: 0 0 0 4px rgba(27,183,196,.34), 0 -2px 7px rgba(52,90,39,.17); }
-.wut-corner-button-left.wut-focused { box-shadow: 0 0 0 4px rgba(27,183,196,.28), 1px -2px 6px rgba(50,65,50,.10); -webkit-box-shadow: 0 0 0 4px rgba(27,183,196,.28), 1px -2px 6px rgba(50,65,50,.10); }
+.wut-corner-button.wut-focused {
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
+}
+.wut-corner-button-left.wut-focused {
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
+}
 
 /* Keep action symbol positions from the proven portal stylesheet. */
 .wut-corner-button:disabled { opacity: .45; }

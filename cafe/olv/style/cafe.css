@@ -278,29 +278,11 @@ img {
    ============================================================ */
 
 .wut-corner-button.wut-focused {
-    border: 4px solid #00b6e6 !important;
-
-    box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.18),
-        inset 0 2px 0 rgba(255,255,255,.70) !important;
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.18),
-        inset 0 2px 0 rgba(255,255,255,.70) !important;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-corner-button-left.wut-focused {
-    box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.25),
-        inset 0 1px 0 rgba(255,255,255,.16) !important;
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.25),
-        inset 0 1px 0 rgba(255,255,255,.16) !important;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 
@@ -882,15 +864,7 @@ img {
 }
 
 .wut-skill-option.wut-focused {
-    border-color: #00b6e6;
-
-    box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.15);
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.15);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-skill-option.wut-selected {
@@ -1562,19 +1536,7 @@ textarea {
 }
 
 .wut-skill-option.wut-focused {
-    border-color: #00b6e6;
-
-    box-shadow:
-        0 0 0 4px #007dbb,
-        0 3px 5px rgba(0,85,125,.16),
-        inset 0 0 0 999px rgba(0,174,255,.12),
-        inset 0 2px 0 rgba(255,255,255,.96);
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        0 3px 5px rgba(0,85,125,.16),
-        inset 0 0 0 999px rgba(0,174,255,.12),
-        inset 0 2px 0 rgba(255,255,255,.96);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-skill-option.wut-selected {
@@ -1605,19 +1567,7 @@ textarea {
 }
 
 .wut-skill-option.wut-selected.wut-focused {
-    border-color: #00b6e6;
-
-    box-shadow:
-        0 0 0 4px #007dbb,
-        0 3px 5px rgba(0,85,125,.18),
-        inset 0 0 0 999px rgba(0,174,255,.08),
-        inset 0 1px 0 rgba(255,255,255,.48);
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        0 3px 5px rgba(0,85,125,.18),
-        inset 0 0 0 999px rgba(0,174,255,.08),
-        inset 0 1px 0 rgba(255,255,255,.48);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-skill-option.wut-selected:after {
@@ -1752,34 +1702,15 @@ textarea {
 }
 
 .wut-corner-button.wut-focused {
-    border: 4px solid #00b6e6 !important;
-
-    box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.16),
-        inset 0 2px 0 rgba(255,255,255,.72) !important;
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.16),
-        inset 0 2px 0 rgba(255,255,255,.72) !important;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-corner-button-left.wut-focused {
-    box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.22),
-        inset 0 1px 0 rgba(255,255,255,.16) !important;
-
-    -webkit-box-shadow:
-        0 0 0 4px #007dbb,
-        inset 0 0 0 999px rgba(0,174,255,.22),
-        inset 0 1px 0 rgba(255,255,255,.16) !important;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-corner-button.wut-focused .wut-action-icon {
-    box-shadow: none;
-    -webkit-box-shadow: none;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 

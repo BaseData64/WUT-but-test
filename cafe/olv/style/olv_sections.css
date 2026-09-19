@@ -292,10 +292,7 @@
 }
 
 .wut-feed-list a.wut-section-focused {
-    background: rgba(232, 249, 255, .70);
-    border-color: #5cc7f0;
-    box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
-    -webkit-box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 /* ------------------------------------------------------------
@@ -348,17 +345,7 @@
 }
 
 .wut-demo-tabs a.wut-section-focused:after {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    bottom: 3px;
-    left: 3px;
-    content: "";
-    border: 3px solid #5cc7f0;
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    box-shadow: 0 0 7px rgba(17, 154, 219, .55);
-    -webkit-box-shadow: 0 0 7px rgba(17, 154, 219, .55);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 /* ------------------------------------------------------------
@@ -596,9 +583,7 @@
 }
 
 .wut-profile-post.wut-section-focused {
-    border-color: #5cc7f0;
-    box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
-    -webkit-box-shadow: inset 7px 0 0 #5ac800, 0 0 8px rgba(17, 154, 219, .48);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 /* ------------------------------------------------------------
@@ -785,12 +770,7 @@
 }
 
 .wut-directory-list a.wut-section-focused {
-    min-height: 107px;
-    background: rgba(232, 249, 255, .76);
-    border-top-color: #5cc7f0;
-    border-bottom-color: #5cc7f0;
-    box-shadow: inset 7px 0 0 #5ac800, inset -7px 0 0 #5ac800;
-    -webkit-box-shadow: inset 7px 0 0 #5ac800, inset -7px 0 0 #5ac800;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-notification-tabs {

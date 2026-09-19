@@ -1,0 +1,577 @@
+/*
+ * WUT-Miiverse — Activity Feed beta / native page mode
+ * ES5-era Wii U friendly CSS. No flex/grid/filter or animated layout.
+ */
+
+/* Activity Feed uses the same oversized beta header geometry as My Menu. */
+#wut-activity-feed-view .wut-beta-topbar-feed {
+    left: -220px;
+    width: 2200px;
+    height: 118px;
+    border-bottom: 2px solid rgba(166,171,169,.86);
+    overflow: hidden;
+}
+
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon {
+    top: 18px;
+    left: 180px;
+}
+
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-copy {
+    top: 20px;
+    left: 276px;
+}
+
+/* Oversized strip, controls stay inside the visible Wii U logical surface. */
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-button {
+    top: 29px;
+    left: 960px;
+    right: auto;
+}
+
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-favorite {
+    top: 29px;
+    left: 1190px;
+    right: auto;
+}
+
+html.wut-feed-native-page,
+html.wut-feed-native-page body {
+    width: 100%;
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+body.wut-feed-native-page #wut-portal-stage {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px;
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+body.wut-feed-native-page #wut-portal-stage:before {
+    display: none !important;
+    content: none !important;
+}
+
+body.wut-feed-native-page #body,
+body.wut-feed-native-page #wut-portal-view {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px;
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+}
+
+body.wut-feed-native-page #global-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+body.wut-feed-native-page #wut-beta-corner-action {
+    display: none !important;
+}
+
+body.wut-feed-native-page #wut-activity-feed-view {
+    position: relative !important;
+    top: auto !important;
+    left: 220px !important;
+    width: 900px;
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+    background: transparent;
+}
+
+/* Feed becomes normal document flow: no internal scrolling / scrollTop. */
+body.wut-feed-native-page .wut-feed-scroll {
+    position: relative !important;
+    top: auto !important;
+    left: 0 !important;
+    width: 900px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0;
+    padding: 136px 0 92px;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+body.wut-feed-native-page .wut-feed-list {
+    width: 850px !important;
+    margin: 0 0 0 18px !important;
+    padding: 0 !important;
+}
+
+body.wut-feed-native-page .wut-feed-list > li {
+    position: relative;
+    width: 850px;
+    min-height: 150px;
+    margin: 0 0 14px;
+    padding: 0;
+    border: 0 !important;
+}
+
+body.wut-feed-native-page .wut-feed-list > li > a {
+    position: relative;
+    display: block;
+    width: 850px !important;
+    min-height: 146px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    color: #323735;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    text-decoration: none;
+}
+
+body.wut-feed-native-page .wut-post-user-icon {
+    position: absolute;
+    top: 37px;
+    left: 0;
+    width: 72px;
+    height: 72px;
+    overflow: hidden;
+    background: #fff;
+    border: 2px solid rgba(190,197,194,.92);
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.17);
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.17);
+    z-index: 2;
+}
+
+body.wut-feed-native-page .wut-post-user-icon img {
+    display: block;
+    width: 72px;
+    height: 72px;
+}
+
+body.wut-feed-native-page .wut-post-body {
+    position: relative;
+    display: block;
+    width: 710px !important;
+    min-height: 128px !important;
+    margin: 0 0 0 94px !important;
+    padding: 12px 16px 10px !important;
+    overflow: visible;
+    background: rgba(250,250,250,.94) !important;
+    border: 1px solid rgba(187,194,191,.94) !important;
+    border-radius: 13px !important;
+    -webkit-border-radius: 13px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,.15) !important;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.15) !important;
+}
+
+body.wut-feed-native-page .wut-post-body:before {
+    display: block !important;
+    content: "";
+    position: absolute;
+    top: 47px;
+    left: -14px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 14px solid rgba(250,250,250,.94);
+    border-bottom: 10px solid transparent;
+}
+
+body.wut-feed-native-page .wut-post-head {
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    overflow: hidden;
+}
+
+body.wut-feed-native-page .wut-post-head strong {
+    float: left;
+    max-width: 340px;
+    height: 25px;
+    padding: 0 12px;
+    overflow: hidden;
+    color: #fff;
+    background: #444a47;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    font-size: 15px;
+    line-height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.wut-feed-native-page .wut-post-head small {
+    display: none !important;
+}
+
+body.wut-feed-native-page .wut-post-head em {
+    float: right;
+    color: #858d89;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 26px;
+}
+
+body.wut-feed-native-page .wut-post-community {
+    display: block !important;
+    width: 690px;
+    height: 26px;
+    margin: 5px 0 7px;
+    overflow: hidden;
+    color: #727a76;
+    background: rgba(226,230,228,.74);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    font-size: 12px;
+    line-height: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.wut-feed-native-page .wut-post-community img {
+    float: left;
+    width: 26px;
+    height: 26px;
+    margin-right: 8px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+body.wut-feed-native-page .wut-post-copy {
+    display: block;
+    height: auto !important;
+    min-height: 42px;
+    max-height: 72px;
+    margin: 0;
+    overflow: hidden;
+    color: #343a37;
+    font-size: 17px;
+    line-height: 23px;
+}
+
+body.wut-feed-native-page .wut-post-meta {
+    display: block !important;
+    height: 30px;
+    margin-top: 6px;
+    color: #79817d;
+    font-size: 11px;
+    line-height: 30px;
+}
+
+body.wut-feed-native-page .wut-post-meta > span {
+    margin-left: 12px;
+}
+
+body.wut-feed-native-page .wut-post-meta i {
+    float: right;
+    color: #a0a6a3;
+    font-family: monospace;
+    font-size: 9px;
+    font-style: normal;
+}
+
+body.wut-feed-native-page .wut-yeah-control {
+    display: inline-block;
+    min-width: 56px;
+    height: 26px;
+    padding: 0 8px 0 28px;
+    background-position: 6px center;
+    background-size: 18px 18px;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    line-height: 26px;
+}
+
+.wut-feed-empty {
+    width: 760px !important;
+    min-height: 130px !important;
+    margin: 20px 0 0 45px !important;
+    padding: 34px 20px 20px !important;
+    color: #656d69;
+    background: rgba(250,250,250,.78);
+    border: 1px solid rgba(188,195,191,.86) !important;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    text-align: center;
+}
+
+.wut-feed-empty strong,
+.wut-feed-empty span {
+    display: block;
+}
+
+.wut-feed-empty strong {
+    color: #49504d;
+    font-size: 23px;
+    line-height: 34px;
+}
+
+.wut-feed-empty span {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* Large early-Wii-U style posting control. */
+#wut-feed-new-post {
+    position: fixed;
+    right: 28px;
+    bottom: 24px;
+    z-index: 60;
+    display: none;
+    width: 148px;
+    height: 58px;
+    color: #fff;
+    background: #58aa20;
+    border: 2px solid #469116;
+    border-radius: 29px;
+    -webkit-border-radius: 29px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.20);
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.20);
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 58px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.18);
+}
+
+body.wut-feed-native-page #wut-feed-new-post {
+    display: block;
+}
+
+#wut-feed-new-post span {
+    margin-right: 7px;
+    font-size: 27px;
+}
+
+/* ------------------------------------------------------------
+   Simple Wii U composer overlay
+   ------------------------------------------------------------ */
+#wut-post-composer {
+    position: fixed;
+    z-index: 500;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(60,65,63,.54);
+}
+
+#wut-post-composer.none {
+    display: none !important;
+}
+
+.wut-post-composer-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    height: 320px;
+    margin: -160px 0 0 -310px;
+    background: #f8faf8;
+    border: 2px solid #b9c0bd;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    box-shadow: 0 5px 16px rgba(0,0,0,.28);
+    -webkit-box-shadow: 0 5px 16px rgba(0,0,0,.28);
+}
+
+.wut-post-composer-card h2 {
+    height: 42px;
+    margin: 18px 24px 0;
+    color: #424946;
+    font-size: 28px;
+    line-height: 42px;
+}
+
+.wut-post-composer-community {
+    display: block;
+    height: 26px;
+    margin: 0 24px 8px;
+    color: #4c9f18;
+    font-size: 14px;
+    line-height: 26px;
+}
+
+#wut-post-composer-text {
+    display: block;
+    width: 550px;
+    height: 126px;
+    margin: 0 24px;
+    padding: 10px;
+    resize: none;
+    color: #333936;
+    background: #fff;
+    border: 2px solid #c4cbc7;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 19px;
+    line-height: 25px;
+}
+
+#wut-post-composer-status {
+    position: absolute;
+    left: 26px;
+    bottom: 22px;
+    width: 300px;
+    height: 42px;
+    overflow: hidden;
+    color: #858d89;
+    font-size: 12px;
+    line-height: 42px;
+}
+
+.wut-post-composer-action {
+    position: absolute;
+    bottom: 18px;
+    display: block;
+    width: 116px;
+    height: 46px;
+    color: #4b514e;
+    background: #fff;
+    border: 1px solid #bbc2bf;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    font-size: 17px;
+    line-height: 46px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#wut-post-composer-cancel {
+    right: 154px;
+}
+
+#wut-post-composer-submit {
+    right: 24px;
+    color: #fff;
+    background: #58aa20;
+    border-color: #469116;
+}
+
+
+/* Activity Feed is read-only: publishing belongs to Communities. */
+#wut-feed-new-post {
+    display: none !important;
+}
+
+/* Future/Community drawing posts use the same feed bubble without adding a
+   second composer to Activity Feed. */
+body.wut-feed-native-page .wut-post-drawing {
+    display: block;
+    width: 520px;
+    min-height: 120px;
+    margin: 8px 0 10px;
+    padding: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #c6ccca;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    text-align: center;
+}
+
+body.wut-feed-native-page .wut-post-drawing img {
+    display: inline-block;
+    max-width: 500px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    border: 0;
+}
+
+body.wut-feed-native-page .wut-post-drawing em {
+    color: #8b918e;
+    font-size: 13px;
+    line-height: 80px;
+}
+
+/* ============================================================
+   ACTIVITY FEED — original menu symbol + Wii U neon pulse
+   Both layers are embedded PNG Base64. The neutral icon is the
+   exact Activity Feed symbol already used by the left rail.
+   ============================================================ */
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon {
+    position: absolute;
+    top: 18px;
+    left: 180px;
+    display: block;
+    width: 78px;
+    height: 78px;
+    overflow: hidden !important;
+    background: #fbfbfb;
+    background-image: none !important;
+    border: 1px solid #bfc6c3;
+    border-bottom-color: #aeb5b2;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(0,0,0,.08);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(0,0,0,.08);
+}
+
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon img {
+    display: none !important;
+}
+
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon:before {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 62px;
+    height: 60px;
+    content: "";
+    pointer-events: none;
+    background-image: url("data:image/png;base64,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");
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: 62px 60px;
+    background-size: 62px 60px;
+}
+
+#wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon:after {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 62px;
+    height: 60px;
+    content: "";
+    pointer-events: none;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAABICAYAAABRGGN6AAALXklEQVR42u2cbXMT1xXH/+feu7uSjOV1CoQOJJYJKdgBR/QhmaZTkJNhknfInwDzCcAfoBP8Cey+6MuO9Q1iXjYuWDCdTNImxQktdqfYkiFusWiCbAc/SNp7+mIfvJINCD9FIrkzO7Z39+7Db88953/PnjWhyVv8Ws4GkPT/Zs3FpXNHJ3b6PNTskEjKW2SoRLBSM5g1oDnPzFkAN6D16OJ7ncUfLKi2G/dTMmqNC8Oo3sAM1gzWDrjigB0NdpxRdpzfL77Xmf3Bgdp/61EHgJww1Kb3wVq70BwNXalAlyvgciXLjjP4vMCaGhQzp74tzY13T7eH1wHMm0JjR0OXyz6wUXaci/UOyWYHZQPIAbBrt604S+j8twqsajNgzmqpyOVyXz3W1dSgPFgJAP2hVWcBJLwFAPBtaQ7d0+3QjgMiCoDpUgXO2hp0qXxxsbcj80KCepYs8KwtDeC89xPflubQddcOLIyZweUKnNU16FJ5cCH16pUXClT8Ws4mw8gRkQ1BtbIgy45zlTWPLp07mq+xuksA7ENTK9CVCojIhVVx4KyswlkrPdGymhLUk2QBO7pWElRFOA/YEID03PIkTs8c2QBLl8p9C6lXR18IUE+SBUHE2ygJqiIcM/cDGJpbnrSrYJUrcFZWi5Xl1dO+NfpNNCOoh0m781/djwlEICFAQgCekyYhQFKCDAUZsaCiEchYJE2GkYtfy6UBgIgyAHoPx7qKt45+DWYGEYGUhLAsW0bMkRfCop4mC+4ufYbf3D8J1jqwFGgNXXY2RDhmTgIYv7v0mf1OvgskBNhx4KyVUHm8UuWvmjbqef4mHYJ11ouCdjjCsdZeB4ArboQLO20f1sv//M5mrQEi318VnZXVTn+4Nr2O2kytA7jgays/wj0DVmq5sjiemIQ7hBnQpTIqyysDC2eODDclqPi1XBpCXPJufAKsZ1lztja1siHCTR8OIHAlcNq9fj9mHnr5zuPL7DiuVTkOnOXV2Ufv/DTRdKBax2YSMmLlhKnWgVQcN1PgOHnWenDx3USmBlgawMjc8qS9DouhyxU4yyvZ4m+P9Ib83q2DXy0kIIS7z1oJleXV3oWzr2SbKuoJ00jIiAkZiXiLBdkShXKXhLTMkbbsvVzr2Eyg2Ilo1I9wnyQmXflABKEUhGWm4uOz/d5+RQCD5EECkRs9pbjQdPKgeOZIXpiGOw6IABIgIUFKQZgmpCsFEjJi3Ypfz/eHYE0A6D3W+nZxHQQglIK0zCuh/TK3O7/52p1IAyQFhKE+aEYdlSj0tKFwKo6p44v4JHEHJMj10kQgpSAtCzIWgbTMkU1g9eWO6yDgk5QQhupoy95L+/sdbEn8ERx0AglxKH4tZzcVKCLKAsgCwEvmYRxrfRvzb+xD4VQcQskAmDAURMTyYaXC/WMqPuxmEELDS6kLodNkAvggQAiQUsmmU+ZE1EvunXYC6AUwDKD4oCuGW6/NBTfowyKlPvIyDX4bnDmuF3x95Q4veS50/DxART/D4Cn2D5pyCuPfEBFliWiAiNoBDB6OdYVgAUJJqKhlk5KXQ/2KLUZbtVUJ0dJ24/665UnxKWsOW+ghtSEEfzxtQ1CaiBKN7NdrtRMRXWHm0cOxrnGSj21fD5FSEIZxGUA41zRMQnzoK3GSEiBK+sOatZ4PZ0VJyldVjZi7QlJeIiltEhRMNBtMervpJ8dBfHw2yxVnwAdGRBPM3Dvf3TJ+YKJokxQgQSCl2tqy99J++oSIigdvL/6DNZ8k6d6jjJiBpNDlygQRhf0WlG9FZKhxaRpJMgzXMVIDa1FmCFc0prhcHo9fz/ctvpvIhmANCtMY4krF00wSWsnzAEZDQvQLMJ8MRzd/26cds3d/fW99QAklC8ITciMyGknKaATSMkBKgqRo3EVJCCUhLRPCsmxhqI9qRObw7Y6HX7OjgzAvDPXL6iSfc7fG6Zn+r8d+cvq72VMSJCX+fmwOhZ62KRG/nk+JiJWWlglqdEuqvjGQFJCW4eeQhsKbD7Ykfuc6ZMBzIyerc1rtf6myUCULoc0TMRUvzne34JV9bwDAhBCGuiSUcg/mOXo3wlJDLq6yDgJbIAXIMFJhq/Idc3i/2hZYzev/QaGnbSocGT35MQDgNBGNKjKMNElRfSAC8icYMRVvSGM6NLUCXSoBTIHFCCkhLDMFwHfs+QNfLQTOX1pGqVa8MnN+vhsJwLWamu1FT6O5ztxNpa5DYq1xs+MrxNSZPIB8A3KyH5yIJg98WQp5CXcYCtM4Ed6xcCpePDS1YgPAgxNRcxOnctrLW2W9Kc4Tm3KFF1VFlNXVtbsAfuVRbcTkXD+0HkHNSBBK1mq/zIMTUV9sZjYRrVVW89TMxYaL0Ixz//3FHxoVkj/LZ60XfGcd2hKp2W8AQB+APiK6uJ1zKuYqz7g+GWye5O+zoI7uSC4MP7YfAKgq18q7eiq17Tz2n2cuI/x+jZGpfcv6lL79CFWdPE9fMNhP2e5FU9uE1C9Mc4iECKQFO85ZL0/01Ba/lkuTYYzU9D3vheyGawreg9nSuDXcZD9JGUgLvVaK1DVqlEpu6FsqJ7eYTGhsi5LRyEl3ourfrIYwzRNb6gsG+W91G9OiNgmxdT4mErS/nhC9032fLA92z7x+lAffH6g9chp7dp7w0OOaYfe8IZe3ce3cHKy2Z1FEeqthRxjqQW1fobYRW3Y5/IntPJX//fylmzJiue/QDAVhGpj42TdT9fQt9LRNVfU1FP722v1Gj3pbbsX5N/bVrDq+WmffiY19eyZeSFBENOzNsezQ6kydfUeZeaCm72iDg/JTK88/fSKi4e2A3rHot8vzPvF9hdtt42Gs12fWphL2RB40VZqFNkqbhk2zjM0kmDlNRNmtfqK67+Ppy0QoLp17LdOoz0Rt9Sm0js0kQTRCUiQFEdjR2XrSKxuPM90vDGMIAOLX80Ps6MzSuaMDTTCFqRMcIS2jVlK1RCFjEYiImfKSeM8FW5jGkIy4VXIqFrWFaVxuRIvasjK39rf/VRgKQim/xA/SModax2aGWj+etp853P50NyVMNS4tyyb/OIaCikXvNOJ8Zss+6uGb9lsHby9Cl93PueC+qQWILutSub91bGaUtb4KoPjd+8eyrWMzSdbaBlGShLggDJX06x38jw3BjHtJo7vlBROcmcKp+IcHJh6BNQewpEUQStm6UulnR/ez1oiPz7rmSwokBSCEWy/gf/ADN9R//vocYqonU7cF7WHOXPBWXRRRHsDg7Em3BCf4Qsn/sskyIaMWVCwaLDLm1YZbpjvUfEjM+Pz1OSTiPUW4hRFNYFHPp8qvMPPZQg9SL995DL1W8tcDUj7zUOyW22C2mxBTPUUAvY36hlr4F+wvW/CJfQAy890teHi6HcIyQVJUHbNq0dodeqaBya4lFHraEFNxH1L9OozXYbtLY2cP/EKHi8x8A8CH890tifD2yUc3g9/3RzpwINoRjn3+JHqgkWsddgRUCFgGQMb7DPU8gBQAu6v9zGa7ZwFcBTDq+bqGb2qnD+gDC/mhVGhzvlnA1AXKWV17H3XWDdUBLrvTF906NpPUlYotpbl3oNxvSEI35lbffRC/lvuIHf1loyUWiKhNmKrffXFKVd5dWFZ+90BZphvWfeFGbkQCUZodJ91wmRX3Ix6vFr4KIAqn4vndkp+qcLJ1Yv8X3ySDJCcBJCSkJWoSYw1jUetVwqE8lIxF/SCxO+dl5v6Z4sTIW9OvNE+NeY2eEoZEoactT0SduwbKi0y3Hq7MJrv/FYdb7d8sRfmAtEx4b3P6dqoM8WmgkgDGAdiTj27i7P03sbGQtMGmFEoit14LP+wVtu6BBTMnmHmcm6s98gTuXhjvBmApuP9gIdHgA+8qgMxeTX3+D0E5Bg9evyLqAAAAAElFTkSuQmCC");
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: 62px 60px;
+    background-size: 62px 60px;
+    opacity: 0;
+    -webkit-transition: opacity 260ms ease-in-out;
+    transition: opacity 260ms ease-in-out;
+}
+
+html.wut-wiiu #wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon:after {
+    opacity: .10;
+}
+
+html.wut-wiiu.wut-wiiu-neon-on #wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon:after {
+    opacity: 1;
+}
+
+html:not(.wut-wiiu) #wut-activity-feed-view .wut-beta-topbar-feed .wut-beta-topbar-icon:after {
+    opacity: 0;
+}
+

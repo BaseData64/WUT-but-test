@@ -2,12 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cafe OLV Portal - Activity Feed</title>
+    <script src="script/olv_applet_startup.js?v=portal-bgm-handoff-2"></script>
+
+    <script>
+    (function () {
+        var hash = (window.location && window.location.hash) ? window.location.hash : "";
+        if (hash === "#communities" || hash === "#plaza") {
+            document.documentElement.className += " wut-boot-plaza";
+        }
+    }());
+    </script>
+    <style>
+        html.wut-boot-plaza #wut-portal-stage { visibility: hidden !important; }
+    </style>
 
     <link rel="stylesheet" href="style/olv_portal.css">
-    <link rel="stylesheet" href="style/olv_communities.css">
     <link rel="stylesheet" href="style/olv_sections.css">
+    <link rel="stylesheet" href="style/olv_beta_menu.css?v=plaza-custom-icon-blue-1">
+    <link rel="stylesheet" href="style/olv_beta_2012.css">
+    <link rel="stylesheet" href="style/olv_plaza_concept.css?v=plaza-native-page-2">
+    <link rel="stylesheet" href="style/olv_beta_topbar.css?v=my-menu-wide-2200-1">
+    <link rel="stylesheet" href="style/olv_mymenu_beta.css?v=accountmii21">
+    <link rel="stylesheet" href="style/olv_community_beta.css?v=community-beta-1">
+    <link rel="stylesheet" href="style/olv_activity_beta.css?v=afexacticon2">
+    <link rel="stylesheet" href="style/olv_messages_beta.css?v=account-core-v1">
 </head>
 <body>
 
@@ -22,7 +42,7 @@
                         alt="User Page"
                     >
                 </span>
-                <span>User Page</span>
+                <span>My Menu</span>
             </a>
         </li>
 
@@ -31,15 +51,15 @@
         </li>
 
         <li id="global-menu-community" data-wut-menu-index="2">
-            <a href="#communities" data-wut-view="communities" data-sound="SE_WAVE_MENU">Communities</a>
+            <a href="#communities" data-wut-view="communities" data-sound="SE_WAVE_MENU">Plaza</a>
         </li>
 
         <li id="global-menu-message" data-wut-menu-index="3">
-            <a href="#messages" data-wut-view="messages" data-sound="SE_WAVE_MENU">Messages</a>
+            <a href="#messages" data-wut-view="messages" data-sound="SE_WAVE_MENU">Message</a>
         </li>
 
         <li id="global-menu-news" data-wut-menu-index="4">
-            <a href="#notifications" data-wut-view="notifications" data-sound="SE_WAVE_MENU">Notifications</a>
+            <a href="#notifications" data-wut-view="notifications" data-sound="SE_WAVE_MENU">News</a>
         </li>
 
         <li id="global-menu-exit" data-wut-menu-index="5">
@@ -58,95 +78,20 @@
                 class="wut-portal-panel"
                 aria-hidden="false"
             >
-                <div class="wut-section-demo-strip">
-                    <strong>CAFE OLV // ACTIVITY STREAM</strong>
-                    <small>LOCAL PREVIEW CHANNEL 01</small>
-                    <span><b>03</b> POSTS</span>
+                <div class="wut-section-demo-strip wut-beta-topbar wut-beta-topbar-feed">
+                    <span class="wut-beta-topbar-icon"><img src="res/olv/default-image.png" alt="Activity Feed"></span>
+                    <span class="wut-beta-topbar-copy"><strong>Activity Feed</strong><small>Community activity</small></span>
+                    <a href="#feed-details" class="wut-beta-topbar-button" data-wut-focus-item="1">Details</a>
+                    <a href="#feed-favorite" class="wut-beta-topbar-favorite" data-wut-focus-item="1"><span class="wut-beta-topbar-favorite-icon"></span></a>
                 </div>
 
                 <div class="wut-section-scroll wut-feed-scroll">
                     <ul id="wut-feed-list" class="wut-feed-list">
-                        <li>
-                            <a href="#feed-wut-welcome" data-wut-focus-item="1" data-wut-demo-action="feed-post" data-wut-label="WUT Announcements post">
-                                <span class="wut-post-user-icon">
-                                    <img id="wut-feed-current-mii" src="res/olv/mii/img_unknown_MiiIcon.png" onerror="this.onerror=null;this.src='res/olv/mii/img_unknown_MiiIcon.png';" alt="Cafe User">
-                                </span>
-                                <span class="wut-post-body">
-                                    <span class="wut-post-head">
-                                        <strong id="wut-feed-user-name">Cafe User</strong>
-                                        <small id="wut-feed-user-id">WUT_USER</small>
-                                        <em>Just now</em>
-                                    </span>
-                                    <span class="wut-post-community">
-                                        <img src="res/olv/default-image.png" alt="">
-                                        WUT Announcements
-                                    </span>
-                                    <span class="wut-post-copy">The Cafe OLV Portal is online. This local feed is ready for the WUT post service.</span>
-                                    <span class="wut-post-meta">
-                                        <b class="wut-yeah-control">Yeah!</b>
-                                        <span>2 Yeahs</span>
-                                        <span>1 Comment</span>
-                                        <i>DEMO DATA</i>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#feed-community-preview" data-wut-focus-item="1" data-wut-demo-action="feed-post" data-wut-label="Community preview post">
-                                <span class="wut-post-user-icon">
-                                    <img src="res/olv/mii/img_unknown_MiiIcon.png" alt="Demo User">
-                                </span>
-                                <span class="wut-post-body">
-                                    <span class="wut-post-head">
-                                        <strong>Demo Operator</strong>
-                                        <small>CAFE_DEV_02</small>
-                                        <em>8 min. ago</em>
-                                    </span>
-                                    <span class="wut-post-community">
-                                        <img src="res/olv/commu/MarioParty10.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="">
-                                        Mario Party Community
-                                    </span>
-                                    <span class="wut-post-copy">Trying the new community directory from the GamePad. The square artwork slots look great!</span>
-                                    <span class="wut-post-meta">
-                                        <b class="wut-yeah-control">Yeah!</b>
-                                        <span>7 Yeahs</span>
-                                        <span>3 Comments</span>
-                                        <i>WII U</i>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#feed-service-test" data-wut-focus-item="1" data-wut-demo-action="feed-post" data-wut-label="Service test post">
-                                <span class="wut-post-user-icon">
-                                    <img src="res/olv/mii/img_unknown_MiiIcon.png" alt="Demo User">
-                                </span>
-                                <span class="wut-post-body">
-                                    <span class="wut-post-head">
-                                        <strong>OLV Test Unit</strong>
-                                        <small>LOCAL_NODE</small>
-                                        <em>24 min. ago</em>
-                                    </span>
-                                    <span class="wut-post-community">
-                                        <img src="res/olv/default-image.png" alt="">
-                                        Cafe Test Community
-                                    </span>
-                                    <span class="wut-post-copy">Navigation response nominal. Post, reply and Yeah endpoints will connect here in a later milestone.</span>
-                                    <span class="wut-post-meta">
-                                        <b class="wut-yeah-control">Yeah!</b>
-                                        <span>4 Yeahs</span>
-                                        <span>0 Comments</span>
-                                        <i>LOCAL</i>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
+                        <li class="wut-feed-empty"><strong>Loading Activity Feed...</strong><span>Connecting to the local WUT post service.</span></li>
                     </ul>
                 </div>
 
-                <p id="wut-feed-status" class="wut-section-status">Choose a post to inspect the local preview.</p>
+                <p id="wut-feed-status" class="wut-section-status">Recent messages and drawings shared inside Communities.</p>
             </section>
 
             <section
@@ -154,45 +99,77 @@
                 class="wut-portal-panel none"
                 aria-hidden="true"
             >
-                <div class="wut-section-demo-strip">
-                    <strong>CAFE OLV // USER PROFILE</strong>
-                    <small>SESSION ADAPTER VIEW</small>
-                    <span id="wut-profile-session-state"><b>LOCAL</b> MODE</span>
+                <div class="wut-section-demo-strip wut-beta-topbar wut-beta-topbar-user">
+                    <span class="wut-beta-topbar-icon"><img id="wut-my-menu-topbar-mii" src="res/olv/mii/img_unknown_MiiIcon.png" onerror="this.onerror=null;this.src='res/olv/mii/img_unknown_MiiIcon.png';" alt="My Menu Mii"></span>
+                    <span class="wut-beta-topbar-copy"><strong>My Menu</strong><small id="wut-my-menu-topbar-name">Cafe User</small></span>
+                    <a href="#user-details" class="wut-beta-topbar-button" data-wut-focus-item="1">Details</a>
+                    <a href="#user-favorite" class="wut-beta-topbar-favorite" data-wut-focus-item="1"><span class="wut-beta-topbar-favorite-icon"></span></a>
                 </div>
 
-                <div class="wut-profile-page">
-                    <div class="wut-profile-card">
-                        <span class="wut-profile-mii-frame">
+                <div class="wut-profile-page wut-mymenu-beta">
+                    <div class="wut-mymenu-person">
+                        <span class="wut-profile-mii-frame wut-mymenu-mii-frame">
                             <img id="wut-profile-mii" src="res/olv/mii/img_unknown_MiiIcon.png" onerror="this.onerror=null;this.src='res/olv/mii/img_unknown_MiiIcon.png';" alt="Current user Mii">
                         </span>
-                        <div class="wut-profile-identity">
+
+                        <div class="wut-profile-identity wut-mymenu-identity">
+                            <small class="wut-mymenu-kicker">THIS IS YOUR PLAZA</small>
                             <h2 id="wut-profile-name">Cafe User</h2>
                             <p id="wut-profile-id">WUT_USER</p>
                             <span id="wut-profile-network">LOCAL SESSION</span>
                         </div>
-                        <div class="wut-profile-skill">
+
+                        <div class="wut-profile-skill wut-mymenu-skill">
                             <small>GAME EXPERIENCE</small>
                             <strong id="wut-profile-game-skill">Not set</strong>
                         </div>
-                        <dl class="wut-profile-counts">
+                    </div>
+
+                    <div class="wut-mymenu-welcome">
+                        <small>WELCOME BACK</small>
+                        <strong><span id="wut-my-menu-greeting-name">Cafe User</span>!</strong>
+                        <p>See what you have shared and jump back into your WUT-Miiverse life.</p>
+                        <dl class="wut-profile-counts wut-mymenu-counts">
                             <dt>Posts</dt><dd>3</dd>
                             <dt>Yeahs</dt><dd>12</dd>
-                            <dt>Following</dt><dd>4</dd>
+                            <dt>Friends</dt><dd>4</dd>
                         </dl>
                     </div>
 
-                    <ul id="wut-profile-tabs" class="wut-demo-tabs wut-profile-tabs">
-                        <li class="selected"><a href="#profile-posts" data-wut-focus-item="1" data-wut-demo-action="profile-posts" data-wut-label="Posts tab">Posts</a></li>
-                        <li><a href="#profile-yeahs" data-wut-focus-item="1" data-wut-demo-action="profile-yeahs" data-wut-label="Yeahs tab">Yeahs</a></li>
-                        <li><a href="#profile-friends" data-wut-focus-item="1" data-wut-demo-action="profile-friends" data-wut-label="Friends tab">Friends</a></li>
+                    <ul id="wut-profile-tabs" class="wut-mymenu-actions">
+                        <li class="selected">
+                            <a href="#profile-posts" data-wut-focus-item="1" data-wut-demo-action="profile-posts" data-wut-label="Posts">
+                                <small>MY POSTS</small>
+                                <strong>Posts</strong>
+                                <span>Things you've shared</span>
+                                <b id="wut-message-conversation-count">0</b>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#profile-yeahs" data-wut-focus-item="1" data-wut-demo-action="profile-yeahs" data-wut-label="Yeahs">
+                                <small>REACTIONS</small>
+                                <strong>Yeahs</strong>
+                                <span>Posts you liked</span>
+                                <b>12</b>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#profile-friends" data-wut-focus-item="1" data-wut-demo-action="profile-friends" data-wut-label="Friends">
+                                <small>PEOPLE</small>
+                                <strong>Friends</strong>
+                                <span>Your Miiverse circle</span>
+                                <b>4</b>
+                            </a>
+                        </li>
                     </ul>
 
-                    <div class="wut-profile-preview">
-                        <a href="#profile-local-post" class="wut-profile-post" data-wut-focus-item="1" data-wut-demo-action="profile-post" data-wut-label="Local profile post">
-                            <span class="wut-profile-post-badge">LATEST LOCAL POST</span>
-                            <strong>Welcome to my User Page!</strong>
-                            <span>This preview will use the authenticated WUT profile when identity resolution is connected.</span>
-                            <small>Just now&nbsp;&nbsp; / &nbsp;&nbsp;2 Yeahs&nbsp;&nbsp; / &nbsp;&nbsp;1 Comment</small>
+                    <div class="wut-mymenu-recent-label">RECENT FROM YOU</div>
+                    <div class="wut-profile-preview wut-mymenu-recent">
+                        <a href="#profile-local-post" class="wut-profile-post" data-wut-focus-item="1" data-wut-demo-action="profile-post" data-wut-label="Latest post">
+                            <span class="wut-profile-post-badge">LATEST POST</span>
+                            <strong>Have fun in WUT-Miiverse!</strong>
+                            <span>Your latest post and drawings will appear here.</span>
+                            <small>Just now&nbsp;&nbsp; · &nbsp;&nbsp;2 Yeahs&nbsp;&nbsp; · &nbsp;&nbsp;1 Comment</small>
                         </a>
                     </div>
                 </div>
@@ -205,154 +182,104 @@
                 class="wut-portal-panel none"
                 aria-hidden="true"
             >
-                <div class="wut-community-demo-strip">
-                    <strong>CAFE OLV // COMMUNITY DIRECTORY</strong>
-                    <small>LOCAL SAMPLE VIEW 01</small>
-                    <span><b id="wut-community-count">10</b> GROUPS</span>
+                <div id="wut-community-directory">
+                <div class="wut-plaza-lite">
+                    <div class="wut-plaza-lite-title wut-beta-topbar wut-beta-topbar-plaza">
+                        <span class="wut-beta-topbar-icon"><img src="res/olv/commu/thumb/shooter.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Shooter"></span>
+                        <span class="wut-beta-topbar-copy"><strong>Plaza</strong><small>Communities</small></span>
+                        <a href="#plaza-details" class="wut-beta-topbar-button" data-wut-focus-item="1">Details</a>
+                        <a href="#plaza-favorite" class="wut-beta-topbar-favorite" data-wut-focus-item="1" data-wut-label="Favorite communities"><span class="wut-beta-topbar-favorite-icon"></span></a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-mario-kart" class="wut-community-card" data-community-index="0" data-community-title="Mario Kart Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/marioKart.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Mario Kart Community"></span>
+                            <span class="wut-community-body"><strong>Mario Kart Community</strong><small>RACING SERIES / WII U SOFTWARE</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-grace" class="wut-community-card" data-community-index="1" data-community-title="Grace Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/grace.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Grace Community"></span>
+                            <span class="wut-community-body"><strong>Grace Community</strong><small>SOCIAL SIMULATION / SAMPLE GROUP</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-mario-party" class="wut-community-card" data-community-index="2" data-community-title="Mario Party Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/MarioParty10.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Mario Party Community"></span>
+                            <span class="wut-community-body"><strong>Mario Party Community</strong><small>PARTY SERIES / WII U SOFTWARE</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-metroid" class="wut-community-card" data-community-index="3" data-community-title="Metroid Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/Metroid.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Metroid Community"></span>
+                            <span class="wut-community-body"><strong>Metroid Community</strong><small>ACTION SERIES / SAMPLE GROUP</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-yoshi" class="wut-community-card" data-community-index="4" data-community-title="Yoshi Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/YoshiWollyWorld.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Yoshi Community"></span>
+                            <span class="wut-community-body"><strong>Yoshi Community</strong><small>PLATFORM SERIES / WII U SOFTWARE</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-wii-fit" class="wut-community-card" data-community-index="5" data-community-title="Wii Fit Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/Wii_Fit_U.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Wii Fit Community"></span>
+                            <span class="wut-community-body"><strong>Wii Fit Community</strong><small>HEALTH &amp; FITNESS / WII U SOFTWARE</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-new-super-mario-bros-u" class="wut-community-card" data-community-index="6" data-community-title="New Super Mario Bros. U Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/NewSuperMarioBrosU.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="New Super Mario Bros. U Community"></span>
+                            <span class="wut-community-body"><strong>New Super Mario Bros. U Community</strong><small>PLATFORM GAME / WII U SOFTWARE</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-shooter" class="wut-community-card" data-community-index="7" data-community-title="Shooter Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/shooter.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="Shooter Community"></span>
+                            <span class="wut-community-body"><strong>Shooter Community</strong><small>ACTION GAMES / SAMPLE GROUP</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-zelda" class="wut-community-card" data-community-index="8" data-community-title="The Legend of Zelda Community">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/botw.png" onerror="this.onerror=null;this.src='res/olv/commu/thumb/default.png';" alt="The Legend of Zelda Community"></span>
+                            <span class="wut-community-body"><strong>The Legend of Zelda Community</strong><small>ADVENTURE SERIES / WII U SOFTWARE</small></span>
+                        </a>
+                    </div>
+
+                    <div class="wut-community-entry">
+                        <a href="#community-wut-announcements" class="wut-community-card" data-community-index="9" data-community-title="WUT Announcements">
+                            <span class="wut-community-icon"><img src="res/olv/commu/thumb/default.png" onerror="this.onerror=null;" alt="WUT Announcements"></span>
+                            <span class="wut-community-body"><strong>WUT Announcements</strong><small>SERVICE INFORMATION / LOCAL GROUP</small></span>
+                        </a>
+                    
+                    </div>
+                </div>
                 </div>
 
-                <!--
-                    The src attribute is the only artwork URL to edit.
-                    If that URL fails, onerror loads the local placeholder.
-                -->
-                <div id="wut-community-scroll" class="wut-community-scroll">
-                    <ul id="wut-community-grid" class="wut-community-grid">
-                        <li data-featured="1" data-favorite="1">
-                            <a href="#community-mario-kart" class="wut-community-card" data-community-index="0" data-community-title="Mario Kart Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/mario-kart.jpg" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Mario Kart Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Mario Kart Community</strong>
-                                    <small>RACING SERIES / WII U SOFTWARE</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
+                <div id="wut-community-detail" class="wut-community-detail none" aria-hidden="true">
+                    <div class="wut-community-detail-topbar wut-beta-topbar">
+                        <span class="wut-beta-topbar-icon"><img id="wut-community-detail-icon" src="res/olv/commu/thumb/marioKart.png" alt="Community"></span>
+                        <span class="wut-beta-topbar-copy"><strong id="wut-community-detail-title">Mario Kart</strong><small>General Plaza</small></span>
+                        <a href="#community-details" class="wut-beta-topbar-button" data-wut-focus-disabled="1">Details</a>
+                        <a href="#community-favorite" class="wut-beta-topbar-favorite" data-wut-focus-disabled="1" aria-label="Favorite"><span class="wut-beta-topbar-favorite-icon"></span></a>
+                    </div>
 
-                        <li data-featured="1" data-favorite="0">
-                            <a href="#community-grace" class="wut-community-card" data-community-index="1" data-community-title="Grace Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/grace.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Grace Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Grace Community</strong>
-                                    <small>SOCIAL SIMULATION / SAMPLE GROUP</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
+                    <div id="wut-community-post-list" class="wut-beta-poststream">
+                        <div class="wut-community-post-empty"><strong>Loading posts...</strong><span>Please wait.</span></div>
+                    </div>
 
-                        <li data-featured="1" data-favorite="1">
-                            <a href="#community-mario-party" class="wut-community-card" data-community-index="2" data-community-title="Mario Party Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/commu/MarioParty10.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Mario Party Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Mario Party Community</strong>
-                                    <small>PARTY SERIES / WII U SOFTWARE</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="1" data-favorite="0">
-                            <a href="#community-metroid" class="wut-community-card" data-community-index="3" data-community-title="Metroid Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/metroid.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Metroid Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Metroid Community</strong>
-                                    <small>ACTION SERIES / SAMPLE GROUP</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="1" data-favorite="1">
-                            <a href="#community-yoshi" class="wut-community-card" data-community-index="4" data-community-title="Yoshi Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/yoshi-woolly-world.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Yoshi Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Yoshi Community</strong>
-                                    <small>PLATFORM SERIES / WII U SOFTWARE</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="1" data-favorite="0">
-                            <a href="#community-wii-fit" class="wut-community-card" data-community-index="5" data-community-title="Wii Fit Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/wii-fit-u.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Wii Fit Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Wii Fit Community</strong>
-                                    <small>HEALTH &amp; FITNESS / WII U SOFTWARE</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="0" data-favorite="0">
-                            <a href="#community-new-super-mario-bros-u" class="wut-community-card" data-community-index="6" data-community-title="New Super Mario Bros. U Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/new-super-mario-bros-u.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="New Super Mario Bros. U Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>New Super Mario Bros. U Community</strong>
-                                    <small>PLATFORM GAME / WII U SOFTWARE</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="0" data-favorite="0">
-                            <a href="#community-shooter" class="wut-community-card" data-community-index="7" data-community-title="Shooter Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/shooter.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="Shooter Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>Shooter Community</strong>
-                                    <small>ACTION GAMES / SAMPLE GROUP</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="0" data-favorite="0">
-                            <a href="#community-zelda" class="wut-community-card" data-community-index="8" data-community-title="The Legend of Zelda Community">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/zelda.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="The Legend of Zelda Community">
-                                </span>
-                                <span class="wut-community-body">
-                                    <strong>The Legend of Zelda Community</strong>
-                                    <small>ADVENTURE SERIES / WII U SOFTWARE</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-
-                        <li data-featured="0" data-favorite="1">
-                            <a href="#community-wut-announcements" class="wut-community-card" data-community-index="9" data-community-title="WUT Announcements">
-                                <span class="wut-community-icon">
-                                    <img src="res/olv/community/wut-announcements.png" onerror="this.onerror=null;this.src='res/olv/default-image.png';" alt="WUT Announcements">
-                                </span>
-                                <span class="wut-community-body">
-                                    <em>NEW</em>
-                                    <strong>WUT Announcements</strong>
-                                    <small>SERVICE INFORMATION / LOCAL GROUP</small>
-                                </span>
-                                <span class="wut-community-arrow" aria-hidden="true"></span>
-                            </a>
-                        </li>
-                    </ul>
+                    <a href="#community-post-new" id="wut-community-post-button" class="wut-community-post-button" data-wut-community-post-link="1" data-wut-focus-disabled="0">
+                        <span>+</span><strong>Post</strong>
+                    </a>
                 </div>
-
-                <p id="wut-community-status" class="wut-community-status">
-                    Choose a community to continue.
-                </p>
             </section>
 
             <section
@@ -360,57 +287,65 @@
                 class="wut-portal-panel none"
                 aria-hidden="true"
             >
-                <div class="wut-section-demo-strip">
-                    <strong>CAFE OLV // MESSAGE DIRECTORY</strong>
-                    <small>CONVERSATION PREVIEW</small>
-                    <span><b>03</b> THREADS</span>
+                <div class="wut-section-demo-strip wut-beta-topbar wut-beta-topbar-message">
+                    <span class="wut-beta-topbar-icon"><i class="wut-message-signal-wave wut-message-signal-wave-a"></i><i class="wut-message-signal-wave wut-message-signal-wave-b"></i><img src="res/olv/official-user-mini.png" alt="Messages"></span>
+                    <span class="wut-beta-topbar-copy"><strong>Messages</strong><small id="wut-message-topbar-subtitle">Conversations</small></span>
+                    <a href="#message-details" class="wut-beta-topbar-button" data-wut-focus-item="1" data-wut-focus-disabled="1">Details</a>
+                    <a href="#message-favorite" class="wut-beta-topbar-favorite" data-wut-focus-item="1" data-wut-focus-disabled="1"><span class="wut-beta-topbar-favorite-icon"></span></a>
                 </div>
 
-                <div class="wut-section-tip">
-                    <img src="res/olv/tutorial/tutorial-message.png" alt="">
-                    <p>Messages are exchanged with friends. This demo exposes the conversation list only; sending is not connected yet.</p>
-                    <b>PREVIEW</b>
+                <div class="wut-message-beta-shell">
+                    <div id="wut-message-inbox" class="wut-message-inbox">
+                        <div class="wut-message-intro">
+                            <strong>Conversations</strong>
+                            <span>Private messages from real WUT users.</span>
+                            <b id="wut-message-conversation-count">0</b>
+                            <a id="wut-message-new-button" href="#new-message" class="wut-message-new-button" data-wut-focus-item="1" data-wut-demo-action="message-new" data-wut-label="New Message">New Message</a>
+                        </div>
+
+                        <div id="wut-message-new" class="wut-message-new none" aria-hidden="true">
+                            <strong>New Message</strong>
+                            <label>WUT ID</label>
+                            <input id="wut-message-new-id" type="text" maxlength="9" inputmode="numeric" placeholder="000000002">
+                            <label>Message</label>
+                            <textarea id="wut-message-new-text" maxlength="200" placeholder="Write a message..."></textarea>
+                            <a href="#cancel" id="wut-message-new-cancel" data-wut-focus-item="1" data-wut-focus-disabled="1" data-wut-demo-action="message-new-cancel">Cancel</a>
+                            <a href="#send" id="wut-message-new-send" data-wut-focus-item="1" data-wut-focus-disabled="1" data-wut-demo-action="message-new-send">Send</a>
+                            <small id="wut-message-new-note">Enter another user's 9-digit WUT ID.</small>
+                        </div>
+
+                        <div id="wut-message-tray" class="wut-message-tray" aria-label="Message conversations"></div>
+                        <div id="wut-message-empty" class="wut-message-empty">
+                            <strong>No messages yet.</strong>
+                            <span>Conversations will appear here when another WUT user sends you a private message.</span>
+                        </div>
+                    </div>
+
+                    <div id="wut-message-thread" class="wut-message-thread none" aria-hidden="true">
+                        <div class="wut-message-thread-head">
+                            <a id="wut-message-thread-back" href="#messages" class="wut-message-thread-back" data-wut-focus-item="1" data-wut-focus-disabled="1" data-wut-demo-action="message-inbox" data-wut-label="Back to conversations">Back</a>
+                            <span class="wut-message-thread-mii"><img id="wut-message-thread-mii" src="res/olv/mii/img_unknown_MiiIcon.png" alt="Conversation Mii"></span>
+                            <span class="wut-message-thread-person"><strong id="wut-message-thread-name">WUT User</strong><small id="wut-message-thread-id">WUT_USER</small></span>
+                            <span class="wut-message-thread-state">PRIVATE MESSAGE</span>
+                        </div>
+
+                        <div id="wut-message-thread-body" class="wut-message-thread-body"></div>
+
+                        <a id="wut-message-reply-button" href="#reply" class="wut-message-reply-button" data-wut-focus-item="1" data-wut-focus-disabled="1" data-wut-demo-action="message-reply" data-wut-label="Reply">
+                            <span>+</span><strong>Reply</strong>
+                        </a>
+
+                        <div id="wut-message-reply-demo" class="wut-message-reply-demo none" aria-hidden="true">
+                            <strong>Reply</strong>
+                            <textarea id="wut-message-reply-text" maxlength="200" placeholder="Write a message..."></textarea>
+                            <a href="#cancel" id="wut-message-reply-cancel" data-wut-focus-item="1" data-wut-focus-disabled="1" data-wut-demo-action="message-reply-cancel">Cancel</a>
+                            <a href="#send" id="wut-message-reply-send" data-wut-focus-item="1" data-wut-focus-disabled="1" data-wut-demo-action="message-reply-send">Send</a>
+                            <small id="wut-message-reply-note">Send a private WUT message.</small>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="wut-section-scroll wut-message-scroll">
-                    <ul id="wut-message-list" class="wut-directory-list">
-                        <li class="wut-unread">
-                            <a href="#message-demo-operator" data-wut-focus-item="1" data-wut-demo-action="message-thread" data-wut-label="Conversation with Demo Operator">
-                                <span class="wut-directory-icon"><img src="res/olv/mii/img_unknown_MiiIcon.png" alt="Demo Operator"></span>
-                                <span class="wut-directory-body">
-                                    <strong>Demo Operator <small>CAFE_DEV_02</small></strong>
-                                    <em>2 min. ago</em>
-                                    <span>Did the community directory load correctly on the GamePad?</span>
-                                </span>
-                                <i class="wut-directory-arrow"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#message-olv-test" data-wut-focus-item="1" data-wut-demo-action="message-thread" data-wut-label="Conversation with OLV Test Unit">
-                                <span class="wut-directory-icon"><img src="res/olv/mii/img_unknown_MiiIcon.png" alt="OLV Test Unit"></span>
-                                <span class="wut-directory-body">
-                                    <strong>OLV Test Unit <small>LOCAL_NODE</small></strong>
-                                    <em>Yesterday</em>
-                                    <span>System check complete. The Portal shell remained active.</span>
-                                </span>
-                                <i class="wut-directory-arrow"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#message-friend-slot" data-wut-focus-item="1" data-wut-demo-action="message-thread" data-wut-label="Empty friend message slot">
-                                <span class="wut-directory-icon"><img src="res/olv/mii/img_unknown_MiiIcon.png" alt="Friend Slot"></span>
-                                <span class="wut-directory-body">
-                                    <strong>Friend Slot <small>WAITING_FOR_API</small></strong>
-                                    <em>No messages</em>
-                                    <span class="placeholder">You haven't exchanged messages with this user yet.</span>
-                                </span>
-                                <i class="wut-directory-arrow"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <p id="wut-message-status" class="wut-section-status">Choose a conversation preview.</p>
+                <p id="wut-message-status" class="wut-section-status">No messages yet.</p>
             </section>
 
             <section
@@ -418,10 +353,11 @@
                 class="wut-portal-panel none"
                 aria-hidden="true"
             >
-                <div class="wut-section-demo-strip">
-                    <strong>CAFE OLV // NOTIFICATION CENTER</strong>
-                    <small>EVENT PREVIEW BUFFER</small>
-                    <span><b>04</b> EVENTS</span>
+                <div class="wut-section-demo-strip wut-beta-topbar wut-beta-topbar-news">
+                    <span class="wut-beta-topbar-icon"><img src="res/olv/feeling-happy.png" alt="News"></span>
+                    <span class="wut-beta-topbar-copy"><strong>News</strong><small>Notifications</small></span>
+                    <a href="#news-details" class="wut-beta-topbar-button" data-wut-focus-item="1">Details</a>
+                    <a href="#news-favorite" class="wut-beta-topbar-favorite" data-wut-focus-item="1"><span class="wut-beta-topbar-favorite-icon"></span></a>
                 </div>
 
                 <ul id="wut-notification-tabs" class="wut-demo-tabs wut-notification-tabs">
@@ -485,16 +421,38 @@
             </section>
         </div>
     </div>
+
+
+    <div id="wut-post-composer" class="none" aria-hidden="true">
+        <div class="wut-post-composer-card">
+            <h2>Write a Post</h2>
+            <span id="wut-post-composer-community" class="wut-post-composer-community">WUT Plaza</span>
+            <textarea id="wut-post-composer-text" maxlength="280" placeholder="What do you want to share?"></textarea>
+            <span id="wut-post-composer-status"></span>
+            <a id="wut-post-composer-cancel" class="wut-post-composer-action" href="#cancel">Cancel</a>
+            <a id="wut-post-composer-submit" class="wut-post-composer-action" href="#post">Post</a>
+        </div>
+    </div>
+
+    <a id="wut-beta-corner-action" href="#comment" data-wut-focus-disabled="1" aria-label="Comment">
+        <span class="wut-beta-corner-glyph">+</span>
+        <span class="wut-beta-corner-label">Comment</span>
+    </a>
 </div>
 
 <script src="script/olv_store.js"></script>
-<script src="script/olv_session.js"></script>
+<script src="script/olv_session.js?v=account-core-v1"></script>
 <script src="script/olv_identity.js"></script>
 <script src="script/olv_mii.js"></script>
 <script src="script/cafe_input.js"></script>
-<script src="script/olv_communities.js"></script>
-<script src="script/olv_sections.js"></script>
-<script src="script/olv_portal.js"></script>
+<script src="script/olv_posts.js?v=post-mii-account-v1"></script>
+<script src="script/olv_communities.js?v=community-filter-2"></script>
+<script src="script/olv_sections.js?v=account-core-v1"></script>
+<script src="script/olv_messages.js?v=account-core-v1"></script>
+<script src="script/olv_portal.js?v=activity-live-1"></script>
+<script src="script/olv_beta_menu_state.js"></script>
+<script src="script/olv_beta_touch.js?v=plaza-native-page-touchhide-1"></script>
+<script src="script/olv_wiiu_neon.js?v=activity-feed-neon-1"></script>
 
 </body>
 </html>

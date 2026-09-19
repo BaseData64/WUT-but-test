@@ -1,0 +1,384 @@
+/*
+ * WUT-Miiverse — Plaza Native Document Flow
+ * ------------------------------------------------------------
+ * The community cards are normal blocks in the document.
+ * There is NO internal scroll viewport, NO scrollTop controller and NO
+ * translated list/grid. When Plaza is active, html/body own the native page
+ * scroll and the 1280 logical surface uses CSS zoom instead of transform.
+ */
+
+/* ------------------------------------------------------------
+   Shared early-Wii-U transparent section strip
+   ------------------------------------------------------------ */
+.wut-section-demo-strip {
+    top: 8px;
+    left: 18px;
+    width: 1038px;
+    height: 44px;
+    padding: 0 16px;
+    color: #565d5a;
+    background: rgba(255,255,255,.58);
+    border: 1px solid rgba(177,183,180,.88);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    font-family: sans-serif;
+    font-size: 11px;
+    line-height: 44px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.90);
+}
+
+.wut-section-demo-strip strong {
+    color: #454b49;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 0;
+}
+
+.wut-section-demo-strip small {
+    margin-left: 14px;
+    color: #8d9591;
+    font-size: 10px;
+    line-height: 44px;
+}
+
+.wut-section-demo-strip > span {
+    height: 44px;
+    color: #777f7b;
+}
+
+.wut-section-demo-strip b {
+    color: #ee8f15;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.wut-feed-scroll,
+.wut-message-scroll,
+.wut-notification-scroll {
+    top: 60px;
+}
+
+.wut-profile-page,
+.wut-section-tip {
+    top: 60px;
+}
+
+/* ------------------------------------------------------------
+   TRUE NATIVE PAGE MODE FOR PLAZA
+   ------------------------------------------------------------ */
+
+/* The document itself scrolls. This is intentionally NOT an inner scroller. */
+html.wut-plaza-native-page,
+html.wut-plaza-native-page body {
+    width: 100%;
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+body.wut-plaza-native-page {
+    position: relative;
+    background-color: #d7d7d7;
+}
+
+/*
+ * In Plaza, #wut-portal-stage participates in document flow. olv_portal.js
+ * swaps the normal transform-scale for CSS zoom so native window scrolling is
+ * not performed inside a giant transformed 720px surface.
+ */
+body.wut-plaza-native-page #wut-portal-stage {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px;
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background-color: #d7d7d7;
+}
+
+/* Kill the full-screen translucent paint layer while the page moves. */
+body.wut-plaza-native-page #wut-portal-stage:before {
+    display: none !important;
+    content: none !important;
+}
+
+body.wut-plaza-native-page #body {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px;
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+}
+
+body.wut-plaza-native-page #wut-portal-view {
+    position: relative;
+    width: 1280px;
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+}
+
+/* Keep the left Portal rail in view. It does not own the scroll. */
+body.wut-plaza-native-page #global-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* The corner comment control is not part of Plaza and costs an extra layer. */
+body.wut-plaza-native-page #wut-beta-corner-action {
+    display: none !important;
+}
+
+/* The Communities section is now a real long document block. */
+body.wut-plaza-native-page #wut-communities-view {
+    position: relative !important;
+    top: auto !important;
+    left: 220px !important;
+    width: 900px;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0;
+    padding: 0;
+    overflow: visible !important;
+    background: transparent;
+}
+
+.wut-plaza-lite {
+    position: relative;
+    width: 900px;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0;
+    padding: 70px 0 42px 0;
+    overflow: visible !important;
+    color: #454b49;
+}
+
+/* Transparent 2012-style Plaza title bar. */
+.wut-plaza-lite-title {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 770px;
+    height: 44px;
+    overflow: hidden;
+    color: #565d5a;
+    background: rgba(255,255,255,.58);
+    border: 1px solid rgba(177,183,180,.88);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.wut-plaza-lite-title:before {
+    content: none;
+}
+
+.wut-plaza-lite-title strong {
+    position: absolute;
+    top: 0;
+    left: 16px;
+    height: 44px;
+    color: #454b49;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 44px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.90);
+}
+
+.wut-plaza-favorite-toggle {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    display: block;
+    width: 34px;
+    height: 32px;
+    overflow: hidden;
+    background: #fbfbfb;
+    border: 1px solid #c5cbc8;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    text-decoration: none;
+    outline: none;
+}
+
+.wut-plaza-favorite-icon {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    /* PON AQUI TU URL DE LA ESTRELLA */
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px 20px;
+    background-color: #eea33a;
+}
+
+/* ------------------------------------------------------------
+   FREE COMMUNITY CARDS
+   These are ordinary siblings in document flow, one by one.
+   ------------------------------------------------------------ */
+#wut-communities-view .wut-community-entry {
+    position: relative;
+    display: block;
+    width: 790px;
+    height: 132px;
+    margin: 0 0 18px 12px;
+    padding: 0;
+}
+
+#wut-communities-view .wut-community-card {
+    position: relative;
+    display: block;
+    width: 778px;
+    height: 120px;
+    overflow: hidden;
+    color: #414745;
+    background: #ffffff;
+    border: 1px solid #c6ccca;
+    border-left: 5px solid #19b6d6;
+    border-bottom: 3px solid #bec5c2;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    text-decoration: none;
+    outline: none;
+}
+
+#wut-communities-view .wut-community-icon {
+    position: absolute;
+    top: 11px;
+    left: 13px;
+    display: block;
+    width: 96px;
+    height: 96px;
+    overflow: hidden;
+    background: #f4f5f4;
+    border: 1px solid #c2c9c6;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+}
+
+#wut-communities-view .wut-community-icon img {
+    display: block;
+    width: 96px;
+    height: 96px;
+    border: 0;
+}
+
+#wut-communities-view .wut-community-body {
+    position: absolute;
+    top: 22px;
+    left: 132px;
+    display: block;
+    width: 605px;
+    height: 76px;
+    text-align: left;
+}
+
+#wut-communities-view .wut-community-body strong {
+    display: block;
+    height: 35px;
+    overflow: hidden;
+    color: #414745;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 32px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#wut-communities-view .wut-community-body small {
+    display: block;
+    margin-top: 5px;
+    height: 20px;
+    overflow: hidden;
+    color: #858d89;
+    font-family: sans-serif;
+    font-size: 11px;
+    line-height: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Focus only changes paint; no geometry and no browser auto-focus scroll. */
+#wut-communities-view .wut-community-focused .wut-community-card,
+#wut-communities-view .wut-community-card:focus {
+    background: #f5fdff;
+    border-color: #18aeca;
+    border-left-color: #00a9d4;
+    border-bottom-color: #96dce9;
+}
+
+#wut-communities-view .wut-community-focused .wut-community-body strong,
+#wut-communities-view .wut-community-card:focus .wut-community-body strong {
+    color: #078ba6;
+}
+
+#wut-communities-view .wut-community-opened .wut-community-card {
+    background: #f7fbf2;
+    border-left-color: #91b95c;
+}
+
+/* Hard-disable every old Communities list/scroller residue if an old stylesheet
+   ever gets re-added later. */
+#wut-communities-view .wut-community-scroll,
+#wut-communities-view .wut-community-grid {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+}
+
+#wut-communities-view .wut-community-card,
+#wut-communities-view .wut-community-icon,
+#wut-communities-view .wut-community-body strong,
+.wut-plaza-lite-title,
+.wut-plaza-favorite-toggle {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -webkit-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+}
+
+
+/* Live per-community post stream */
+.wut-community-post-empty {
+    display: block;
+    width: 760px;
+    margin: 34px auto 0;
+    padding: 34px 24px;
+    color: #6f7774;
+    background: rgba(250,250,250,.92);
+    border: 1px solid #bfc6c3;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    text-align: center;
+}
+.wut-community-post-empty strong {
+    display: block;
+    color: #454c49;
+    font-size: 22px;
+    line-height: 30px;
+}
+.wut-community-post-empty span {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 20px;
+}

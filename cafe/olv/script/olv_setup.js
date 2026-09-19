@@ -284,12 +284,74 @@
         }
 
         applySkillSelection();
+        bindPlayerPreview();
 
         /* Native Miiverse confirmation sound for the selected play style. */
         playNativeSound("SE_OLV_OK", 1);
 
         if (window.console && console.log) {
             console.log("[WUT:FIRSTRUN] Game experience: " + name);
+        }
+    }
+
+    function bindPlayerPreview() {
+        var avatar;
+        var nameNode;
+        var subNode;
+        var noteNode;
+        var state = null;
+        var expression = selectedSkill === "expert" ? "smile" : "normal";
+
+        if (!document.querySelector) {
+            return;
+        }
+
+        avatar = document.querySelector(".wut-player-preview-avatar img");
+        nameNode = document.querySelector(".wut-player-preview-name");
+        subNode = document.querySelector(".wut-player-preview-sub");
+        noteNode = document.querySelector(".wut-player-preview-note");
+
+        if (
+            window.WUTSession &&
+            typeof window.WUTSession.getState === "function"
+        ) {
+            state = window.WUTSession.getState();
+        }
+
+        if (nameNode) {
+            nameNode.innerHTML = state && state.miiName ? state.miiName : "PLAYER";
+        }
+
+        if (subNode) {
+            if (state && state.pnid) {
+                subNode.innerHTML = state.pnid;
+            }
+            else if (state && state.userId) {
+                subNode.innerHTML = state.userId;
+            }
+            else {
+                subNode.innerHTML = "WUT USER";
+            }
+        }
+
+        if (noteNode) {
+            noteNode.innerHTML = state && state.identityResolved ?
+                "Detected from the active Wii U user. This card follows the account currently signed in." :
+                "Your Mii and account name will appear here when WUT identity is connected.";
+        }
+
+        if (
+            avatar &&
+            window.WUTMii &&
+            typeof window.WUTMii.bindImage === "function"
+        ) {
+            window.WUTMii.bindImage(
+                avatar,
+                "res/olv/mii/img_unknown_MiiIcon.png",
+                128,
+                "face",
+                expression
+            );
         }
     }
 
@@ -336,6 +398,9 @@
         setControl("wut-setup-next", steps[current].right);
         showSkillControls(gameStep);
         applySkillSelection();
+        if (gameStep) {
+            bindPlayerPreview();
+        }
 
         if (steps[current].name === "finish") {
             playNativeSound(
@@ -414,110 +479,68 @@
     function finish(source) {
         var stage = document.getElementById("wut-cafe-stage");
         var copy = document.getElementById("wut-finish-copy");
-        var sessionState = null;
         var persisted = false;
-        var search = (
-            window.location && window.location.search ?
-            window.location.search :
-            ""
-        );
-        var portalUrl = "cafe-olv-portal.html" + search;
+        var search = (window.location && window.location.search ? window.location.search : "");
+        var portalUrl = "cafe-olv-portal.html" + search + "#communities";
+        var navigated = false;
 
-        if (
-            window.WUTSession &&
-            typeof window.WUTSession.getState === "function"
-        ) {
-            sessionState = window.WUTSession.getState();
+        function openPortal() {
+            if (navigated || !window.location) { return; }
+            navigated = true;
+            if (copy) { copy.innerHTML = "WUT Account ready. Opening Cafe OLV Portal..."; }
+            window.setTimeout(function () { window.location.href = portalUrl; }, 120);
         }
 
-        /*
-         * On the real Miiverse applet we never force the user through the old
-         * manual Mii Link form. Native Inkay identity is the preferred path;
-         * if it is temporarily unavailable the portal can still open with its
-         * placeholder Mii while diagnostics remain available separately.
-         *
-         * Off-device browser testing keeps mii-link.html as a debug fallback.
-         */
-        if (
-            (!sessionState || !sessionState.miiRenderable) &&
-            (!sessionState || !sessionState.consoleContext)
-        ) {
-            portalUrl = "mii-link.html";
+        function accountFailed(payload) {
+            complete = false;
+            if (copy) {
+                if (payload && payload.error === "stable_identity_required") {
+                    copy.innerHTML = "WUT could not detect a stable Wii U user yet. Wait a moment and select Start again.";
+                }
+                else if (payload && payload.error === "mii_data_required") {
+                    copy.innerHTML = "WUT detected your Wii U user, but the Mii data is not ready yet. Wait a moment and select Start again.";
+                }
+                else {
+                    copy.innerHTML = "WUT Account could not be created. Select Start to try again.";
+                }
+            }
+            setControl("wut-setup-next", steps[current].right);
+            if (window.WUTPortalNav && typeof window.WUTPortalNav.refresh === "function") {
+                window.WUTPortalNav.refresh("right");
+            }
         }
 
-        if (complete) {
-            return;
-        }
-
+        if (complete) { return; }
         complete = true;
-
-        /*
-         * Native transition audio. SE_WAVE_MENU accompanies Start.
-         * BGM_OLV_MAIN is only requested when we are actually entering the
-         * Cafe OLV portal; Mii Link keeps the First Run audio context.
-         */
         playNativeSound("SE_WAVE_MENU", 1);
 
         if (portalUrl.indexOf("cafe-olv-portal.html") === 0) {
-            playNativeSound(
-                "BGM_OLV_MAIN",
-                3,
-                "firstrun-bgm-main"
-            );
+            playNativeSound("BGM_OLV_MAIN", 3, "firstrun-bgm-main");
         }
 
-        if (
-            window.WUTSession &&
-            typeof window.WUTSession.completeSetup === "function"
-        ) {
-            persisted = window.WUTSession.completeSetup(true);
-        }
-
-        if (stage) {
-            stage.setAttribute("data-wut-firstrun-complete", "true");
-        }
-
-        if (copy) {
-            copy.innerHTML = (
-                portalUrl.indexOf("cafe-olv-portal.html") === 0
-            ) ?
-                "Setup saved. Opening Cafe OLV Portal..." :
-                "Setup saved. Opening Mii Link debug tool...";
-        }
-
+        if (stage) { stage.setAttribute("data-wut-firstrun-complete", "true"); }
+        if (copy) { copy.innerHTML = "Creating your WUT Account..."; }
         setControl("wut-setup-close", null);
         setControl("wut-setup-next", null);
         showSkillControls(false);
 
-        if (
-            window.WUTPortalNav &&
-            typeof window.WUTPortalNav.refresh === "function"
-        ) {
-            window.WUTPortalNav.refresh("right");
-        }
-
-        emit("wut:firstrun-complete", {
-            source: source || "unknown",
-            persistent: persisted,
-            gameExperience: selectedSkill,
-            gameSkill: (
-                window.WUTSession ?
-                window.WUTSession.getState().gameSkill :
-                null
-            )
-        });
-
-        if (window.console && console.log) {
-            console.log("[WUT:FIRSTRUN] Setup complete; opening Cafe OLV Portal");
-        }
-
-        if (typeof window.setTimeout === "function" && window.location) {
-            window.setTimeout(
-                function () {
-                    window.location.href = portalUrl;
-                },
-                180
-            );
+        if (window.WUTSession && typeof window.WUTSession.completeSetup === "function") {
+            persisted = window.WUTSession.completeSetup(true, function (ok, payload) {
+                if (ok && payload && payload.account && payload.account.wut_id) {
+                    emit("wut:firstrun-complete", {
+                        source: source || "unknown",
+                        persistent: persisted,
+                        wutId: payload.account.wut_id,
+                        gameExperience: selectedSkill,
+                        gameSkill: window.WUTSession.getState().gameSkill
+                    });
+                    openPortal();
+                } else {
+                    accountFailed(payload || {});
+                }
+            });
+        } else {
+            accountFailed({ error: "profile_unavailable" });
         }
     }
 
@@ -586,7 +609,7 @@
 
         if (copy) {
             copy.innerHTML =
-                "Select Start to save this setup and connect your Mii.";
+                "Select Start to save this setup. Your Wii U Mii is detected automatically.";
         }
 
         showStep(0);
@@ -594,6 +617,14 @@
 
     if (window.addEventListener) {
         window.addEventListener("resize", fitStage, false);
+
+        window.addEventListener(
+            "wut:identity-ready",
+            function () {
+                bindPlayerPreview();
+            },
+            false
+        );
 
         window.addEventListener(
             "wut:session-ready",
@@ -605,10 +636,23 @@
                 }
 
                 sessionState = window.WUTSession.getState();
+
+                /* Existing WUT accounts already completed First Run. The
+                 * persistent server account, not localStorage, decides this. */
+                if (sessionState.identityResolved && sessionState.wutAccountReady && sessionState.setupComplete) {
+                    if (window.console && console.log) {
+                        console.log("[WUT:FIRSTRUN] Existing WUT Account " + sessionState.wutId + "; skipping setup.");
+                    }
+                    window.location.href = "cafe-olv-portal.html" + (window.location.search || "") + "#communities";
+                    return;
+                }
+
                 if (sessionState.gameExperience) {
                     selectedSkill = sessionState.gameExperience;
                     applySkillSelection();
                 }
+
+                bindPlayerPreview();
             },
             false
         );

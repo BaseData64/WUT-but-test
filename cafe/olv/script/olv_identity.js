@@ -163,10 +163,7 @@
 
         state = window.WUTSession ? window.WUTSession.getState() : {};
 
-        if (worked && state.nativeIdentityAccepted && state.miiRenderable) {
-            console.log("[WUT:IDENTITY] Native Wii U account + Mii received automatically.");
-        }
-        else if (worked && state.identityResolved && state.miiRenderable) {
+        if (worked && state.identityResolved && state.miiRenderable) {
             console.log("[WUT:IDENTITY] Linked identity and Mii render source ready.");
         }
         else if (worked && state.serviceTokenPresent && state.paramPackPresent) {

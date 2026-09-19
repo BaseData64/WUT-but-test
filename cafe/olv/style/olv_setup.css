@@ -326,17 +326,7 @@
 }
 
 .wut-skill-option.wut-focused {
-    border: 4px solid #00b6e6;
-
-    box-shadow:
-        0 0 0 3px #087eb8,
-        inset 0 0 0 999px rgba(0,174,255,.11),
-        inset 0 2px 0 rgba(255,255,255,.90);
-
-    -webkit-box-shadow:
-        0 0 0 3px #087eb8,
-        inset 0 0 0 999px rgba(0,174,255,.11),
-        inset 0 2px 0 rgba(255,255,255,.90);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-skill-option.wut-selected {
@@ -928,17 +918,7 @@
 }
 
 .wut-skill-option.wut-focused {
-    border: 4px solid #00b6e6;
-
-    box-shadow:
-        0 0 0 3px #087db4,
-        inset 0 0 0 999px rgba(0,174,255,.09),
-        inset 0 2px 0 rgba(255,255,255,.92);
-
-    -webkit-box-shadow:
-        0 0 0 3px #087db4,
-        inset 0 0 0 999px rgba(0,174,255,.09),
-        inset 0 2px 0 rgba(255,255,255,.92);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-skill-option.wut-selected {
@@ -1139,17 +1119,7 @@
 }
 
 .wut-corner-button.wut-focused {
-    border: 4px solid #00b7e7 !important;
-
-    box-shadow:
-        0 0 0 4px #087db5,
-        inset 0 0 0 999px rgba(0,174,255,.12),
-        inset 0 2px 0 rgba(255,255,255,.72) !important;
-
-    -webkit-box-shadow:
-        0 0 0 4px #087db5,
-        inset 0 0 0 999px rgba(0,174,255,.12),
-        inset 0 2px 0 rgba(255,255,255,.72) !important;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 /* ------------------------------------------------------------
@@ -1857,17 +1827,7 @@ body {
 }
 
 .wut-corner-button.wut-focused {
-    border-width: 5px !important;
-
-    box-shadow:
-        0 0 0 5px #087db5,
-        inset 0 0 0 999px rgba(0,174,255,.12),
-        inset 0 2px 0 rgba(255,255,255,.72) !important;
-
-    -webkit-box-shadow:
-        0 0 0 5px #087db5,
-        inset 0 0 0 999px rgba(0,174,255,.12),
-        inset 0 2px 0 rgba(255,255,255,.72) !important;
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 /* ============================================================
    WUT FIRST RUN — EARLY Wii U / SOCIAL CONCEPT DEMO PASS
@@ -2937,15 +2897,7 @@ body {
 }
 
 .wut-player-choice-panel .wut-skill-option.wut-focused {
-    border: 4px solid #00b4e6;
-
-    box-shadow:
-        0 0 0 2px #087eb4,
-        inset 0 0 0 999px rgba(0,177,235,.06);
-
-    -webkit-box-shadow:
-        0 0 0 2px #087eb4,
-        inset 0 0 0 999px rgba(0,177,235,.06);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-player-choice-panel .wut-skill-option.wut-selected {
@@ -4262,4 +4214,37 @@ body {
 .wut-final-simple-window .wut-beta-finish-center,
 .wut-final-simple-window .wut-finish-copy-wrap {
     display: none !important;
+}
+
+
+/* ============================================================
+   WUT PLAY STYLE METER — ACTIVE SEGMENT ONLY
+   UI-only; no navigation or identity behavior lives here.
+   ============================================================ */
+#wut-cafe-stage .wut-player-demo-meter-track i,
+#wut-cafe-stage .wut-player-demo-meter-track i:first-child {
+    background: #dce1d8;
+    border-color: #c8cec4;
+}
+
+#wut-cafe-stage[data-wut-game-experience="beginner"]
+.wut-player-demo-meter-track i:nth-child(1) {
+    background: #67d42f;
+    border-color: #51b921;
+}
+
+#wut-cafe-stage[data-wut-game-experience="intermediate"]
+.wut-player-demo-meter-track i:nth-child(2) {
+    background: #00b9ff;
+    border-color: #008fd0;
+    box-shadow: 0 0 4px rgba(0,185,255,.65);
+    -webkit-box-shadow: 0 0 4px rgba(0,185,255,.65);
+}
+
+#wut-cafe-stage[data-wut-game-experience="expert"]
+.wut-player-demo-meter-track i:nth-child(3) {
+    background: #ef1738;
+    border-color: #c90d29;
+    box-shadow: 0 0 4px rgba(239,23,56,.55);
+    -webkit-box-shadow: 0 0 4px rgba(239,23,56,.55);
 }

@@ -180,9 +180,7 @@
 .wut-link-form input:focus,
 .wut-link-form select:focus,
 .wut-link-form .wut-link-field-focus {
-    border-color: #57c4ef;
-    box-shadow: 0 0 7px rgba(17, 154, 219, .55);
-    -webkit-box-shadow: 0 0 7px rgba(17, 154, 219, .55);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-link-form input {
@@ -226,14 +224,7 @@
 }
 
 .wut-mii-link-stage .wut-corner-button.wut-focused {
-    box-shadow:
-        0 -2px 8px rgba(0, 0, 0, .25),
-        inset 0 0 0 4px #5cc7f0,
-        inset 0 0 0 7px rgba(255, 255, 255, .82);
-    -webkit-box-shadow:
-        0 -2px 8px rgba(0, 0, 0, .25),
-        inset 0 0 0 4px #5cc7f0,
-        inset 0 0 0 7px rgba(255, 255, 255, .82);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-mii-link-stage .wut-corner-button:disabled {

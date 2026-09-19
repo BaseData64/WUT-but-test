@@ -1,0 +1,301 @@
+/*
+ * WUT-Miiverse — Community / General Plaza beta concept
+ * ------------------------------------------------------------
+ * Visual direction: early Wii U / Miiverse 2012 social board.
+ * This is a WUT-original reconstruction, not a pixel-for-pixel clone.
+ * Old WebKit friendly: ordinary document flow, no inner scroll surface,
+ * no animated layout properties, no blur filters.
+ */
+
+#wut-community-detail {
+    position: relative;
+    width: 900px;
+    min-height: 690px;
+    margin: 0;
+    padding: 136px 0 28px 0;
+    overflow: visible;
+    color: #3d4341;
+}
+
+#wut-community-detail.none {
+    display: none !important;
+}
+
+/* Same big beta header language as Plaza, now for the selected community. */
+.wut-community-detail-topbar.wut-beta-topbar {
+    top: 0;
+    left: -220px;
+    width: 1638px;
+    height: 118px;
+}
+
+/* ------------------------------------------------------------
+   POST STREAM
+   ------------------------------------------------------------ */
+.wut-beta-poststream {
+    position: relative;
+    width: 850px;
+    margin: 0 0 0 6px;
+    padding: 0;
+}
+
+.wut-beta-post {
+    position: relative;
+    display: block;
+    width: 850px;
+    height: 145px;
+    margin: 0 0 12px 0;
+    padding: 0;
+}
+
+.wut-beta-post-mii {
+    position: absolute;
+    top: 27px;
+    left: 0;
+    display: block;
+    width: 86px;
+    height: 86px;
+    overflow: hidden;
+    background: rgba(255,255,255,.78);
+    border: 1px solid #bfc5c2;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+}
+
+.wut-beta-post-mii img {
+    display: block;
+    width: 86px;
+    height: 86px;
+    border: 0;
+}
+
+/* Early-demo-like black user capsule, but WUT typography/geometry. */
+.wut-beta-post-name {
+    position: absolute;
+    top: 0;
+    left: 105px;
+    display: block;
+    min-width: 86px;
+    max-width: 260px;
+    height: 26px;
+    padding: 0 11px;
+    overflow: hidden;
+    color: #fff;
+    background: #363a39;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wut-beta-post-time {
+    position: absolute;
+    top: 3px;
+    right: 7px;
+    display: block;
+    width: 110px;
+    height: 21px;
+    overflow: hidden;
+    color: #777f7b;
+    font-family: sans-serif;
+    font-size: 11px;
+    line-height: 21px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.wut-beta-post-bubble {
+    position: absolute;
+    top: 26px;
+    left: 105px;
+    display: block;
+    width: 714px;
+    height: 104px;
+    overflow: visible;
+    color: #414644;
+    background: rgba(249,249,248,.92);
+    border: 1px solid #bdc4c1;
+    border-radius: 0 9px 9px 9px;
+    -webkit-border-radius: 0 9px 9px 9px;
+    text-decoration: none;
+    outline: none;
+}
+
+/* Tail pointing to the Mii. */
+.wut-beta-post-bubble:before {
+    content: "";
+    position: absolute;
+    top: 29px;
+    left: -17px;
+    width: 0;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 17px solid #bdc4c1;
+}
+
+.wut-beta-post-bubble:after {
+    content: "";
+    position: absolute;
+    top: 30px;
+    left: -15px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 16px solid #f9f9f8;
+}
+
+.wut-beta-post-game {
+    position: absolute;
+    top: 14px;
+    left: 17px;
+    display: block;
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #c6ccca;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+.wut-beta-post-game img {
+    display: block;
+    width: 55px;
+    height: 55px;
+    border: 0;
+}
+
+.wut-beta-post-text {
+    position: absolute;
+    top: 13px;
+    left: 89px;
+    display: block;
+    width: 590px;
+    height: 50px;
+    overflow: hidden;
+    color: #333937;
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 25px;
+}
+
+.wut-beta-post-meta {
+    position: absolute;
+    right: 15px;
+    bottom: 9px;
+    display: block;
+    height: 24px;
+    color: #7c8380;
+    font-family: sans-serif;
+    font-size: 10px;
+    line-height: 24px;
+    text-align: right;
+}
+
+.wut-beta-post-meta b,
+.wut-beta-post-meta i {
+    display: inline-block;
+    height: 22px;
+    margin-left: 7px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 22px;
+    vertical-align: top;
+}
+
+.wut-beta-post-meta b {
+    min-width: 48px;
+    padding: 0 7px;
+    color: #555d59;
+    background: #eceeec;
+    border: 1px solid #cbd0ce;
+    border-radius: 11px;
+    -webkit-border-radius: 11px;
+    text-align: center;
+}
+
+.wut-beta-post-meta i {
+    min-width: 16px;
+    color: #8d9491;
+    text-align: left;
+}
+
+/* D-pad focus is a whole-post state, not a browser list cursor. */
+.wut-beta-post-bubble.wut-community-detail-focused {
+    background: #f2fcfe;
+    border-color: #00a7d7;
+}
+
+.wut-beta-post-bubble.wut-community-detail-focused:before {
+    border-right-color: #00a7d7;
+}
+
+.wut-beta-post-bubble.wut-community-detail-focused:after {
+    border-right-color: #f2fcfe;
+}
+
+/* ------------------------------------------------------------
+   POST BUTTON — large system-style action at lower right
+   ------------------------------------------------------------ */
+.wut-community-post-button {
+    position: relative;
+    display: block;
+    width: 176px;
+    height: 68px;
+    margin: 2px 0 0 648px;
+    color: #49504d;
+    background: rgba(250,250,249,.94);
+    border: 1px solid #bcc3c0;
+    border-radius: 34px;
+    -webkit-border-radius: 34px;
+    text-decoration: none;
+    outline: none;
+}
+
+.wut-community-post-button span {
+    position: absolute;
+    top: 11px;
+    left: 15px;
+    display: block;
+    width: 44px;
+    height: 44px;
+    color: #fff;
+    background: #00a7d7;
+    border-radius: 22px;
+    -webkit-border-radius: 22px;
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 40px;
+    text-align: center;
+}
+
+.wut-community-post-button strong {
+    position: absolute;
+    top: 0;
+    left: 69px;
+    display: block;
+    height: 68px;
+    color: #4c5350;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 68px;
+}
+
+/* Keep this view cheap for the Wii U renderer. */
+#wut-community-detail,
+#wut-community-detail * {
+    -webkit-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}

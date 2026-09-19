@@ -203,26 +203,11 @@
 }
 
 .wut-community-focused .wut-community-card {
-    height: 154px;
-    background: rgba(235, 250, 255, .72);
-    border-top: 3px solid rgba(92, 199, 240, .95);
-    border-bottom: 3px solid rgba(92, 199, 240, .95);
-    box-shadow:
-        inset 8px 0 0 rgba(90, 200, 0, .75),
-        inset -8px 0 0 rgba(90, 200, 0, .75);
-    -webkit-box-shadow:
-        inset 8px 0 0 rgba(90, 200, 0, .75),
-        inset -8px 0 0 rgba(90, 200, 0, .75);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-community-focused .wut-community-icon {
-    border-color: #ffffff;
-    box-shadow:
-        0 3px 8px rgba(48, 58, 16, .36),
-        0 0 8px rgba(17, 154, 219, .58);
-    -webkit-box-shadow:
-        0 3px 8px rgba(48, 58, 16, .36),
-        0 0 8px rgba(17, 154, 219, .58);
+    /* WUT: visual focus removed; class remains for navigation/app cursor. */
 }
 
 .wut-community-opened .wut-community-card {

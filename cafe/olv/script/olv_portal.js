@@ -30,8 +30,8 @@
 
     var views = {
         "user-page": {
-            title: "User Page",
-            message: "Loading user page..."
+            title: "My Menu",
+            message: "Loading My Menu..."
         },
         "activity-feed": {
             title: "Activity Feed",
@@ -52,10 +52,15 @@
     };
 
     function addClass(element, name) {
-        if (
-            element &&
-            (" " + element.className + " ").indexOf(" " + name + " ") < 0
-        ) {
+        if (!element) {
+            return;
+        }
+
+        if (typeof element.className !== "string") {
+            element.className = "";
+        }
+
+        if ((" " + element.className + " ").indexOf(" " + name + " ") < 0) {
             element.className += " " + name;
         }
     }
@@ -63,6 +68,10 @@
     function removeClass(element, name) {
         if (!element) {
             return;
+        }
+
+        if (typeof element.className !== "string") {
+            element.className = "";
         }
 
         element.className = element.className.replace(
@@ -105,8 +114,90 @@
             scale = 1;
         }
 
-        stage.style.webkitTransform = "scale(" + scale + ")";
-        stage.style.transform = "scale(" + scale + ")";
+        if (activeView === "communities" || activeView === "activity-feed") {
+            /* CSS zoom participates in layout in old WebKit. That lets the
+               actual document scroll without putting the whole page inside a
+               transformed 720px scroller. */
+            if (typeof stage.style.zoom !== "undefined") {
+                stage.style.webkitTransform = "none";
+                stage.style.transform = "none";
+                stage.style.zoom = scale;
+            }
+            else {
+                /* Safety fallback for non-WebKit test browsers. */
+                stage.style.zoom = "";
+                stage.style.webkitTransform = "scale(" + scale + ")";
+                stage.style.transform = "scale(" + scale + ")";
+            }
+        }
+        else {
+            stage.style.zoom = "";
+            stage.style.webkitTransform = "scale(" + scale + ")";
+            stage.style.transform = "scale(" + scale + ")";
+        }
+    }
+
+    function setPlazaPageMode(enabled) {
+        var root = document.documentElement;
+        var page = document.body;
+        var stage = document.getElementById("wut-portal-stage");
+
+        if (enabled) {
+            addClass(root, "wut-plaza-native-page");
+            addClass(page, "wut-plaza-native-page");
+            addClass(stage, "wut-plaza-native-page");
+        }
+        else {
+            removeClass(root, "wut-plaza-native-page");
+            removeClass(page, "wut-plaza-native-page");
+            removeClass(stage, "wut-plaza-native-page");
+        }
+
+        if (window.scrollTo) {
+            window.scrollTo(0, 0);
+        }
+
+        fitStage();
+    }
+
+    function setActivityFeedPageMode(enabled) {
+        var root = document.documentElement;
+        var page = document.body;
+        var stage = document.getElementById("wut-portal-stage");
+
+        if (enabled) {
+            addClass(root, "wut-feed-native-page");
+            addClass(page, "wut-feed-native-page");
+            addClass(stage, "wut-feed-native-page");
+        }
+        else {
+            removeClass(root, "wut-feed-native-page");
+            removeClass(page, "wut-feed-native-page");
+            removeClass(stage, "wut-feed-native-page");
+        }
+
+        if (window.scrollTo) {
+            window.scrollTo(0, 0);
+        }
+
+        fitStage();
+    }
+
+    function setMyMenuWideMode(enabled) {
+        var root = document.documentElement;
+        var page = document.body;
+        var stage = document.getElementById("wut-portal-stage");
+
+        if (enabled) {
+            addClass(root, "wut-mymenu-wide-page");
+            addClass(page, "wut-mymenu-wide-page");
+            addClass(stage, "wut-mymenu-wide-page");
+        }
+        else {
+            removeClass(root, "wut-mymenu-wide-page");
+            removeClass(page, "wut-mymenu-wide-page");
+            removeClass(stage, "wut-mymenu-wide-page");
+        }
     }
 
     function blurMenu() {
@@ -238,6 +329,13 @@
         if (container) {
             container.setAttribute("data-wut-current-view", viewName);
         }
+
+        /* Plaza and Activity Feed use the browser document itself as the scroll surface. */
+        setPlazaPageMode(viewName === "communities");
+        setActivityFeedPageMode(viewName === "activity-feed");
+
+        /* My Menu owns an intentionally oversized 2200px beta header. */
+        setMyMenuWideMode(viewName === "user-page");
 
         document.title = "Cafe OLV Portal - " + config.title;
         focus(index);
@@ -419,12 +517,20 @@
 
     function start() {
         var i;
+        var initialHash = (window.location && window.location.hash) ? window.location.hash : "";
 
         if (started) {
             return;
         }
 
         started = true;
+
+        /* Resolve the requested initial view BEFORE any stage sizing/rendering.
+           This prevents a one-frame Activity Feed setup when First Run enters
+           with #communities. */
+        if (initialHash === "#communities" || initialHash === "#plaza") {
+            activeView = "communities";
+        }
 
         for (i = 0; i < menuIds.length; i += 1) {
             bind(i);
@@ -447,6 +553,10 @@
         }
 
         showView(activeView);
+
+        /* Plaza boot is hidden only until its final initial state is applied. */
+        removeClass(document.documentElement, "wut-boot-plaza");
+
         bindMii();
 
         if (
@@ -560,6 +670,16 @@
         activate: activate,
         back: function (source) {
             if (
+                window.WUTPosts &&
+                typeof window.WUTPosts.isComposerOpen === "function" &&
+                window.WUTPosts.isComposerOpen() &&
+                typeof window.WUTPosts.closeComposer === "function"
+            ) {
+                window.WUTPosts.closeComposer();
+                return;
+            }
+
+            if (
                 sectionsActive() &&
                 window.WUTPortalSections &&
                 typeof window.WUTPortalSections.leave === "function"
@@ -570,10 +690,14 @@
 
             if (
                 communitiesActive() &&
-                window.WUTCommunities &&
-                typeof window.WUTCommunities.leave === "function"
+                window.WUTCommunities
             ) {
-                window.WUTCommunities.leave();
+                if (typeof window.WUTCommunities.back === "function") {
+                    window.WUTCommunities.back();
+                }
+                else if (typeof window.WUTCommunities.leave === "function") {
+                    window.WUTCommunities.leave();
+                }
                 return;
             }
 

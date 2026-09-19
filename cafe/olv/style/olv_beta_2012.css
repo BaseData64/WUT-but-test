@@ -1,0 +1,391 @@
+/*
+ * WUT-Miiverse — 2012 Miiverse demo reconstruction pass.
+ *
+ * Evidence target: the user-supplied early Miiverse/Wii U demo frame.
+ * This file is intentionally an override layer. It does not replace identity,
+ * native Mii rendering, navigation, communities, or backend code.
+ *
+ * Design rule: preserve the 1280x720 logical Portal surface and let
+ * olv_portal.js scale it to the Wii U viewport. Values below are therefore
+ * expressed in that 1280x720 coordinate space.
+ */
+
+/* ------------------------------------------------------------
+   BACKDROP / STAGE
+   ------------------------------------------------------------ */
+
+#wut-portal-stage {
+    background-color: #999999;
+}
+
+/* The original supplied Portal pattern is kept, then darkened with a neutral
+   translucent layer. This avoids introducing a fabricated bitmap asset. */
+#wut-portal-stage:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+    background: rgba(0, 0, 0, .06);
+    z-index: 0;
+}
+
+#body {
+    position: relative;
+    z-index: 2;
+}
+
+/* The photographed 2012 demo does not use the later green Portal title bar. */
+#header {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+   GLOBAL MENU
+   ------------------------------------------------------------ */
+
+#global-menu {
+    width: 160px;
+    height: 720px;
+    background: rgba(250, 250, 250, .95);
+    border-radius: 0 44px 0 0;
+    -webkit-border-radius: 0 44px 0 0;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, .22);
+    -webkit-box-shadow: 5px 0 10px rgba(0, 0, 0, .22);
+    z-index: 30;
+}
+
+#global-menu li {
+    margin: 0 14px;
+    border-top: 1px solid rgba(184, 184, 184, .58);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .94);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .94);
+}
+
+#global-menu a {
+    color: #7a7a7a;
+    font-size: 18px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .96);
+}
+
+/* The demo highlight is mostly carried by the cyan icon/text, not a large
+   selected-row slab. */
+#global-menu .selected a,
+#global-menu #global-menu-mymenu.selected a {
+    background-color: transparent;
+    color: #00a8d4;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+#global-menu #global-menu-mymenu .mii-icon {
+    width: 58px;
+    height: 58px;
+    margin-top: 12px;
+}
+
+#global-menu #global-menu-mymenu .mii-icon img {
+    width: 58px;
+    height: 58px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+/* The early demo uses Back at the bottom rather than the later Close/X look. */
+#global-menu #global-menu-exit,
+#global-menu #global-menu-exit.wut-beta-back-mode {
+    height: 128px;
+}
+
+#global-menu #global-menu-exit a,
+#global-menu #global-menu-exit.wut-beta-back-mode a {
+    width: 170px;
+    height: 40px;
+    padding-top: 88px;
+    color: #f1f1f1;
+    background-color: rgba(74, 74, 74, .92);
+    border-radius: 0 28px 0 0;
+    -webkit-border-radius: 0 28px 0 0;
+    font-size: 18px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .55);
+}
+
+/* ------------------------------------------------------------
+   EARLY-DEMO CONTENT GEOMETRY
+   ------------------------------------------------------------ */
+
+#wut-activity-feed-view,
+#wut-user-page-view,
+#wut-communities-view,
+#wut-messages-view,
+#wut-notifications-view {
+    top: 0;
+    left: 245px;
+    width: 990px;
+    height: 720px;
+}
+
+/* Developer/prototype labels were useful while building the WIP, but they are
+   not present in the photographed demo surface. */
+.wut-section-demo-strip,
+.wut-community-demo-strip,
+.wut-section-status,
+.wut-community-status {
+    display: none !important;
+}
+
+.wut-section-scroll {
+    width: 990px;
+}
+
+/* ------------------------------------------------------------
+   ACTIVITY / COMMENT STREAM
+   ------------------------------------------------------------ */
+
+.wut-feed-scroll {
+    top: 0;
+    left: 0;
+    width: 990px;
+    height: 650px;
+    overflow-y: auto;
+    background: rgba(245, 245, 245, .55);
+    border-left: 1px solid rgba(255, 255, 255, .58);
+    border-right: 1px solid rgba(85, 85, 85, .14);
+    border-bottom: 1px solid rgba(85, 85, 85, .14);
+    border-radius: 0 0 18px 18px;
+    -webkit-border-radius: 0 0 18px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+}
+
+.wut-feed-scroll::-webkit-scrollbar {
+    width: 11px;
+}
+
+.wut-feed-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .26);
+}
+
+.wut-feed-scroll::-webkit-scrollbar-thumb {
+    background: rgba(111, 111, 111, .58);
+    border: 2px solid rgba(255, 255, 255, .54);
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+}
+
+.wut-feed-list {
+    width: 960px;
+    margin: 0;
+    padding: 12px 0 22px 14px;
+}
+
+.wut-feed-list > li {
+    min-height: 120px;
+    margin: 0;
+    border-bottom: 1px solid rgba(153, 153, 153, .20);
+}
+
+.wut-feed-list > li > a {
+    width: 930px;
+    min-height: 108px;
+    padding: 6px 8px 5px 8px;
+    color: #252525;
+    border: 0;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.wut-feed-list > li:nth-child(odd) > a {
+    background: rgba(255, 255, 255, .13);
+}
+
+.wut-post-user-icon {
+    top: 20px;
+    left: 14px;
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid rgba(207, 207, 207, .88);
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .16);
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .16);
+}
+
+.wut-post-user-icon img {
+    width: 64px;
+    height: 64px;
+}
+
+.wut-post-body {
+    width: 820px;
+    min-height: 88px;
+    margin-left: 84px;
+    padding: 8px 10px 8px 12px;
+    background: rgba(255, 255, 255, .60);
+    border: 0;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.wut-post-body:before {
+    display: none;
+}
+
+.wut-post-head {
+    height: 29px;
+    line-height: 29px;
+}
+
+.wut-post-head strong {
+    max-width: 500px;
+    color: #303030;
+    font-size: 19px;
+    line-height: 29px;
+}
+
+/* PNID/channel metadata is retained in the DOM for later data work, but the
+   photographed beta row only exposes the display name and timestamp. */
+.wut-post-head small {
+    display: none;
+}
+
+.wut-post-head em {
+    color: #939393;
+    font-size: 16px;
+    line-height: 29px;
+}
+
+.wut-post-community,
+.wut-post-meta {
+    display: none;
+}
+
+.wut-post-copy {
+    height: 52px;
+    margin-top: 1px;
+    overflow: hidden;
+    color: #252525;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+/* Focus state stays understated like the photographed touch-first demo. */
+.wut-feed-list a.wut-section-focused {
+    background: rgba(255, 255, 255, .76);
+}
+
+/* ------------------------------------------------------------
+   PLAZA / COMMUNITY DIRECTORY — use the same inset demo panel
+   ------------------------------------------------------------ */
+
+.wut-community-scroll {
+    top: 0;
+    left: 0;
+    width: 990px;
+    height: 650px;
+    background: rgba(245, 245, 245, .52);
+    border-radius: 0 0 18px 18px;
+    -webkit-border-radius: 0 0 18px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .11);
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .11);
+}
+
+.wut-community-grid,
+.wut-community-grid > li,
+.wut-community-card {
+    width: 972px;
+}
+
+.wut-community-grid > li {
+    height: 132px;
+}
+
+.wut-community-card {
+    height: 129px;
+    background: rgba(255, 255, 255, .18);
+    border-bottom: 1px solid rgba(150, 150, 150, .26);
+}
+
+.wut-community-grid > li:nth-child(even) .wut-community-card {
+    background: rgba(255, 255, 255, .08);
+}
+
+.wut-community-icon {
+    top: 12px;
+    left: 22px;
+    width: 102px;
+    height: 102px;
+}
+
+.wut-community-icon img {
+    width: 102px;
+    height: 102px;
+}
+
+.wut-community-body {
+    top: 30px;
+    left: 154px;
+    width: 700px;
+    height: 72px;
+}
+
+/* ------------------------------------------------------------
+   LOWER-RIGHT COMMENT CONTROL
+   ------------------------------------------------------------ */
+
+#wut-beta-corner-action {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 145px;
+    height: 108px;
+    overflow: hidden;
+    color: #777777;
+    background: rgba(249, 249, 249, .96);
+    border-top: 1px solid rgba(255, 255, 255, .95);
+    border-left: 1px solid rgba(190, 190, 190, .72);
+    border-radius: 105px 0 0 0;
+    -webkit-border-radius: 105px 0 0 0;
+    box-shadow: -3px -2px 7px rgba(0, 0, 0, .16);
+    -webkit-box-shadow: -3px -2px 7px rgba(0, 0, 0, .16);
+    text-align: center;
+    text-shadow: 0 1px 0 #ffffff;
+    z-index: 40;
+}
+
+.wut-beta-corner-glyph {
+    position: absolute;
+    top: 22px;
+    left: 72px;
+    display: block;
+    width: 28px;
+    height: 28px;
+    color: #969696;
+    border: 3px solid #969696;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+}
+
+.wut-beta-corner-label {
+    position: absolute;
+    top: 67px;
+    right: 9px;
+    left: 32px;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+/* Keep the corner affordance outside keyboard/GamePad focus until the real
+   composer route exists. */
+#wut-beta-corner-action:focus {
+    outline: none;
+}
