@@ -307,7 +307,7 @@
 
         state = window.WUTSession.getState();
         name = state.miiName || "Cafe User";
-        userId = state.pnid || state.userId || "WUT_USER";
+        userId = state.wutId || state.pnid || state.userId || "WUT_USER";
         network = state.network ? String(state.network).toUpperCase() : "LOCAL SESSION";
 
         setText("wut-profile-name", name);
@@ -316,6 +316,8 @@
         setText("wut-profile-game-skill", titleCase(state.gameExperience));
         setText("wut-feed-user-name", name);
         setText("wut-feed-user-id", userId);
+        setText("wut-my-menu-topbar-name", name);
+        setText("wut-my-menu-greeting-name", name);
 
         if (profileState) {
             profileState.innerHTML = state.identityResolved ?
@@ -337,6 +339,14 @@
                 image,
                 "res/olv/mii/img_unknown_MiiIcon.png",
                 96,
+                "face"
+            );
+
+            image = document.getElementById("wut-my-menu-topbar-mii");
+            window.WUTMii.bindImage(
+                image,
+                "res/olv/mii/img_unknown_MiiIcon.png",
+                128,
                 "face"
             );
         }
@@ -382,7 +392,51 @@
             setStatus(label + " selected — post detail/API is not connected yet.");
         }
         else if (action === "message-thread") {
-            setStatus(label + " selected — sending messages is not connected yet.");
+            if (window.WUTMessages && typeof window.WUTMessages.openThread === "function") {
+                window.WUTMessages.openThread(link.getAttribute("data-wut-thread"));
+                focus(0);
+            }
+            else {
+                setStatus(label + " selected — message preview unavailable.");
+            }
+        }
+        else if (action === "message-inbox") {
+            if (window.WUTMessages && typeof window.WUTMessages.backToInbox === "function") {
+                window.WUTMessages.backToInbox();
+                focus(0);
+            }
+        }
+        else if (action === "message-new") {
+            if (window.WUTMessages && typeof window.WUTMessages.showNewMessage === "function") {
+                window.WUTMessages.showNewMessage();
+            }
+        }
+        else if (action === "message-new-cancel") {
+            if (window.WUTMessages && typeof window.WUTMessages.hideNewMessage === "function") {
+                window.WUTMessages.hideNewMessage();
+                focus(0);
+            }
+        }
+        else if (action === "message-new-send") {
+            if (window.WUTMessages && typeof window.WUTMessages.sendNewMessage === "function") {
+                window.WUTMessages.sendNewMessage();
+            }
+        }
+        else if (action === "message-reply") {
+            if (window.WUTMessages && typeof window.WUTMessages.showReply === "function") {
+                window.WUTMessages.showReply();
+            }
+        }
+        else if (action === "message-reply-cancel") {
+            if (window.WUTMessages && typeof window.WUTMessages.hideReply === "function") {
+                window.WUTMessages.hideReply();
+                focus(1);
+            }
+        }
+        else if (action === "message-reply-send") {
+            if (window.WUTMessages && typeof window.WUTMessages.demoSend === "function") {
+                window.WUTMessages.demoSend();
+            }
         }
         else if (action === "friend-request") {
             setStatus(label + " selected — relationship actions are not connected yet.");
@@ -399,6 +453,12 @@
 
     function leave() {
         var index = menuIndexes[currentView];
+
+        if (currentView === "messages" && window.WUTMessages && typeof window.WUTMessages.isThreadOpen === "function" && window.WUTMessages.isThreadOpen()) {
+            window.WUTMessages.backToInbox();
+            focus(0);
+            return true;
+        }
 
         active = false;
         clearFocus();
@@ -502,6 +562,13 @@
         active = false;
         clearFocus();
         bindSession();
+
+        if (viewName === "activity-feed" && window.WUTPosts && typeof window.WUTPosts.load === "function") {
+            window.WUTPosts.load();
+        }
+        if (viewName === "messages" && window.WUTMessages && typeof window.WUTMessages.reset === "function") {
+            window.WUTMessages.reset();
+        }
         return true;
     }
 
@@ -548,6 +615,9 @@
         },
         activate: activate,
         bindSession: bindSession,
+        refreshBindings: function () {
+            bindAll();
+        },
         getState: function () {
             return {
                 active: active,

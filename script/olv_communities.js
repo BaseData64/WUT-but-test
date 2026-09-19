@@ -1,15 +1,74 @@
 /*
- * WUT-Miiverse — Communities prototype controller.
- * ES5 and DOM APIs compatible with the Cafe/old-WebKit client layer.
+ * WUT-Miiverse — Plaza / Community beta controller.
+ * ES5 / old-WebKit-safe.
+ *
+ * Directory cards stay in native document flow. Activating a community swaps
+ * to a WUT-original "General Plaza" post view inspired by early Wii U social
+ * UI concepts. No inner scroller, no translated list/grid.
  */
-
 (function () {
     "use strict";
 
     var started = false;
     var active = false;
-    var selected = 0;
-    var currentFilter = "all";
+    var selected = -1;
+    var items = [];
+    var detailActive = false;
+    var detailSelected = 0;
+    var detailItems = [];
+
+    var postCopy = [
+        [
+            "This Plaza feels really different on the GamePad.",
+            "I finally cleared the part that kept getting me. That was close!",
+            "Anyone else trying a different route? I think there is a better way through here."
+        ],
+        [
+            "I checked in again today. The Plaza is getting busy!",
+            "I changed a few things and it already feels completely different.",
+            "What is everyone working on right now?"
+        ],
+        [
+            "That minigame was way closer than I expected.",
+            "I need a rematch after that one.",
+            "There has to be another trick to this board."
+        ],
+        [
+            "I found a route I had never noticed before.",
+            "That last section almost got me again.",
+            "Has anyone tried a different setup for this part?"
+        ],
+        [
+            "This stage looks amazing on the GamePad.",
+            "I finally found the thing I was looking for.",
+            "The little details in this area are really nice."
+        ],
+        [
+            "Finished today's session!",
+            "That was more tiring than I expected.",
+            "Trying to beat my previous result next time."
+        ],
+        [
+            "I keep finding little secrets I missed the first time.",
+            "That jump was much harder than it looked.",
+            "Anyone else going for everything in this game?"
+        ],
+        [
+            "S.O.S. I think I took the wrong route again.",
+            "That encounter was way too close.",
+            "I might try a completely different strategy next time."
+        ],
+        [
+            "I wandered off the path and found something interesting.",
+            "This area is much bigger than I expected.",
+            "I am definitely coming back here later."
+        ],
+        [
+            "WUT-Miiverse visual test online.",
+            "The Community Plaza layout is now being tested on real hardware.",
+            "Next stop: more beta-style social UI."
+        ]
+    ];
 
     function hasClass(element, name) {
         return !!(
@@ -28,179 +87,320 @@
         if (!element) {
             return;
         }
-
         element.className = element.className.replace(
             new RegExp("\\s*" + name, "g"),
             ""
         );
     }
 
-    function allItems() {
-        var grid = document.getElementById("wut-community-grid");
-
-        return grid ? grid.getElementsByTagName("li") : [];
-    }
-
     function linkFor(item) {
         var links = item ? item.getElementsByTagName("a") : [];
-
         return links.length ? links[0] : null;
     }
 
-    function useImageFallback() {
-        var fallback = this.getAttribute("data-wut-fallback") ||
-            "res/olv/default-image.png";
-        var source = this.getAttribute("src") || "";
+    function revealElement(element) {
+        var rect;
+        var viewport;
+        var delta = 0;
 
-        if (source === fallback) {
-            this.onerror = null;
+        if (!element || !element.getBoundingClientRect) {
             return;
         }
 
-        this.onerror = null;
-        this.src = fallback;
+        rect = element.getBoundingClientRect();
+        viewport = window.innerHeight || (document.documentElement && document.documentElement.clientHeight) || 720;
 
-        if (this.setAttribute) {
-            this.setAttribute("src", fallback);
+        if (rect.top < 18) {
+            delta = rect.top - 18;
+        }
+        else if (rect.bottom > viewport - 18) {
+            delta = rect.bottom - (viewport - 18);
+        }
+
+        if (delta && window.scrollBy) {
+            window.scrollBy(0, delta);
         }
     }
 
-    function loadImages() {
-        var grid = document.getElementById("wut-community-grid");
-        var images = grid ? grid.getElementsByTagName("img") : [];
-        var image;
-        var source;
-        var i;
-
-        for (i = 0; i < images.length; i += 1) {
-            image = images[i];
-            source = image.getAttribute("src");
-            image.onerror = useImageFallback;
-
-            if (!source) {
-                useImageFallback.call(image);
-            }
-            else if (
-                image.complete &&
-                typeof image.naturalWidth === "number" &&
-                image.naturalWidth === 0
-            ) {
-                useImageFallback.call(image);
-            }
-        }
+    function reveal(index) {
+        revealElement(items[index]);
     }
 
-    function visibleItems() {
-        var all = allItems();
-        var visible = [];
-        var i;
+    function select(index, bringIntoView) {
+        var previous;
 
-        for (i = 0; i < all.length; i += 1) {
-            if (!hasClass(all[i], "wut-community-hidden")) {
-                visible.push(all[i]);
-            }
-        }
-
-        return visible;
-    }
-
-    function normalizeColumns() {
-        var all = allItems();
-        var visible = visibleItems();
-        var i;
-
-        for (i = 0; i < all.length; i += 1) {
-            removeClass(all[i], "wut-column-right");
-        }
-
-        for (i = 0; i < visible.length; i += 1) {
-            if (i % 2 === 1) {
-                addClass(visible[i], "wut-column-right");
-            }
-        }
-    }
-
-    function ensureVisible(item) {
-        var scroller = document.getElementById("wut-community-scroll");
-        var top;
-        var bottom;
-
-        if (!scroller || !item) {
-            return;
-        }
-
-        top = item.offsetTop || 0;
-        bottom = top + (item.offsetHeight || 126);
-
-        if (top < scroller.scrollTop) {
-            scroller.scrollTop = top;
-        }
-        else if (bottom > scroller.scrollTop + scroller.clientHeight) {
-            scroller.scrollTop = bottom - scroller.clientHeight;
-        }
-    }
-
-    function focus(index) {
-        var visible = visibleItems();
-        var link;
-        var i;
-
-        if (!visible.length) {
+        if (!items.length) {
             selected = -1;
-            return;
+            return false;
         }
 
         if (index < 0) {
             index = 0;
         }
-
-        if (index >= visible.length) {
-            index = visible.length - 1;
+        if (index >= items.length) {
+            index = items.length - 1;
         }
 
+        previous = selected;
         selected = index;
         active = true;
 
-        if (
-            window.WUTPortalNav &&
-            typeof window.WUTPortalNav.blurMenu === "function"
-        ) {
+        if (window.WUTPortalNav && typeof window.WUTPortalNav.blurMenu === "function") {
             window.WUTPortalNav.blurMenu();
         }
 
-        for (i = 0; i < visible.length; i += 1) {
-            removeClass(visible[i], "wut-community-focused");
+        if (previous >= 0 && previous < items.length && previous !== selected) {
+            removeClass(items[previous], "wut-community-focused");
+        }
 
-            if (i === selected) {
-                addClass(visible[i], "wut-community-focused");
-                link = linkFor(visible[i]);
+        addClass(items[selected], "wut-community-focused");
 
-                try {
-                    if (link) {
-                        link.focus();
-                    }
-                }
-                catch (ignore) {}
+        if (bringIntoView !== false) {
+            reveal(selected);
+        }
 
-                ensureVisible(visible[i]);
+        return true;
+    }
+
+    function currentCard() {
+        return selected >= 0 && selected < items.length ? linkFor(items[selected]) : null;
+    }
+
+    function communityIcon(card) {
+        var images = card ? card.getElementsByTagName("img") : [];
+        return images.length ? images[0].src : "res/olv/commu/thumb/default.png";
+    }
+
+    function communityIconPath(card) {
+        var images = card ? card.getElementsByTagName("img") : [];
+        var value = images.length ? images[0].getAttribute("src") : null;
+        return value || "res/olv/default-image.png";
+    }
+
+    function currentCommunityInfo() {
+        var card = currentCard();
+        var href = card ? String(card.getAttribute("href") || "") : "";
+        var id = href.indexOf("#community-") === 0 ? href.substr(11) : "";
+        var title = cleanTitle(card ? card.getAttribute("data-community-title") : "WUT Plaza");
+        if (!id) {
+            id = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "wut-plaza";
+        }
+        return {
+            id: id,
+            title: title,
+            icon: communityIconPath(card)
+        };
+    }
+
+    function cleanTitle(title) {
+        title = String(title || "Community");
+        title = title.replace(/\s+Community$/i, "");
+        return title || "Community";
+    }
+
+    function setText(id, value) {
+        var element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = String(value || "");
+        }
+    }
+
+    function setImage(id, src) {
+        var image = document.getElementById(id);
+        if (image) {
+            image.src = src;
+        }
+    }
+
+    function bindCurrentMii() {
+        var image = document.getElementById("wut-community-current-mii");
+        var state;
+        var name = "Cafe User";
+
+        if (window.WUTSession && typeof window.WUTSession.getState === "function") {
+            state = window.WUTSession.getState();
+            name = state.miiName || state.pnid || state.userId || name;
+        }
+
+        setText("wut-community-current-name", name);
+
+        if (image && window.WUTMii && typeof window.WUTMii.bindImage === "function") {
+            window.WUTMii.bindImage(
+                image,
+                "res/olv/mii/img_unknown_MiiIcon.png",
+                96,
+                "face"
+            );
+        }
+    }
+
+    function updateDetail() {
+        var card = currentCard();
+        var icon;
+        var title;
+        var copy;
+        var i;
+
+        if (!card) {
+            return;
+        }
+
+        icon = communityIcon(card);
+        title = cleanTitle(card.getAttribute("data-community-title"));
+        copy = postCopy[selected] || postCopy[0];
+
+        setText("wut-community-detail-title", title);
+        setImage("wut-community-detail-icon", icon);
+
+        if (window.WUTPosts && typeof window.WUTPosts.loadCommunity === "function") {
+            window.WUTPosts.loadCommunity(currentCommunityInfo());
+        }
+
+        bindCurrentMii();
+    }
+
+    function collectDetailItems() {
+        var root = document.getElementById("wut-community-detail");
+        var links = root ? root.getElementsByTagName("a") : [];
+        var i;
+        detailItems = [];
+
+        for (i = 0; i < links.length; i += 1) {
+            if (links[i].getAttribute("data-wut-community-post-link") === "1") {
+                detailItems.push(links[i]);
             }
         }
     }
 
-    function leave() {
-        var visible = visibleItems();
+    function clearDetailFocus() {
         var i;
+        for (i = 0; i < detailItems.length; i += 1) {
+            removeClass(detailItems[i], "wut-community-detail-focused");
+        }
+    }
 
-        active = false;
-
-        for (i = 0; i < visible.length; i += 1) {
-            removeClass(visible[i], "wut-community-focused");
+    function selectDetail(index, bringIntoView) {
+        if (!detailItems.length) {
+            collectDetailItems();
+        }
+        if (!detailItems.length) {
+            return false;
         }
 
-        if (
-            window.WUTPortalNav &&
-            typeof window.WUTPortalNav.focusMenu === "function"
-        ) {
+        if (index < 0) {
+            index = 0;
+        }
+        if (index >= detailItems.length) {
+            index = detailItems.length - 1;
+        }
+
+        detailSelected = index;
+        active = true;
+        clearDetailFocus();
+        addClass(detailItems[detailSelected], "wut-community-detail-focused");
+
+        if (window.WUTPortalNav && typeof window.WUTPortalNav.blurMenu === "function") {
+            window.WUTPortalNav.blurMenu();
+        }
+
+        if (bringIntoView !== false) {
+            revealElement(detailItems[detailSelected]);
+        }
+
+        return true;
+    }
+
+    function openDetail() {
+        var directory = document.getElementById("wut-community-directory");
+        var detail = document.getElementById("wut-community-detail");
+        var i;
+
+        if (!currentCard()) {
+            return false;
+        }
+
+        for (i = 0; i < items.length; i += 1) {
+            removeClass(items[i], "wut-community-opened");
+        }
+        addClass(items[selected], "wut-community-opened");
+
+        /* Older runtime tests / fallback shells may not include the detail DOM.
+           Keep activation valid even there. */
+        if (!detail) {
+            return true;
+        }
+
+        updateDetail();
+        collectDetailItems();
+        detailActive = true;
+        detailSelected = 0;
+        active = true;
+
+        if (directory) {
+            addClass(directory, "none");
+            directory.setAttribute("aria-hidden", "true");
+        }
+
+        removeClass(detail, "none");
+        detail.setAttribute("aria-hidden", "false");
+
+        if (window.scrollTo) {
+            window.scrollTo(0, 0);
+        }
+
+        selectDetail(0, false);
+        return true;
+    }
+
+    function closeDetail() {
+        var directory = document.getElementById("wut-community-directory");
+        var detail = document.getElementById("wut-community-detail");
+
+        if (!detailActive) {
+            return false;
+        }
+
+        detailActive = false;
+        clearDetailFocus();
+
+        if (detail) {
+            addClass(detail, "none");
+            detail.setAttribute("aria-hidden", "true");
+        }
+        if (directory) {
+            removeClass(directory, "none");
+            directory.setAttribute("aria-hidden", "false");
+        }
+
+        if (window.scrollTo) {
+            window.scrollTo(0, 0);
+        }
+
+        select(selected >= 0 ? selected : 0, false);
+        return true;
+    }
+
+    function leave() {
+        var detail = document.getElementById("wut-community-detail");
+        var directory = document.getElementById("wut-community-directory");
+
+        detailActive = false;
+        clearDetailFocus();
+
+        if (detail) {
+            addClass(detail, "none");
+            detail.setAttribute("aria-hidden", "true");
+        }
+        if (directory) {
+            removeClass(directory, "none");
+            directory.setAttribute("aria-hidden", "false");
+        }
+
+        active = false;
+        if (selected >= 0 && selected < items.length) {
+            removeClass(items[selected], "wut-community-focused");
+        }
+        if (window.WUTPortalNav && typeof window.WUTPortalNav.focusMenu === "function") {
             window.WUTPortalNav.focusMenu(2);
         }
     }
@@ -209,224 +409,136 @@
         if (!active) {
             return false;
         }
-
         if (direction < 0) {
             leave();
-            return true;
         }
-
-        /* The compact directory is a single vertical list. */
         return true;
     }
 
     function moveVertical(direction) {
-        var visible = visibleItems();
-        var next = selected + direction;
-
         if (!active) {
             return false;
         }
 
-        if (next < 0) {
-            next = 0;
+        if (detailActive) {
+            return selectDetail(detailSelected + direction, true);
         }
 
-        if (next >= visible.length) {
-            next = selected;
+        if (!items.length) {
+            return false;
         }
-
-        focus(next);
-        return true;
+        return select(selected + direction, true);
     }
 
     function openSelected() {
-        var visible = visibleItems();
-        var item = visible[selected];
-        var link = linkFor(item);
-        var status = document.getElementById("wut-community-status");
-        var all = allItems();
-        var title;
-        var i;
+        var link;
 
-        if (!item || !link) {
-            return false;
+        if (detailActive) {
+            if (!detailItems.length) {
+                collectDetailItems();
+            }
+            link = detailItems[detailSelected];
+
+            if (link && link.id === "wut-community-post-button") {
+                if (window.WUTPosts && typeof window.WUTPosts.openComposer === "function") {
+                    window.WUTPosts.openComposer(currentCommunityInfo());
+                }
+                return true;
+            }
+
+            /* Existing post bubbles remain detail-preview targets for now. */
+            return true;
         }
-
-        for (i = 0; i < all.length; i += 1) {
-            removeClass(all[i], "wut-community-opened");
-        }
-
-        addClass(item, "wut-community-opened");
-        title = link.getAttribute("data-community-title") || "Community";
-
-        if (status) {
-            status.innerHTML = title + " selected — community page connects here next.";
-        }
-        return true;
+        return openDetail();
     }
 
-    function setFilter(filter) {
-        var tabs = document.getElementById("wut-community-tabs");
-        var tabItems = tabs ? tabs.getElementsByTagName("li") : [];
-        var all = allItems();
-        var count = document.getElementById("wut-community-count");
-        var button;
-        var show;
-        var i;
-
-        if (
-            filter !== "featured" &&
-            filter !== "favorites" &&
-            filter !== "all"
-        ) {
-            filter = "all";
-        }
-
-        currentFilter = filter;
-
-        for (i = 0; i < tabItems.length; i += 1) {
-            button = tabItems[i].getElementsByTagName("button")[0];
-            removeClass(tabItems[i], "selected");
-
-            if (
-                button &&
-                button.getAttribute("data-wut-community-filter") === filter
-            ) {
-                addClass(tabItems[i], "selected");
-            }
-        }
-
-        for (i = 0; i < all.length; i += 1) {
-            show = filter === "all";
-
-            if (filter === "featured") {
-                show = all[i].getAttribute("data-featured") === "1";
-            }
-            else if (filter === "favorites") {
-                show = all[i].getAttribute("data-favorite") === "1";
-            }
-
-            if (show) {
-                removeClass(all[i], "wut-community-hidden");
-            }
-            else {
-                addClass(all[i], "wut-community-hidden");
-            }
-        }
-
-        normalizeColumns();
-
-        if (count) {
-            count.innerHTML = String(visibleItems().length);
-        }
-        if (active) {
-            focus(0);
-        }
-    }
-
-    function bindCard(item) {
+    function bindCard(item, index) {
         var link = linkFor(item);
-
         if (!link || link._wutCommunityBound) {
             return;
         }
-
         link._wutCommunityBound = true;
 
-        link.addEventListener(
-            "focus",
-            function () {
-                var visible = visibleItems();
-                var i;
+        link.addEventListener("touchstart", function () {
+            select(index, false);
+        }, false);
 
-                for (i = 0; i < visible.length; i += 1) {
-                    if (visible[i] === item) {
-                        focus(i);
-                        return;
-                    }
-                }
-            },
-            false
-        );
+        link.addEventListener("mousedown", function () {
+            select(index, false);
+        }, false);
 
-        link.addEventListener(
-            "touchstart",
-            function () {
-                link.focus();
-            },
-            false
-        );
-
-        link.addEventListener(
-            "click",
-            function (event) {
-                if (event && event.preventDefault) {
-                    event.preventDefault();
-                }
-
-                link.focus();
-                openSelected();
-                return false;
-            },
-            false
-        );
-    }
-
-    function bindFilter(button) {
-        if (!button || button._wutCommunityFilterBound) {
-            return;
-        }
-
-        button._wutCommunityFilterBound = true;
-        button.addEventListener(
-            "click",
-            function (event) {
-                if (event && event.preventDefault) {
-                    event.preventDefault();
-                }
-
-                setFilter(button.getAttribute("data-wut-community-filter"));
-                return false;
-            },
-            false
-        );
+        link.addEventListener("click", function (event) {
+            if (event && event.preventDefault) {
+                event.preventDefault();
+            }
+            select(index, false);
+            openSelected();
+            return false;
+        }, false);
     }
 
     function start() {
-        var all;
-        var tabs;
-        var buttons;
+        var plaza;
+        var found;
         var i;
 
         if (started) {
             return;
         }
-
         started = true;
-        all = allItems();
-        tabs = document.getElementById("wut-community-tabs");
-        buttons = tabs ? tabs.getElementsByTagName("button") : [];
 
-        for (i = 0; i < all.length; i += 1) {
-            bindCard(all[i]);
+        plaza = document.getElementById("wut-community-directory") ||
+            document.getElementById("wut-communities-view");
+        found = plaza ? plaza.getElementsByTagName("div") : [];
+        items = [];
+
+        for (i = 0; i < found.length; i += 1) {
+            if (hasClass(found[i], "wut-community-entry")) {
+                items.push(found[i]);
+                bindCard(found[i], items.length - 1);
+            }
         }
 
-        for (i = 0; i < buttons.length; i += 1) {
-            bindFilter(buttons[i]);
-        }
+        collectDetailItems();
 
-        loadImages();
-        setFilter("all");
+        (function () {
+            var postButton = document.getElementById("wut-community-post-button");
+            if (postButton && !postButton._wutPostComposerBound) {
+                postButton._wutPostComposerBound = true;
+                postButton.addEventListener("click", function (event) {
+                    if (event && event.preventDefault) {
+                        event.preventDefault();
+                    }
+                    if (window.WUTPosts && typeof window.WUTPosts.openComposer === "function") {
+                        window.WUTPosts.openComposer(currentCommunityInfo());
+                    }
+                    return false;
+                }, false);
+            }
+        }());
     }
 
     window.WUTCommunities = {
         start: start,
         enter: function () {
-            focus(0);
+            if (detailActive) {
+                return selectDetail(detailSelected, true);
+            }
+            return select(selected >= 0 ? selected : 0, true);
         },
         leave: leave,
+        back: function () {
+            if (detailActive) {
+                return closeDetail();
+            }
+            leave();
+            return true;
+        },
         isActive: function () {
             return active;
+        },
+        isDetailActive: function () {
+            return detailActive;
         },
         left: function () {
             return moveHorizontal(-1);
@@ -441,13 +553,23 @@
             return moveVertical(1);
         },
         activate: openSelected,
-        setFilter: setFilter,
+        refreshDetailItems: function () {
+            collectDetailItems();
+            if (detailActive && detailItems.length) {
+                if (detailSelected >= detailItems.length) {
+                    detailSelected = detailItems.length - 1;
+                }
+                selectDetail(detailSelected, false);
+            }
+        },
+        getCurrentCommunity: currentCommunityInfo,
         getState: function () {
             return {
                 active: active,
                 selected: selected,
-                filter: currentFilter,
-                visible: visibleItems().length
+                visible: items.length,
+                detailActive: detailActive,
+                detailSelected: detailSelected
             };
         }
     };

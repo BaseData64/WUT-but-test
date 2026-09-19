@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/_common.php';
 require __DIR__ . '/mii/_renderer.php';
+require __DIR__ . '/account/_common.php';
 
 wut_start_session();
 $config = wut_config();
@@ -52,7 +53,9 @@ if (
 }
 wut_apply_local_dev_identity($config);
 
-$identity = wut_identity_from_session();
+$reconciledIdentity = wut_accounts_reconcile_current_identity();
+$account = $reconciledIdentity['account'];
+$identity = wut_accounts_render_identity($reconciledIdentity['identity'], $account);
 $publicIdentity = wut_public_identity($identity);
 
 /*
@@ -122,6 +125,19 @@ if (empty($publicIdentity['mii_name']) && !empty($identity['mii_data'])) {
 $rendererSettings = wut_mii_renderer_settings($config);
 $miiSource = wut_mii_lookup_source($identity);
 $profile = $_SESSION['wut_profile'] ?? array();
+
+/* A WUT account is the persistent source of First Run completion. This makes
+ * setup one-time per resolved Wii U identity instead of one-time per browser
+ * localStorage/PHP session. */
+if ($account !== null) {
+    $profile = array(
+        'game_skill' => isset($account['game_skill']) ? (int) $account['game_skill'] : null,
+        'setup_complete' => !empty($account['setup_complete']),
+        'updated_at' => (int) ($account['updated_at'] ?? time()),
+    );
+    $_SESSION['wut_profile'] = $profile;
+}
+
 $authPhase = wut_auth_phase($authProbe, $identity);
 
 wut_json(array(
@@ -161,6 +177,7 @@ wut_json(array(
                 : null),
     ),
     'identity' => $publicIdentity,
+    'account' => $account !== null ? wut_accounts_public($account) : null,
     'profile' => array(
         'game_skill' => isset($profile['game_skill']) ? (int) $profile['game_skill'] : null,
         'setup_complete' => !empty($profile['setup_complete']),
@@ -169,6 +186,7 @@ wut_json(array(
         'renderer_configured' => !empty($rendererSettings['configured']),
         'render_source' => $miiSource,
         'renderable' => wut_identity_can_render($identity, $config),
+        'persistent_account_mii' => !empty($identity['mii_account_bound']),
         'cache_key' => wut_mii_identity_cache_key($identity),
         'proxy_url' => '../../net/olv/v1/mii/render.php',
         'status_url' => '../../net/olv/v1/mii/status.php',

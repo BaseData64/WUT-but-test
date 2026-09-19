@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require dirname(__DIR__) . '/_common.php';
+require dirname(__DIR__) . '/account/_common.php';
 
 $config = wut_config();
 
@@ -100,6 +101,24 @@ if (!@rename($tmp, $path)) {
     }
 }
 
+/* If this Wii U user already completed WUT setup, persist the freshest Mii
+ * StoreData immediately. This does NOT create accounts; First Run remains the
+ * only account-creation boundary. */
+$accountMiiSynced = false;
+$bridgeIdentity = array(
+    'resolved' => true,
+    'authenticated' => true,
+    'source' => 'wiiu-native-act',
+    'network' => 'wut',
+    'account_id' => $accountId,
+    'pid' => $pid,
+    'mii_data' => $miiData,
+);
+$existingAccount = wut_accounts_sync_existing_identity($bridgeIdentity);
+if ($existingAccount !== null) {
+    $accountMiiSynced = !empty($existingAccount['mii_data']);
+}
+
 wut_json(array(
     'ok' => true,
     'slot' => $slot,
@@ -108,4 +127,5 @@ wut_json(array(
     'persistent_id' => $persistentId,
     'mii_bytes' => 96,
     'received_at' => $state['received_at'],
+    'account_mii_synced' => $accountMiiSynced,
 ));

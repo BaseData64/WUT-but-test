@@ -1,0 +1,1 @@
+Plaza icon fix: HTML untouched. User icon converted to compact 86x60 gray/cyan PNGs and embedded only as Base64 CSS background overrides.

@@ -252,11 +252,11 @@ browser.WUTPortalNav.activate("test");
 
 if (
     browser.WUTPortalNav.getState().activeView !== "user-page" ||
-    elements["page-title"].innerHTML !== "User Page" ||
+    elements["page-title"].innerHTML !== "My Menu" ||
     (" " + elements["wut-user-page-view"].className + " ").indexOf(" none ") >= 0 ||
     elements["wut-user-page-view"].getAttribute("aria-hidden") !== "false"
 ) {
-    throw new Error("User Page button did not expose its Portal panel");
+    throw new Error("My Menu button did not expose its Portal panel");
 }
 
 browser.WUTPortalNav.right("test");

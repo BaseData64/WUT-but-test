@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/_common.php';
 require __DIR__ . '/_renderer.php';
+require dirname(__DIR__) . '/account/_common.php';
 
 wut_start_session();
 $config = wut_config();
@@ -40,6 +41,10 @@ if (
 }
 wut_apply_local_dev_identity($config);
 
+$reconciledIdentity = wut_accounts_reconcile_current_identity();
+$account = $reconciledIdentity['account'];
+$identity = wut_accounts_render_identity($reconciledIdentity['identity'], $account);
+
 $settings = wut_mii_renderer_settings($config);
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 
@@ -60,7 +65,6 @@ if (empty($settings['configured'])) {
     exit;
 }
 
-$identity = wut_identity_from_session();
 
 if (!wut_identity_can_render($identity, $config)) {
     http_response_code(401);
@@ -124,6 +128,7 @@ header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $modified) . ' GMT');
 header('X-Content-Type-Options: nosniff');
 header('X-WUT-Mii-Cache: ' . (string) $render['cache']);
 header('X-WUT-Mii-Source: ' . wut_mii_lookup_source($identity));
+header('X-WUT-Mii-Persistence: ' . (!empty($identity['mii_account_bound']) ? 'wut-account' : 'session'));
 header('X-WUT-Identity-Source: ' . (string) ($identity['source'] ?? 'none'));
 
 if (trim((string) ($_SERVER['HTTP_IF_NONE_MATCH'] ?? '')) === $etag) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/_common.php';
 require __DIR__ . '/_renderer.php';
+require dirname(__DIR__) . '/account/_common.php';
 
 wut_start_session();
 $config = wut_config();
@@ -33,7 +34,10 @@ if (
 }
 wut_apply_local_dev_identity($config);
 
-$identity = wut_identity_from_session();
+$reconciledIdentity = wut_accounts_reconcile_current_identity();
+$account = $reconciledIdentity['account'];
+$identity = wut_accounts_render_identity($reconciledIdentity['identity'], $account);
+
 $settings = wut_mii_renderer_settings($config);
 $source = wut_mii_lookup_source($identity);
 
@@ -65,6 +69,7 @@ wut_json(array(
         'authenticated' => !empty($identity['authenticated']),
         'render_source' => $source,
         'renderable' => wut_identity_can_render($identity, $config),
+        'persistent_account_mii' => !empty($identity['mii_account_bound']),
         'cache_key' => wut_mii_identity_cache_key($identity),
     ),
     'cache' => array(

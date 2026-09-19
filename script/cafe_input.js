@@ -184,27 +184,39 @@
     function start() {
         var device = document.getElementById("wut-input-device");
 
+        /*
+         * Wii U applet/native-browser mode:
+         * the host already owns the on-screen cursor and turns GamePad input
+         * into pointer/click interaction. Do NOT poll window.wiiu.gamepad here,
+         * otherwise WUT and the host both react to the same D-Pad/A/B press.
+         *
+         * We intentionally keep WUTPortalNav and all click/focus handlers
+         * untouched. The native cursor clicks the real DOM controls; those
+         * handlers still update the portal state normally.
+         */
+        if (hasWiiUGamePad()) {
+            if (device) {
+                device.innerHTML = "INPUT: WII U NATIVE CURSOR";
+            }
+
+            if (timer !== null) {
+                window.clearInterval(timer);
+                timer = null;
+            }
+
+            lastHold = 0;
+            return;
+        }
+
+        /* Desktop/testing fallback only. */
         document.addEventListener(
             "keydown",
             onKeyDown,
             false
         );
 
-        if (hasWiiUGamePad()) {
-            if (device) {
-                device.innerHTML = "INPUT: WII U GAMEPAD";
-            }
-
-            timer = window.setInterval(
-                poll,
-                33
-            );
-        }
-
-        else {
-            if (device) {
-                device.innerHTML = "INPUT: WEB / KEYBOARD";
-            }
+        if (device) {
+            device.innerHTML = "INPUT: WEB / KEYBOARD";
         }
     }
 

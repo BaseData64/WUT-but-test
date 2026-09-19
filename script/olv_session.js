@@ -30,7 +30,6 @@
         identitySource: "none",
         network: null,
         pid: null,
-        persistentId: null,
         userId: null,
         pnid: null,
         miiName: null,
@@ -38,14 +37,15 @@
         miiImageUrl: null,
         serviceTokenPresent: false,
         paramPackPresent: false,
-        nativeIdentityPresent: false,
-        nativeIdentityAccepted: false,
-        nativeMiiPresent: false,
         serviceTokenFingerprint: null,
         gameSkill: null,
         gameExperience: null,
         setupComplete: false,
         serverProfileAvailable: false,
+        wutAccountReady: false,
+        wutId: null,
+        wutDisplayName: null,
+        wutAccountCreatedAt: null,
         miiRendererConfigured: false,
         miiRenderable: false,
         miiSource: "none",
@@ -136,7 +136,7 @@
         return true;
     }
 
-    function completeSetup(syncServer) {
+    function completeSetup(syncServer, callback) {
         var persisted = false;
 
         state.setupComplete = true;
@@ -149,7 +149,10 @@
         }
 
         if (syncServer !== false) {
-            syncProfile(true);
+            syncProfile(true, callback);
+        }
+        else if (typeof callback === "function") {
+            callback(true, { localOnly: true });
         }
 
         emit("wut:setup-complete", {
@@ -177,6 +180,7 @@
         var consoleInfo;
         var profile;
         var mii;
+        var account;
         var skill;
 
         if (!payload) {
@@ -187,13 +191,11 @@
         consoleInfo = payload.console || {};
         profile = payload.profile || {};
         mii = payload.mii || {};
+        account = payload.account || null;
 
         state.consoleContext = !!consoleInfo.detected;
         state.serviceTokenPresent = !!consoleInfo.service_token_present;
         state.paramPackPresent = !!consoleInfo.param_pack_present;
-        state.nativeIdentityPresent = !!consoleInfo.native_identity_present;
-        state.nativeIdentityAccepted = !!consoleInfo.native_identity_accepted;
-        state.nativeMiiPresent = !!consoleInfo.native_mii_present;
         state.serviceTokenFingerprint = consoleInfo.service_token_fingerprint || null;
 
         if (identity.hasOwnProperty("resolved")) {
@@ -211,11 +213,6 @@
         if (identity.hasOwnProperty("pid")) {
             state.pid = identity.pid !== undefined && identity.pid !== null ? identity.pid : null;
         }
-        if (identity.hasOwnProperty("persistent_id")) {
-            state.persistentId = identity.persistent_id !== undefined && identity.persistent_id !== null ?
-                identity.persistent_id :
-                null;
-        }
         if (identity.hasOwnProperty("user_id")) {
             state.userId = identity.user_id || null;
         }
@@ -230,6 +227,19 @@
         }
         if (identity.hasOwnProperty("mii_image_url")) {
             state.miiImageUrl = identity.mii_image_url || null;
+        }
+
+        if (account && account.wut_id) {
+            state.wutAccountReady = true;
+            state.wutId = account.wut_id;
+            state.wutDisplayName = account.display_name || state.miiName || null;
+            state.wutAccountCreatedAt = account.created_at || null;
+        }
+        else if (payload.hasOwnProperty("account")) {
+            state.wutAccountReady = false;
+            state.wutId = null;
+            state.wutDisplayName = null;
+            state.wutAccountCreatedAt = null;
         }
 
         if (mii.hasOwnProperty("renderer_configured")) {
@@ -286,11 +296,21 @@
         return pairs.join("&");
     }
 
-    function syncProfile(markComplete) {
+    function parseJSON(text) {
+        try {
+            return JSON.parse(text);
+        }
+        catch (ignore) {
+            return null;
+        }
+    }
+
+    function syncProfile(markComplete, callback) {
         var xhr;
         var body;
 
         if (!window.XMLHttpRequest || state.gameSkill === null) {
+            if (typeof callback === "function") { callback(false, { error: "profile_unavailable" }); }
             return false;
         }
 
@@ -306,10 +326,31 @@
                 "Content-Type",
                 "application/x-www-form-urlencoded; charset=UTF-8"
             );
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.onreadystatechange = function () {
+                var payload;
+                var account;
+                if (xhr.readyState !== 4) { return; }
+                payload = parseJSON(xhr.responseText || "") || {};
+                if (xhr.status >= 200 && xhr.status < 300 && payload.ok) {
+                    account = payload.account || null;
+                    if (account && account.wut_id) {
+                        state.wutAccountReady = true;
+                        state.wutId = account.wut_id;
+                        state.wutDisplayName = account.display_name || state.miiName || null;
+                        state.wutAccountCreatedAt = account.created_at || null;
+                    }
+                    if (typeof callback === "function") { callback(true, payload); }
+                }
+                else if (typeof callback === "function") {
+                    callback(false, payload);
+                }
+            };
             xhr.send(body);
             return true;
         }
         catch (ignore) {
+            if (typeof callback === "function") { callback(false, { error: "request_failed" }); }
             return false;
         }
     }
@@ -323,7 +364,6 @@
             identitySource: state.identitySource,
             network: state.network,
             pid: state.pid,
-            persistentId: state.persistentId,
             userId: state.userId,
             pnid: state.pnid,
             miiName: state.miiName,
@@ -331,13 +371,14 @@
             miiImageUrl: state.miiImageUrl,
             serviceTokenPresent: state.serviceTokenPresent,
             paramPackPresent: state.paramPackPresent,
-            nativeIdentityPresent: state.nativeIdentityPresent,
-            nativeIdentityAccepted: state.nativeIdentityAccepted,
-            nativeMiiPresent: state.nativeMiiPresent,
             serviceTokenFingerprint: state.serviceTokenFingerprint,
             gameSkill: state.gameSkill,
             gameExperience: state.gameExperience,
             setupComplete: state.setupComplete,
+            wutAccountReady: state.wutAccountReady,
+            wutId: state.wutId,
+            wutDisplayName: state.wutDisplayName,
+            wutAccountCreatedAt: state.wutAccountCreatedAt,
             miiRendererConfigured: state.miiRendererConfigured,
             miiRenderable: state.miiRenderable,
             miiSource: state.miiSource,

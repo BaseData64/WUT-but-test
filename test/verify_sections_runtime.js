@@ -151,8 +151,10 @@ requests.childrenByTag.li = [requestOne.row];
     "wut-profile-game-skill",
     "wut-feed-user-name",
     "wut-feed-user-id",
+    "wut-my-menu-topbar-name",
     "wut-profile-mii",
-    "wut-feed-current-mii"
+    "wut-feed-current-mii",
+    "wut-my-menu-topbar-mii"
 ].forEach(function (id) {
     add(id, "");
 });
@@ -221,13 +223,14 @@ vm.runInNewContext(
 if (
     elements["wut-profile-name"].innerHTML !== "Maki" ||
     elements["wut-profile-id"].innerHTML !== "MAKI_DEV" ||
-    elements["wut-profile-game-skill"].innerHTML !== "Expert"
+    elements["wut-profile-game-skill"].innerHTML !== "Expert" ||
+    elements["wut-my-menu-topbar-name"].innerHTML !== "Maki"
 ) {
     throw new Error("Session data did not reach the User Page demo");
 }
 
-if (miiBindings !== 2) {
-    throw new Error("Profile and feed Mii images were not bound");
+if (miiBindings !== 3) {
+    throw new Error("Profile, feed and My Menu topbar Mii images were not bound");
 }
 
 browser.WUTPortalSections.enter("activity-feed");

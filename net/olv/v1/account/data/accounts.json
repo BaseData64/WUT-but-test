@@ -1,0 +1,38 @@
+[
+    {
+        "version": 2,
+        "wut_id": "000000001",
+        "identity_key": "pid:1405467372",
+        "network": "pretendo",
+        "account_id": "YosMakii99_PN",
+        "pid": "1405467372",
+        "pnid": null,
+        "display_name": "☂\nmakii\n\n♥",
+        "game_skill": 2,
+        "setup_complete": true,
+        "created_at": 1789788522,
+        "updated_at": 1789788522,
+        "mii_data": "AwEAQMBheGSApKDg3sSswW1yM0pNMAAAAWwCJgoAbQBhAGsAaQBpAAoACgBlJkAQsgCBBwiOoyTlaIcHAAAIAA0AACmHK0hQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACNG",
+        "mii_sha256": "1b7b4486396946367220db0aa7abfcaa38bd77ee49d0d3c8477f667d9b1d4389",
+        "mii_name": "☂\nmakii\n\n♥",
+        "mii_updated_at": 1789788522
+    },
+    {
+        "version": 2,
+        "wut_id": "000000002",
+        "identity_key": "pid:1779327100",
+        "network": "pretendo",
+        "account_id": "rencray",
+        "pid": "1779327100",
+        "pnid": null,
+        "display_name": "rencray㍊",
+        "game_skill": 2,
+        "setup_complete": true,
+        "created_at": 1789788595,
+        "updated_at": 1789788595,
+        "mii_data": "AwAAQMBheGSApKDg37GyCm1yM0pNMAAAkm+I4HIAZQBuAGMAcgBhAHkAGOBKMxYGEgBJAEivgx4FaIgHAAAfAA0AACmHA0hQAeAA4ALgA+CD4ITghOCF4IbgE+AAALN6",
+        "mii_sha256": "aedc478eab46d6b7615263eb431280cfdc138de8c0e064bbe839e07c5119572d",
+        "mii_name": "rencray㍊",
+        "mii_updated_at": 1789788595
+    }
+]
